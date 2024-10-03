@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'EwinLantapa (Admin)',
             'email' => 'ewin@fic10.com',
-            'password' => Hash::make('Pass310317'),
+            'password' => Hash::make('11111111'),
             'roles' => 'ADMIN',
             'phone' => '081340985993',
             'skpd' => 'AllSKPD',
