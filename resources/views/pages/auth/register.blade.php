@@ -12,8 +12,13 @@
 
 @section('main')
     <div class="card card-primary">
-        <div class="card-header">
-            <h4>Register</h4>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="text-right">Register</h4>
+            <!-- Section for the logos, they will be side by side -->
+            <div class="d-flex align-items-center">
+                <!-- Logo BPKPD -->
+                <img src="{{ asset('img/logo_bpkpd.png') }}" alt="Logo BPKPD" style="height: 50px;">
+            </div>
         </div>
 
         <div class="card-body">
