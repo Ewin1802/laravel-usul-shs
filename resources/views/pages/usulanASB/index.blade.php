@@ -104,9 +104,6 @@
                                                 {{$s->Satuan}}
                                             </td>
 
-                                            {{-- <td>
-                                                {{$s->Harga}}
-                                            </td> --}}
                                             <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
 
                                             <td>

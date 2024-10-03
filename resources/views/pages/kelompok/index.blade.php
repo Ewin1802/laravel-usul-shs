@@ -63,13 +63,16 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
+                                            <th>No.</th>
                                             <th>Kode Rekening</th>
                                             <th>Uraian</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($kelompoks as $kel)
+                                        @foreach ($kelompoks as $index => $kel)
                                         <tr>
+                                            <td>
+                                                {{ ($kelompoks->currentPage() - 1) * $kelompoks->perPage() + $index + 1 }}
+                                            </td>
                                             <td>
                                                 {{$kel->Kode}}
                                             </td>

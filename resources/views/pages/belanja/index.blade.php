@@ -61,33 +61,24 @@
                                         </div>
                                     </form>
                                 </div>
-                                {{-- <form action="{{ route('satuans.import') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="file">Upload Excel File</label>
-                                        <input type="file" name="file" class="form-control" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Import</button>
-                                </form> --}}
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
                                     Import Excel File
                                 </button>
-
-
-
                                 <div class="clearfix mb-3"></div>
 
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
+                                            <th>No.</th>
                                             <th>Kode Rekening</th>
                                             <th>Belanja</th>
 
-                                            {{-- <th>Action</th> --}}
                                         </tr>
-                                        @foreach ($belanjas as $bel)
+                                        @foreach ($belanjas as $index => $bel)
                                         <tr>
+                                            <td>
+                                                {{ ($belanjas->currentPage() - 1) * $belanjas->perPage() + $index + 1 }}
+                                            </td>
                                             <td>
                                                 {{$bel->Rekening}}
                                             </td>

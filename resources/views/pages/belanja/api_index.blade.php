@@ -80,14 +80,17 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
+                                            <th>No.</th>
                                             <th>Kode Rekening</th>
                                             <th>Belanja</th>
 
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($belanjas as $bel)
+                                        @foreach ($belanjas as $index => $bel)
                                         <tr>
+                                            <td>
+                                                {{ ($belanjas->currentPage() - 1) * $belanjas->perPage() + $index + 1 }}
+                                            </td>
                                             <td>
                                                 {{$bel->Rekening}}
                                             </td>

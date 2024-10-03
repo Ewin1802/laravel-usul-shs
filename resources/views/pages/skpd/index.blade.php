@@ -62,12 +62,16 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
+                                            <th>No.</th>
                                             <th>Bidang</th>
                                             <th>SKPD</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($skpd as $kel)
+                                        @foreach ($skpd as $index => $kel)
                                         <tr>
+                                            <td>
+                                                {{ ($skpd->currentPage() - 1) * $skpd->perPage() + $index + 1 }}
+                                            </td>
                                             <td>
                                                 {{$kel->bidang}}
                                             </td>
