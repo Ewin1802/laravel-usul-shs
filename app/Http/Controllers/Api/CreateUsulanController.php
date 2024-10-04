@@ -416,7 +416,7 @@ class CreateUsulanController extends Controller
             'user' => $user->name,
             'skpd' => $user->skpd,
             'ket' => 'Proses Usul', // Keterangan awal
-            'Kelompok' => '3',
+            'Kelompok' => '2',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

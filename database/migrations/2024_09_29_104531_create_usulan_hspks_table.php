@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('rekening_8')->nullable();
             $table->string('rekening_9')->nullable();
             $table->string('rekening_10')->nullable();
-            $table->string('Kelompok')->default(3);
+            $table->string('Kelompok')->default(2);
             $table->string('nilai_tkdn');
             $table->string('Document');
             $table->string('ket')->default('Proses Usul');

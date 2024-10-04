@@ -94,7 +94,7 @@ class UsulHSPKController extends Controller
 
         $usulanHspk->akun_belanja = $request->input('akun_belanja');
         $usulanHspk->rekening_1 = $rekening_1 ? $rekening_1->Rekening : null;
-        $usulanHspk->Kelompok = 3;
+        $usulanHspk->Kelompok = 2;
         $usulanHspk->nilai_tkdn = $request->input('nilai_tkdn');
         $usulanHspk->Document = $doc ? $doc->judul : null;
         $usulanHspk->ket = 'Proses Usul';
