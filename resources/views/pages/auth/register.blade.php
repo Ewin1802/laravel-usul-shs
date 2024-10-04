@@ -25,7 +25,7 @@
             <form method="POST" action="{{route('register')}}">
                 @csrf
                 <div class="form-group">
-                    <label for="frist_name">Name</label>
+                    <label for="frist_name">Nama (sesuai Data Pegawai)</label>
                     <input id="frist_name"
                         type="text"
                         class="form-control @error('name')
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone</label>
+                    <label for="phone">Nomor Telepon</label>
                     <input id="phone"
                         type="text"
                         {{-- Membatasi input hanya untuk angka --}}
