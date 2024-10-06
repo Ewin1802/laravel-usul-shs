@@ -30,7 +30,10 @@ class UsulASBController extends Controller
         // Query data berdasarkan filter yang dipilih
         $asb = DB::table('usulan_asbs')
             ->when($request->input('spek'), function ($query, $spek) {
-                return $query->where('spek', 'like', '%' . $spek . '%');
+                return $query->where(function ($query) use ($spek) {
+                    $query->where('spek', 'like', '%' . $spek . '%')
+                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                });
             })
             ->when($filter == 'SKPD', function ($query) use ($skpd) {
                 // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
@@ -111,8 +114,11 @@ class UsulASBController extends Controller
     public function admin_asb(Request $request)
     {
         $admin_asb = DB::table('usulan_asbs')
-            ->when($request->input('spek'), function ($query, $spek ) {
-                return $query->where('spek', 'like', '%'.$spek.'%' );
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where(function ($query) use ($spek) {
+                    $query->where('spek', 'like', '%' . $spek . '%')
+                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                });
             })
             ->when($request->input('filter'), function ($query, $filter) {
                 if ($filter == 'Usul Baru') {

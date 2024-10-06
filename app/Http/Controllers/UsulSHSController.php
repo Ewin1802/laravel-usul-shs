@@ -23,23 +23,24 @@ class UsulSHSController extends Controller
         $user = Auth::user();  // Ambil informasi user yang login
         $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
 
-        // Dapatkan filter dari request, default ke 'SKPD' jika tidak ada filter yang dipilih
-        // $filter = $request->input('filter', 'SKPD');
         $filter = $request->input('filter', 'Semua');
 
         // Query data berdasarkan filter yang dipilih
         $shs = DB::table('usulan_shs')
-            ->when($request->input('spek'), function ($query, $spek) {
-                return $query->where('spek', 'like', '%' . $spek . '%');
-            })
-            ->when($filter == 'SKPD', function ($query) use ($skpd) {
-                // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
-                return $query->where('skpd', $skpd);
-            })
-            // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
-            ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
-            // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
-            ->paginate(10);
+        ->when($request->input('spek'), function ($query, $spek) {
+            return $query->where(function ($query) use ($spek) {
+                $query->where('spek', 'like', '%' . $spek . '%')
+                      ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+            });
+        })
+        ->when($filter == 'SKPD', function ($query) use ($skpd) {
+            // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
+            return $query->where('skpd', $skpd);
+        })
+        // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
+        ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
+        // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
+        ->paginate(10);
 
         return view('pages.usulanSHS.index', compact('shs'));
     }
@@ -49,7 +50,10 @@ class UsulSHSController extends Controller
         $admin_shs = DB::table('usulan_shs')
             // Filter berdasarkan 'spek'
             ->when($request->input('spek'), function ($query, $spek) {
-                return $query->where('spek', 'like', '%' . $spek . '%');
+                return $query->where(function ($query) use ($spek) {
+                    $query->where('spek', 'like', '%' . $spek . '%')
+                          ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                });
             })
             // Filter berdasarkan 'ket' (status)
             ->when($request->input('filter'), function ($query, $filter) {

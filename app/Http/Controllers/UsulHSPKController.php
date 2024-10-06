@@ -30,7 +30,10 @@ class UsulHSPKController extends Controller
         // Query data berdasarkan filter yang dipilih
         $hspk = DB::table('usulan_hspks')
             ->when($request->input('spek'), function ($query, $spek) {
-                return $query->where('spek', 'like', '%' . $spek . '%');
+                return $query->where(function ($query) use ($spek) {
+                    $query->where('spek', 'like', '%' . $spek . '%')
+                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                });
             })
             ->when($filter == 'SKPD', function ($query) use ($skpd) {
                 // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
@@ -111,8 +114,11 @@ class UsulHSPKController extends Controller
     public function admin_hspk(Request $request)
     {
         $admin_hspk = DB::table('usulan_hspks')
-            ->when($request->input('spek'), function ($query, $spek ) {
-                return $query->where('spek', 'like', '%'.$spek.'%' );
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where(function ($query) use ($spek) {
+                    $query->where('spek', 'like', '%' . $spek . '%')
+                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                });
             })
             ->when($request->input('filter'), function ($query, $filter) {
                 if ($filter == 'Usul Baru') {
