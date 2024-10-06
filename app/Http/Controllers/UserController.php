@@ -20,7 +20,10 @@ class UserController extends Controller
     {
         $users = DB::table('users')
             ->when($request->input('name'), function ($query, $name) {
-                return $query->where('name', 'like', '%' . $name . '%');
+                return $query->where(function ($query) use ($name) {
+                    $query->where('name', 'like', '%' . $name . '%')
+                        ->orWhere('skpd', 'like', '%' . $name . '%'); // Tambahkan pencarian di kolom "skpd" juga
+                });
             })
             ->where('skpd', '!=', 'AllSKPD')  // Mengecualikan user yang memiliki skpd "AllSKPD"
             ->orderBy('id', 'desc')
@@ -28,6 +31,7 @@ class UserController extends Controller
 
         return view('pages.users.index', compact('users'));
     }
+
 
     public function create()
     {
