@@ -125,11 +125,79 @@ class DocumentController extends Controller
         return view('pages.documents.createContohSurat');
     }
 
+    // public function upload(Request $request)
+    // {
+    //     // Validasi input termasuk pengecekan keunikan judul dan validasi tipe file
+    //     $request->validate([
+    //         'judul' => 'required|string|max:255|unique:contoh_surats,judul',
+    //         'file' => 'required|mimes:pdf,doc,docx|max:2048', // Max 2 MB dan mendukung PDF serta Word
+    //     ]);
+
+    //     // Mendapatkan user yang sedang login
+    //     $user = Auth::user();
+    //     // Mendapatkan judul dari inputan
+    //     $judul = $request->input('judul');
+
+    //     // Proses upload file
+    //     if ($request->hasFile('file')) {
+    //         $file = $request->file('file');
+
+    //         // Mendapatkan ekstensi file untuk memastikan penamaan yang benar
+    //         $extension = $file->getClientOriginalExtension();
+
+    //         // Buat nama file unik berdasarkan user, tanggal pengajuan, dan judul
+    //         $filename = $user->id . '_' . str_replace(' ', '_', $judul) . '.' . $extension;
+
+    //         // Menyimpan file di dalam folder 'contohsurat' di disk public
+    //         $path = $file->storeAs('contohsurat', $filename, 'public');
+
+    //         // Cek apakah ada entri di tabel ContohSurat
+    //         $document = ContohSurat::first();
+
+    //         if ($document) {
+    //             // Jika sudah ada, hapus file lama dari storage
+    //             Storage::disk('public')->delete('contohsurat/' . $document->file_name);
+
+    //             // Perbarui informasi dokumen dengan yang baru
+    //             $document->judul = $judul;
+    //             $document->file_name = $filename;
+
+    //             // Membuat path file yang lengkap untuk diakses melalui URL
+    //             $baseUrl = request()->getSchemeAndHttpHost();
+    //             $document->file_path = $baseUrl . '/storage/' . $path;
+
+    //             // Menyimpan informasi user yang mengupload
+    //             $document->user = $user->name;
+    //         } else {
+    //             // Jika belum ada, buat entri baru di tabel
+    //             $document = new ContohSurat();
+    //             $document->judul = $judul;
+    //             $document->file_name = $filename;
+
+    //             // Membuat path file yang lengkap untuk diakses melalui URL
+    //             $baseUrl = request()->getSchemeAndHttpHost();
+    //             $document->file_path = $baseUrl . '/storage/' . $path;
+
+    //             // Menyimpan informasi user yang mengupload
+    //             $document->user = $user->name;
+    //         }
+
+    //         // Simpan atau update ke database
+    //         $document->save();
+
+    //         // Redirect ke halaman daftar dokumen dengan pesan sukses
+    //         return redirect()->route('docs_admin')
+    //                         ->with('success', 'File Contoh Surat berhasil diupload.');
+    //     }
+
+    //     // Jika file tidak berhasil diupload
+    //     return back()->withErrors(['msg' => 'File tidak berhasil diupload']);
+    // }
     public function upload(Request $request)
     {
         // Validasi input termasuk pengecekan keunikan judul dan validasi tipe file
         $request->validate([
-            'judul' => 'required|string|max:255|unique:documents,judul',
+            'judul' => 'required|string|max:255|unique:contoh_surats,judul',
             'file' => 'required|mimes:pdf,doc,docx|max:2048', // Max 2 MB dan mendukung PDF serta Word
         ]);
 
@@ -151,8 +219,8 @@ class DocumentController extends Controller
             // Menyimpan file di dalam folder 'contohsurat' di disk public
             $path = $file->storeAs('contohsurat', $filename, 'public');
 
-            // Cek apakah ada entri di tabel ContohSurat
-            $document = ContohSurat::first();
+            // Cek apakah ada entri berdasarkan judul atau pengguna yang sedang login
+            $document = ContohSurat::where('judul', $judul)->first();
 
             if ($document) {
                 // Jika sudah ada, hapus file lama dari storage
@@ -193,6 +261,7 @@ class DocumentController extends Controller
         // Jika file tidak berhasil diupload
         return back()->withErrors(['msg' => 'File tidak berhasil diupload']);
     }
+
 
     public function download()
     {
