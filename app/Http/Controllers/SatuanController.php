@@ -46,7 +46,6 @@ class SatuanController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-
             'satuan' => 'required',
         ]);
 

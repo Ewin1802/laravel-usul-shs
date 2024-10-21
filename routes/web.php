@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/docs_user', [DocumentController::class, 'index'])->name('documents.index');
         Route::get('/docs_create', [DocumentController::class, 'create'])->name('documents.create');
         Route::post('/docs_store', [DocumentController::class, 'store'])->name('documents.store');
+        Route::get('/contoh_surats/download', [DocumentController::class, 'download'])->name('contoh_surats.download');
 
         Route::get('shs/index', [UsulSHSController::class, 'index'])->name('shs.index');
         Route::get('shs/create', [UsulSHSController::class, 'create'])->name('shs.create');
@@ -83,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:ADMIN'])->group(function () {
 
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
+        Route::get('admin/contohsurat_create', [DocumentController::class, 'createContohSurat'])->name('docs_admin.create');
+        Route::post('admin/contohsurat_store', [DocumentController::class, 'upload'])->name('docs_admin.store');
 
         Route::get('shs/admin_shs', [UsulSHSController::class, 'admin_shs'])->name('shs.admin_shs');
         Route::post('shs/{id}/verified', [UsulSHSController::class, 'verified'])->name('shs.verified');

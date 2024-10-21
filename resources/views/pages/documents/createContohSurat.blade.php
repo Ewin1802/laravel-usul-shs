@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Upload Surat Usulan')
+@section('title', 'Upload Contoh Surat')
 {{-- Favicon - Logo web disamping title --}}
 <link rel="icon" href="{{ asset('img/logo_pemda.png') }}" type="image/png">
 @push('style')
@@ -20,14 +20,14 @@
                     {{-- <div class="breadcrumb-item active"><a href="#">Dashboard</a></div> --}}
                     <div class="breadcrumb-item active"><a href="#">Akses SKPD</a></div>
                     <div class="breadcrumb-item"><a href="#">Surat Usulan</a></div>
-                    <div class="breadcrumb-item">Upload Surat Usulan</div>
+                    <div class="breadcrumb-item">Upload Contoh Surat</div>
                 </div>
             </div>
 
             <div class="section-body">
                 <h2 class="section-title">Petunjuk</h2>
                 <ul>
-                    <li>Surat Usulan yang diupload harus ditandatangani oleh Pimpinan dan dicap basah, serta memuat lampiran yang bisa dijadikan dasar harga dari usulan tersebut.</li>
+                    <li>Surat Usulan yang diupload harus ditandatangani oleh Pimpinan dan dicap basah.</li>
                     <li>Nomor Surat tidak boleh sama dengan nomor yang pernah digunakan sebelumnya.</li>
                     <li>Tanggal Pengajuan disesuaikan dengan tanggal Surat Usulan.</li>
                     <li>Ukuran Dokumen yang diupload tidak melebihi 2 MB.</li>
@@ -35,21 +35,17 @@
 
                 <div class="row justify-content-center mt-5">
                     <div class="col-lg-4">
-                        <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data" class="p-4 shadow-sm rounded bg-light">
+                        <form action="{{ route('docs_admin.store') }}" method="POST" enctype="multipart/form-data" class="p-4 shadow-sm rounded bg-light">
                             @csrf
 
 
                             <div class="form-group mb-3">
-                                <label for="judul" class="form-label">Nomor Surat:</label>
+                                <label for="judul" class="form-label">Judul:</label>
                                 <input type="text" name="judul" id="judul" class="form-control" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="tgl_pengajuan" class="form-label">Tanggal Pengajuan (disesuaikan dengan Tanggal Surat):</label>
-                                <input type="date" name="tgl_pengajuan" id="tgl_pengajuan" class="form-control" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="pdf_file" class="form-label">Pilih File PDF (ukuran tidak melebihi 2 MB):</label>
-                                <input type="file" name="pdf_file" id="pdf_file" class="form-control" required>
+                                <label for="file" class="form-label">Pilih File PDF (ukuran tidak melebihi 2 MB):</label>
+                                <input type="file" name="file" id="file" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Upload</button>
                         </form>

@@ -17,6 +17,7 @@
                 <h1>Dokumen Surat Usulan</h1>
                 <div class="section-header-button">
                     <a href="{{ route('documents.create') }}" class="btn btn-primary">Upload Surat Usulan</a>
+                    {{-- <a href="{{ route('contoh_surats.download') }}" class="btn btn-success">Download Contoh Surat</a> --}}
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Akses SKPD</a></div>
@@ -34,8 +35,13 @@
 
                 <ul>
                     <li>Anda dapat mengupload dokumen pdf surat usulan dengan mengklik "Upload Surat Usulan".</li>
-                    <li>Anda dapat melakukan filter data dengan memilih "Data SKPD saya"</li>
+                    <li>Anda dapat melakukan filter data dengan memilih "Data SKPD saya".</li>
+                    <li>Surat Usulan yang diupload harus ditandatangani oleh Pimpinan dan dicap basah, serta memuat lampiran yang bisa dijadikan dasar harga dari usulan tersebut.</li>
+                    <li>Untuk mendownload contoh surat Usulan, Silahkan klik
+                        <a href="{{ route('contoh_surats.download') }}" class="btn btn-success btn-sm">di sini</a>.
+                    </li>
                 </ul>
+
 
                 <div class="row mt-4">
                     <div class="col-12">
