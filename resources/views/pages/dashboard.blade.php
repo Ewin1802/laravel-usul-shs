@@ -71,17 +71,18 @@
                 <h1>Dashboard - Usulan Standar Harga Satuan</h1>
             </div>
             <div class="rules-card">
-                <h2 class="section-title">Informasi</h2>
+                <h2 class="section-title">MOHON DIBACA !!!</h2>
                 <ul class="section-lead">
-                    <li>User Umum tidak diberikan akses untuk halaman SKPD dan Admin.</li>
-                    <li>User SKPD tidak diberikan akses untuk halaman Admin.</li>
-                    <li>Semua Usulan Standar Harga yang baru WAJIB diusulkan melalui Web atau Aplikasi Android yang telah disediakan.</li>
+                    <li>Usulan harga dalam bentuk Pembelian BARANG (SSH) harus melampirkan Price List/Nota/Catatan dari Pihak Penjual atau bisa juga dalam bentuk screenshot dari Online Shop (e-catalog dll).</li>
+                    <li>Usulan harga dalam bentuk Pembayaran JASA/HONORARIUM (SBU) agar melampirkan Aturan yang mendukung Pembayaran Jasa/Honor tersebut.</li>
+                    <li>Jika Ada yang mengusulkan terkait Pembangunan/Rehabilitasi Gedung Kantor (ASB Fisik) perlu dikoordinasikan dengan Dinas PUTR sebagai Dinas Teknis.</li>
+                    <li>Lampiran yang disebutkan diatas dibentuk dalam 1 file pdf bersama dengan Surat Usulan yang sudah tertanda dan cap SKPD kemudian di upload pada menu Usulan (Pdf).</li>
                 </ul>
             </div>
 
 
 
-            <div class="row">
+            {{-- <div class="row">
                 <!-- Admin SKPD Card -->
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
@@ -184,7 +185,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> --}}
 
 
 

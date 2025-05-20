@@ -125,74 +125,6 @@ class DocumentController extends Controller
         return view('pages.documents.createContohSurat');
     }
 
-    // public function upload(Request $request)
-    // {
-    //     // Validasi input termasuk pengecekan keunikan judul dan validasi tipe file
-    //     $request->validate([
-    //         'judul' => 'required|string|max:255|unique:contoh_surats,judul',
-    //         'file' => 'required|mimes:pdf,doc,docx|max:2048', // Max 2 MB dan mendukung PDF serta Word
-    //     ]);
-
-    //     // Mendapatkan user yang sedang login
-    //     $user = Auth::user();
-    //     // Mendapatkan judul dari inputan
-    //     $judul = $request->input('judul');
-
-    //     // Proses upload file
-    //     if ($request->hasFile('file')) {
-    //         $file = $request->file('file');
-
-    //         // Mendapatkan ekstensi file untuk memastikan penamaan yang benar
-    //         $extension = $file->getClientOriginalExtension();
-
-    //         // Buat nama file unik berdasarkan user, tanggal pengajuan, dan judul
-    //         $filename = $user->id . '_' . str_replace(' ', '_', $judul) . '.' . $extension;
-
-    //         // Menyimpan file di dalam folder 'contohsurat' di disk public
-    //         $path = $file->storeAs('contohsurat', $filename, 'public');
-
-    //         // Cek apakah ada entri di tabel ContohSurat
-    //         $document = ContohSurat::first();
-
-    //         if ($document) {
-    //             // Jika sudah ada, hapus file lama dari storage
-    //             Storage::disk('public')->delete('contohsurat/' . $document->file_name);
-
-    //             // Perbarui informasi dokumen dengan yang baru
-    //             $document->judul = $judul;
-    //             $document->file_name = $filename;
-
-    //             // Membuat path file yang lengkap untuk diakses melalui URL
-    //             $baseUrl = request()->getSchemeAndHttpHost();
-    //             $document->file_path = $baseUrl . '/storage/' . $path;
-
-    //             // Menyimpan informasi user yang mengupload
-    //             $document->user = $user->name;
-    //         } else {
-    //             // Jika belum ada, buat entri baru di tabel
-    //             $document = new ContohSurat();
-    //             $document->judul = $judul;
-    //             $document->file_name = $filename;
-
-    //             // Membuat path file yang lengkap untuk diakses melalui URL
-    //             $baseUrl = request()->getSchemeAndHttpHost();
-    //             $document->file_path = $baseUrl . '/storage/' . $path;
-
-    //             // Menyimpan informasi user yang mengupload
-    //             $document->user = $user->name;
-    //         }
-
-    //         // Simpan atau update ke database
-    //         $document->save();
-
-    //         // Redirect ke halaman daftar dokumen dengan pesan sukses
-    //         return redirect()->route('docs_admin')
-    //                         ->with('success', 'File Contoh Surat berhasil diupload.');
-    //     }
-
-    //     // Jika file tidak berhasil diupload
-    //     return back()->withErrors(['msg' => 'File tidak berhasil diupload']);
-    // }
     public function upload(Request $request)
     {
         // Validasi input termasuk pengecekan keunikan judul dan validasi tipe file
@@ -262,7 +194,6 @@ class DocumentController extends Controller
         return back()->withErrors(['msg' => 'File tidak berhasil diupload']);
     }
 
-
     public function download()
     {
         // Ambil contoh surat terbaru (atau sesuaikan query jika Anda ingin mengambil file tertentu)
@@ -278,6 +209,26 @@ class DocumentController extends Controller
         return redirect()->back()->with('error', 'File contoh surat tidak ditemukan.');
     }
 
+    public function destroy($id)
+    {
+        // Cari dokumen berdasarkan ID
+        $document = Document::findOrFail($id);
+
+        // Ambil path file relatif dari storage
+        // Karena file_path berisi URL lengkap, kita ambil bagian akhirnya saja
+        $relativePath = str_replace(request()->getSchemeAndHttpHost() . '/storage/', '', $document->file_path);
+
+        // Hapus file dari storage jika ada
+        if ($relativePath && Storage::disk('public')->exists($relativePath)) {
+            Storage::disk('public')->delete($relativePath);
+        }
+
+        // Hapus entri dokumen dari database
+        $document->delete();
+
+        // Redirect ke halaman dokumen admin/index
+        return redirect()->route('docs_admin')->with('success', 'Dokumen dan file terkait berhasil dihapus.');
+    }
 
 }
 

@@ -74,6 +74,11 @@
                                             <td>
                                                 <button class="btn btn-primary" onclick="showPDFModal('{{ $doc->file_path }}')">Preview</button>
                                                 <button class="btn btn-success" onclick="downloadPDF('{{ $doc->file_path }}', '{{ $doc->file_name }}')">Download</button>
+                                                <form action="{{ route('documents.destroy', $doc->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokumen ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach

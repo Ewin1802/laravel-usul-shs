@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:ADMIN'])->group(function () {
 
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
+        Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
         Route::get('admin/contohsurat_create', [DocumentController::class, 'createContohSurat'])->name('docs_admin.create');
         Route::post('admin/contohsurat_store', [DocumentController::class, 'upload'])->name('docs_admin.store');
 

@@ -16,7 +16,9 @@
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{ asset('img/logo_pemda.png') }}" class="mr-2 logo-pemda">
                 <div class="user-info">
-                    <div class="kab-info">Kab. Bolaang Mongondow Utara</div>
+                    {{-- <div class="kab-info">Kab. Bolaang Mongondow Utara</div> --}}
+
+                    <div class="kab-info">{{ auth()->user()->skpd }}</div>
                     <div class="user-name">{{ auth()->user()->name }}</div>
                 </div>
             </a>
