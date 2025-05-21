@@ -35,9 +35,17 @@ use App\Http\Controllers\CetakPdfController;
 */
 
 // Semua peran bisa mengakses halaman login
+// Route::get('/', function () {
+//     return view('pages.auth.login');
+// });
+
 Route::get('/', function () {
-    return view('pages.auth.login');
+    // return view('pages.auth.login');
+    return view('pages.landing');
 });
+Route::get('/login', function () {
+    return view('pages.auth.login');
+})->name('login');
 
 Route::middleware(['auth'])->group(function () {
 
