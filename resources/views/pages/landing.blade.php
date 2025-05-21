@@ -218,7 +218,7 @@
 
   <!-- HEADER -->
   <header>
-    <div class="logo">USULAN STANDAR HARGA</div>
+    <div class="logo">APLIKASI PENUNJANG BMD</div>
     <nav>
       <a href="https://sipd-ri.kemendagri.go.id/auth/login">SIPD-RI</a>
       <a href="https://bolaangmongondowutara.e-bmd.co.id/">E-BMD</a>
