@@ -230,7 +230,7 @@
   <!-- HERO SECTION -->
   <section class="hero">
     <div class="text">
-      <h1>Standar Harga Satuan (SHS)</h1>
+      <h2>Standar Harga Satuan (SHS)</h2>
       <p>Standar Harga Satuan (SHS) berfungsi sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi dan efektivitas penggunaan anggaran, serta mendorong transparansi dan akuntabilitas. Proses Usulan Standar Harga harus mengacu pada Peraturan Perundang-undangan yang berlaku atau bisa juga mengambil dasar harga dari survei dilapangan.</p>
       <form action="{{ route('login') }}" method="GET" style="margin-top: 20px;">
         <button type="submit" class="btn-main">Login</button>
@@ -238,7 +238,7 @@
     </div>
 
     <div class="product">
-      <img src="{{ asset('img/18th.png') }}" alt="Logo Pemda" style="width: 400px;">
+      <img src="{{ asset('img/18th.png') }}" alt="Logo Pemda" style="width: 320px;">
     </div>
 
     <div class="details">
