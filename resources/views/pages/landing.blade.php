@@ -238,7 +238,7 @@
     </div>
 
     <div class="product">
-      <img src="{{ asset('img/logo_pemda.png') }}" alt="Logo Pemda">
+      <img src="{{ asset('img/18th.png') }}" alt="Logo Pemda" style="width: 400px;">
     </div>
 
     <div class="details">
