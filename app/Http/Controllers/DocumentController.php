@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\ContohSurat;
 use App\Models\User;
+use App\Models\UsulanShs;
+use App\Models\UsulanSbu;
+use App\Models\UsulanAsb;
+use App\Models\UsulanHspk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -209,13 +213,53 @@ class DocumentController extends Controller
         return redirect()->back()->with('error', 'File contoh surat tidak ditemukan.');
     }
 
+    // public function destroy($id)
+    // {
+    //     // Cari dokumen berdasarkan ID
+    //     $document = Document::findOrFail($id);
+
+    //     // Cek apakah judul dokumen sudah digunakan di tabel usulan_shs
+    //     $isUsed = DB::table('usulan_shs')
+    //                 ->where('Document', $document->judul)
+    //                 ->exists();
+
+    //     if ($isUsed) {
+    //         // Jika sudah digunakan, kembalikan dengan pesan error
+    //         return redirect()->route('docs_admin')->with('error', 'Dokumen sudah digunakan.');
+    //     }
+
+    //     // Ambil path file relatif dari storage
+    //     $relativePath = str_replace(request()->getSchemeAndHttpHost() . '/storage/', '', $document->file_path);
+
+    //     // Hapus file dari storage jika ada
+    //     if ($relativePath && Storage::disk('public')->exists($relativePath)) {
+    //         Storage::disk('public')->delete($relativePath);
+    //     }
+
+    //     // Hapus entri dokumen dari database
+    //     $document->delete();
+
+    //     // Redirect ke halaman dokumen admin/index
+    //     return redirect()->route('docs_admin')->with('success', 'Dokumen dan file terkait berhasil dihapus.');
+    // }
+
     public function destroy($id)
     {
-        // Cari dokumen berdasarkan ID
         $document = Document::findOrFail($id);
 
+        // Cek apakah dokumen sudah digunakan di salah satu tabel usulan
+        $judul = $document->judul;
+
+        $usedInSHS = UsulanShs::where('Document', $judul)->exists();
+        $usedInSBUS = UsulanSbu::where('Document', $judul)->exists();
+        $usedInASBS = UsulanAsb::where('Document', $judul)->exists();
+        $usedInHSPKS = UsulanHspk::where('Document', $judul)->exists();
+
+        if ($usedInSHS || $usedInSBUS || $usedInASBS || $usedInHSPKS) {
+            return redirect()->route('docs_admin')->with('error', 'Dokumen sudah digunakan dalam salah satu usulan dan tidak dapat dihapus.');
+        }
+
         // Ambil path file relatif dari storage
-        // Karena file_path berisi URL lengkap, kita ambil bagian akhirnya saja
         $relativePath = str_replace(request()->getSchemeAndHttpHost() . '/storage/', '', $document->file_path);
 
         // Hapus file dari storage jika ada
@@ -226,9 +270,10 @@ class DocumentController extends Controller
         // Hapus entri dokumen dari database
         $document->delete();
 
-        // Redirect ke halaman dokumen admin/index
         return redirect()->route('docs_admin')->with('success', 'Dokumen dan file terkait berhasil dihapus.');
     }
+
+
 
 }
 

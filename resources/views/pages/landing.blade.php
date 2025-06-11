@@ -245,7 +245,7 @@
       <div class="price">
         BPKPD BOLMUT<br>
         BIDANG BMD<br>
-        <span class="stars">★ ★ ★ ★ ★ ★ ★ ★</span>
+        <span class="stars">★ ★ ★ ★ ★ ★ ★ ★ ★</span>
       </div>
     </div>
   </section>
