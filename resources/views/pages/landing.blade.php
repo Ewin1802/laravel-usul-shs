@@ -232,9 +232,16 @@
     <div class="text">
       <h2>Standar Harga Satuan (SHS)</h2>
       <p>Standar Harga Satuan (SHS) berfungsi sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi dan efektivitas penggunaan anggaran, serta mendorong transparansi dan akuntabilitas. Proses Usulan Standar Harga harus mengacu pada Peraturan Perundang-undangan yang berlaku atau bisa juga mengambil dasar harga dari survei dilapangan.</p>
-      <form action="{{ route('login') }}" method="GET" style="margin-top: 20px;">
-        <button type="submit" class="btn-main">Login</button>
-      </form>
+      {{-- <form action="{{ route('login') }}" method="GET" style="margin-top: 20px;">
+        <button type="submit" class="btn-main">Mulai</button>
+      </form> --}}
+        <div style="display: inline-flex; gap: 10px; flex-wrap: wrap;">
+            <form action="{{ route('login') }}" method="GET">
+                <button type="submit" class="btn-main">Mulai</button>
+            </form>
+            <button class="btn-main" onclick="openModal()">Petunjuk</button>
+        </div>
+
     </div>
 
     <div class="product">
@@ -270,6 +277,49 @@
     });
 </script>
 
+    <!-- MODAL -->
+    <div id="readMoreModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background-color: #fff;
+  color: #000;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  max-height: 80vh;         /* Batasi tinggi maksimum modal */
+  overflow-y: auto;">
+            <h3 style="margin-top:0;">Blum Ada Akun?</h3>
+            <ol style="padding-left: 20px; margin-top: 10px;">
+                <li>Klik tombol <strong>"Mulai"</strong> untuk login ke dalam sistem.</li>
+                <li>Silahkan Registrasi, Klik <strong>"Bekeng disini"</strong> Lanjutkan Registrasi.</li>
+                <li>Pada Halaman Registrasi, isi <strong>Nama Lengkap, Email Aktif dan No Telepon yang bisa dihubungi.</strong></li>
+                <li>Setelah berhasil Registrasi, Silahkan Hubungi Admin BMD untuk mendapatkan Akses SKPD.</li>
+            </ol>
+            <hr style="margin: 30px 0; border: none; border-top: 2px dashed #ccc;">
+            <h3 style="margin-top:0;">Mo ba usul standar harga baru?</h3>
+            <ol style="padding-left: 20px; margin-top: 10px;">
+            <li>Klik tombol <strong>"Mulai"</strong> untuk login ke dalam sistem;</li>
+            <li>Siapkan File PDF Surat Usulan disertai <strong>"Lampiran sebagai pendukung Harga Barang/Jasa/Honorarium yang Akan diusul"</strong>;</li>
+            <li>Dasar/Pendukung usulan Barang bisa diambil dari e-catalogue/online shop yang discreenshot, atau bisa juga Brosur/Daftar Harga dari Toko;</li>
+            <li>Jika Usulan dalam bentuk Honor/Jasa <strong>"Wajib"</strong> mempunyai Dasar Aturan dari Perpres 33 atau SBM dari Kemenkeu yang dianggap wajar/setara dengan Kabupaten/Kota (se- Prov. Sulut);</li>
+            <li>Upload Surat Usulan pada Menu yang tersedia;</li>
+            <li>Input Usulan pada Menu SSH SBU ASB: <strong>Barang (Input di SSH), Jasa (Input di SBU), Konstruksi (Input di ASB sesuai Petunjuk Dinas PUTR)</strong>;</li>
+            <li><strong>SUDAH, Bagitu jo dulu!</strong> So kiring bibir ba jolaskan . . .</li>
+        </ol>
+            <button onclick="closeModal()" style="margin-top: 20px; padding: 10px 20px; background-color: #b0d9f9; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Tutup</button>
+        </div>
+    </div>
+
+
+    <script>
+        function openModal() {
+            document.getElementById('readMoreModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('readMoreModal').style.display = 'none';
+        }
+    </script>
 
 
 </body>
