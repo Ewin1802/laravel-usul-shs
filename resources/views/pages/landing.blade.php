@@ -208,6 +208,17 @@
     }
   </style>
 
+  <style>
+    @keyframes fadeInScale {
+    from {opacity: 0; transform: scale(0.8);}
+    to {opacity: 1; transform: scale(1);}
+    }
+    #audioModal button:hover {
+    background-color: #357ABD;
+    }
+</style>
+
+
 </head>
 <body>
 
@@ -231,7 +242,7 @@
   <section class="hero">
     <div class="text">
       <h2>Standar Harga Satuan (SHS)</h2>
-      <p>Standar Harga Satuan (SHS) berfungsi sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi dan efektivitas penggunaan anggaran, serta mendorong transparansi dan akuntabilitas. Proses Usulan Standar Harga harus mengacu pada Peraturan Perundang-undangan yang berlaku atau bisa juga mengambil dasar harga dari survei dilapangan.</p>
+      <p>Standar Harga Satuan (SHS) berfungsi sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi dan efektivitas penggunaan anggaran, serta mendorong transparansi dan akuntabilitas. <Br><Br>Catatan : Backsound hanya untuk membangkitkan semangat agar ceria setiap waktu.</p>
       {{-- <form action="{{ route('login') }}" method="GET" style="margin-top: 20px;">
         <button type="submit" class="btn-main">Mulai</button>
       </form> --}}
@@ -268,26 +279,26 @@
 
   <!-- SPINNER SCRIPT -->
   <script>
-    window.addEventListener('load', function() {
-        const spinner = document.getElementById('loading-spinner');
-        spinner.style.opacity = '0'; // fade out
-        setTimeout(() => {
-            spinner.style.display = 'none'; // remove spinner
-        }, 500);
-    });
-</script>
+        window.addEventListener('load', function() {
+            const spinner = document.getElementById('loading-spinner');
+            spinner.style.opacity = '0'; // fade out
+            setTimeout(() => {
+                spinner.style.display = 'none'; // remove spinner
+            }, 500);
+        });
+    </script>
 
     <!-- MODAL -->
     <div id="readMoreModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
         <div style="background-color: #fff;
-  color: #000;
-  padding: 30px;
-  border-radius: 10px;
-  max-width: 600px;
-  width: 90%;
-  position: relative;
-  max-height: 80vh;         /* Batasi tinggi maksimum modal */
-  overflow-y: auto;">
+            color: #000;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            max-height: 80vh;         /* Batasi tinggi maksimum modal */
+            overflow-y: auto;">
             <h3 style="margin-top:0;">Blum Ada Akun?</h3>
             <ol style="padding-left: 20px; margin-top: 10px;">
                 <li>Klik tombol <strong>"Mulai"</strong> untuk login ke dalam sistem.</li>
@@ -320,6 +331,81 @@
             document.getElementById('readMoreModal').style.display = 'none';
         }
     </script>
+
+   <!-- AUDIO -->
+    <audio id="audio-backsound" src="{{ asset('audio/leher.mp3') }}" loop></audio>
+
+    <!-- MODAL -->
+    <div id="audioModal" style="
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.75);
+        backdrop-filter: blur(4px);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+        ">
+        <div style="
+            background-color: #ffffff;
+            color: #333;
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeInScale 0.4s ease;
+        ">
+            <h2 style="color: #800000; font-weight: 700; font-size: 1.6rem;">
+            {{-- ✨ CUMA MO KASE INGA ✨ --}}
+            CUMA MO KASE INGA
+            </h2>
+
+            <p style="margin: 5px 0; font-size: 1rem; line-height: 1.5; color: #555;">
+            Ajukan harga yang wajar serta didasari bukti dukung yang jelas.<br><br>
+            Bukti Dukung berupa Aturan Perundang-undangan tentang pembayaran Jasa/Honorarium.<br>Jika yang diusulkan adalah Harga Barang, lampirkan Foto pada saat survei harga atau Daftar Harga resmi dari Toko.
+            <br><br>File Bukti dukung disertakan dalam Surat Usulan dibuat dalam file Pdf (500Kb).
+            </p>
+            <button id="closeAudioBtn" style="
+            margin-top: 15px;
+            padding: 12px 30px;
+            background-color: #47c363;
+            border: none;
+            color: #fff;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            ">Tutup</button>
+        </div>
+    </div>
+
+<script>
+  const backsound = document.getElementById('audio-backsound');
+  const audioModal = document.getElementById('audioModal');
+  const closeAudioBtn = document.getElementById('closeAudioBtn');
+
+  window.addEventListener('load', () => {
+    audioModal.style.display = 'flex';
+  });
+
+  closeAudioBtn.addEventListener('click', () => {
+    audioModal.style.display = 'none';
+    try {
+      backsound.currentTime = 0;
+      backsound.play()
+        .then(() => console.log('Audio diputar'))
+        .catch(err => console.log('Gagal memutar audio:', err));
+    } catch (err) {
+      console.log('Error audio:', err);
+    }
+  });
+</script>
+
+
 
 
 </body>

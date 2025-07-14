@@ -67,17 +67,20 @@
 @section('main')
     <div class="main-content">
         <section class="section">
-            <div class="section-header">
-                <h1>Dashboard - Usulan Standar Harga Satuan</h1>
-            </div>
+            {{-- <div class="section-header">
+                <h1>Torang pe Dashboard</h1>
+            </div> --}}
             <div class="rules-card">
-                <h2 class="section-title">MOHON DIBACA !!!</h2>
+                <h2 class="section-title">KASE INGA ULANG</h2>
                 <ul class="section-lead">
                     <li>Usulan harga dalam bentuk Pembelian BARANG (SSH) harus melampirkan Price List/Nota/Catatan dari Pihak Penjual atau bisa juga dalam bentuk screenshot dari Online Shop (e-catalog dll).</li>
                     <li>Usulan harga dalam bentuk Pembayaran JASA/HONORARIUM (SBU) agar melampirkan Aturan yang mendukung Pembayaran Jasa/Honor tersebut.</li>
                     <li>Jika Ada yang mengusulkan terkait Pembangunan/Rehabilitasi Gedung Kantor (ASB Fisik) perlu dikoordinasikan dengan Dinas PUTR sebagai Dinas Teknis.</li>
                     <li>Lampiran yang disebutkan diatas dibentuk dalam 1 file pdf bersama dengan Surat Usulan yang sudah tertanda dan cap SKPD kemudian di upload pada menu Usulan (Pdf).</li>
                 </ul>
+            </div>
+            <div class="rules-card">
+                <h2 class="section-title">Hadapi dengan Senyuman. Nda iko Aturan? Wajib ditolak !</h2>
             </div>
 
 
@@ -191,6 +194,20 @@
 
         </section>
     </div>
+
+    <audio id="audio-backsound" src="{{ asset('audio/dewa.mp3') }}" autoplay></audio>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const backsound = document.getElementById('audio-backsound');
+        // Play ketika halaman dashboard diload
+        backsound.play().catch((e) => {
+            console.log('Autoplay mungkin diblokir:', e);
+        });
+    });
+    </script>
+
+
 @endsection
 
 @push('scripts')

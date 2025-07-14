@@ -48,7 +48,7 @@
 
                 <li class="nav-item {{ Request::is('asb*') && !Request::is('asb/admin_asb') && !Request::is('asb/export_asb') ? 'active' : '' }}">
                     <a href="{{ route('asb.index') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>4. Usul ASB (Analisa)</span>
+                        <i class="fas fa-fire"></i><span>4. Usul ASB (Kegiatan)</span>
                     </a>
                 </li>
 

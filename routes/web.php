@@ -40,7 +40,6 @@ use App\Http\Controllers\CetakPdfController;
 // });
 
 Route::get('/', function () {
-    // return view('pages.auth.login');
     return view('pages.landing');
 });
 Route::get('/login', function () {
