@@ -27,6 +27,64 @@
     }
     header, main, footer {z-index:1;position:relative;}
 
+    /* NEON EFFECT (versi halus) */
+  .neon-text {
+    color: #f3f9fa;
+    text-shadow:
+      0 0 2px #03b3bc,
+      0 0 4px #03b3bc,
+      0 0 6px #00eaff;
+    animation: flicker 3s infinite alternate;
+  }
+  @keyframes flicker {
+    0%, 100% {opacity:1;}
+    45%, 55% {opacity:0.85;}
+  }
+
+  .neon-btn {
+    background:#03b3bc;
+    color:#fff;
+    border:none;
+    padding:12px 28px;
+    border-radius:30px;
+    font-weight:600;
+    font-size:1rem;
+    cursor:pointer;
+    transition:all .3s ease;
+    box-shadow:0 0 6px #03b3bc, 0 0 10px #00eaff;
+  }
+  .neon-btn:hover {
+    transform:scale(1.05);
+    box-shadow:0 0 10px #03b3bc, 0 0 20px #00eaff;
+  }
+
+    nav a {
+      text-decoration:none;
+      color:#fff;
+      font-weight:600;
+      position:relative;
+      transition:.3s;
+      text-shadow:0 0 5px #03b3bc,0 0 10px #00eaff;
+    }
+    nav a:hover {
+      color:#03b3bc;
+      text-shadow:0 0 10px #03b3bc,0 0 20px #00eaff,0 0 40px #00eaff;
+    }
+
+    .features span {
+      background:rgba(255,255,255,0.08);
+      padding:10px 18px;
+      border-radius:20px;
+      transition:all .3s;
+      text-shadow:0 0 6px #03b3bc,0 0 12px #00eaff;
+    }
+    .features span:hover {
+      background:#03b3bc;
+      color:#fff;
+      transform:scale(1.15);
+      box-shadow:0 0 15px #03b3bc,0 0 30px #00eaff;
+    }
+
     /* SPINNER */
     #loading-spinner {
       position:fixed;top:0;left:0;width:100%;height:100%;
@@ -38,6 +96,7 @@
       width:65px;height:65px;border:6px solid rgba(255,255,255,0.3);
       border-top:6px solid #03b3bc;border-radius:50%;
       animation:spin 1s linear infinite;
+      box-shadow:0 0 15px #03b3bc,0 0 30px #00eaff;
     }
     @keyframes spin {to{transform:rotate(360deg)}}
 
@@ -47,18 +106,7 @@
       display:flex;flex-direction:column;align-items:center;
       text-align:center;
     }
-    .logo {font-size:2rem;font-weight:700;color:#03b3bc;margin-bottom:.5rem;}
-    nav {display:flex;flex-wrap:wrap;gap:20px;}
-    nav a {
-      text-decoration:none;color:#fff;font-weight:600;
-      transition:.3s;position:relative;
-    }
-    nav a::after {
-      content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;
-      background:#03b3bc;transition:width .3s;
-    }
-    nav a:hover{color:#03b3bc;}
-    nav a:hover::after{width:100%;}
+    .logo {font-size:2rem;font-weight:700;margin-bottom:.5rem;}
 
     /* HERO */
     .hero {
@@ -69,19 +117,14 @@
     }
     .hero .text h1 {font-size:2.5rem;margin-bottom:1rem;}
     .hero .text p {color:#ccc;line-height:1.6;margin-bottom:1.5rem;}
-    .btn-main {
-      background:#03b3bc;color:#fff;border:none;
-      padding:12px 28px;border-radius:30px;
-      font-weight:600;font-size:1rem;cursor:pointer;
-      transition:all .3s ease;
-    }
-    .btn-main:hover{background:#03b3bc;transform:scale(1.05);}
     .hero .product img {
       width:100%;max-width:320px;display:block;margin:auto;
-      transition:transform .6s ease;
+      transition:transform .6s ease, filter .3s ease;
+      filter:drop-shadow(0 0 15px #00eaff);
     }
     .hero .product img:hover {
       transform:scale(1.15) rotate(3deg);
+      filter:drop-shadow(0 0 25px #03b3bc);
     }
 
     /* FEATURES */
@@ -90,16 +133,6 @@
       padding:2rem 1rem 3rem;
       font-size:1rem;color:#ddd;
       display:flex;flex-wrap:wrap;justify-content:center;gap:25px;
-    }
-    .features span {
-      background:rgba(255,255,255,0.08);
-      padding:10px 18px;border-radius:20px;
-      transition:all .3s;
-    }
-    .features span:hover {
-      background:#03b3bc;
-      color:#fff;
-      transform:scale(1.1);
     }
 
     /* MODAL */
@@ -110,19 +143,23 @@
       background:rgba(0,0,0,0.6);z-index:10000;
     }
     .modal-box {
-      background:#fff;color:#333;padding:30px;
-      border-radius:15px;max-width:600px;width:90%;
-      box-shadow:0 10px 30px rgba(0,0,0,0.3);
-      animation:fadeInScale .4s ease;
-      overflow-y:auto;max-height:80vh;
+        background:#fff;color:#333;padding:30px;
+        border-radius:15px;max-width:600px;width:90%;
+        box-shadow:0 0 8px #03b3bc,0 0 15px #00eaff;
+        animation:fadeInScale .4s ease;
+        overflow-y:auto;max-height:80vh;
     }
     .modal-box h3 {margin:0 0 15px;font-size:1.4rem;color:#03b3bc;}
     .modal-box button {
-      margin-top:20px;padding:10px 20px;border:none;
-      border-radius:8px;background:#03b3bc;color:#fff;
-      font-weight:600;cursor:pointer;transition:.3s;
+        margin-top:20px;padding:10px 20px;border:none;
+        border-radius:8px;background:#03b3bc;color:#fff;
+        font-weight:600;cursor:pointer;transition:.3s;
+        box-shadow:0 0 6px #03b3bc,0 0 10px #00eaff;
     }
-    .modal-box button:hover{background:#03b3bc;transform:scale(1.05);}
+    .modal-box button:hover{
+        transform:scale(1.05);
+        box-shadow:0 0 10px #03b3bc,0 0 18px #00eaff;
+    }
   </style>
 </head>
 <body>
@@ -131,7 +168,7 @@
 
   <!-- HEADER -->
   <header data-aos="fade-down">
-    <div class="logo">APLIKASI PENUNJANG BMD</div>
+    <div class="logo neon-text">APLIKASI PENUNJANG BMD</div>
     <nav>
       <a href="https://sipd-ri.kemendagri.go.id/auth/login">SIPD-RI</a>
       <a href="https://bolaangmongondowutara.e-bmd.co.id/">E-BMD</a>
@@ -143,17 +180,17 @@
   <!-- HERO -->
   <main class="hero">
     <div class="text" data-aos="fade-right">
-      <h1>Standar Harga Satuan (SHS)</h1>
-      <p>SHS berfungsi sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi, transparansi, dan akuntabilitas penggunaan anggaran.</p>
+      <h1 class="neon-text">Usulan Standar Harga</h1>
+      <p>Website ini dibuat agar Proses pengusulan standar harga satuan (SHS) lebih mudah serta bisa diakses kapan saja selama koneksi internet Anda dalam keadaan baik-baik saja. SHS berfungsi sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi, transparansi, dan akuntabilitas penggunaan anggaran.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <form action="{{ route('login') }}" method="GET">
-          <button type="submit" class="btn-main">Mulai</button>
+          <button type="submit" class="neon-btn">Mulai</button>
         </form>
-        <button class="btn-main" onclick="openModal()">Petunjuk</button>
+        <button class="neon-btn" onclick="openModal()">Petunjuk</button>
       </div>
     </div>
     <div class="product" data-aos="zoom-in">
-      <img src="{{ asset('img/18th.png') }}" alt="Logo Pemda">
+      <img src="{{ asset('img/sjlmap.jpg') }}" alt="Logo Pemda">
     </div>
   </main>
 
