@@ -17,35 +17,56 @@ use App\Http\Requests\UpdateUsulanRequest;
 
 class UsulSBUController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     // Ambil informasi user yang sedang login
+    //     $user = Auth::user();  // Ambil informasi user yang login
+    //     $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
+
+    //     // Dapatkan filter dari request, default ke 'SKPD' jika tidak ada filter yang dipilih
+    //     // $filter = $request->input('filter', 'SKPD');
+    //     $filter = $request->input('filter', 'Semua');
+
+    //     // Query data berdasarkan filter yang dipilih
+    //     $sbu = DB::table('usulan_sbus')
+    //         ->when($request->input('spek'), function ($query, $spek) {
+    //             return $query->where(function ($query) use ($spek) {
+    //                 $query->where('spek', 'like', '%' . $spek . '%')
+    //                     ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+    //             });
+    //         })
+    //         ->when($filter == 'SKPD', function ($query) use ($skpd) {
+    //             // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
+    //             return $query->where('skpd', $skpd);
+    //         })
+    //         // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
+    //         ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
+    //         // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
+    //         ->paginate(10);
+
+    //     return view('pages.usulanSBU.index', compact('sbu'));
+    // }
+
     public function index(Request $request)
     {
         // Ambil informasi user yang sedang login
-        $user = Auth::user();  // Ambil informasi user yang login
-        $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
+        $user = Auth::user();
 
-        // Dapatkan filter dari request, default ke 'SKPD' jika tidak ada filter yang dipilih
-        // $filter = $request->input('filter', 'SKPD');
-        $filter = $request->input('filter', 'Semua');
-
-        // Query data berdasarkan filter yang dipilih
+        // Query data berdasarkan filter
         $sbu = DB::table('usulan_sbus')
+            ->where('user', $user->name) // pakai $user->email kalau yg disimpan email
             ->when($request->input('spek'), function ($query, $spek) {
                 return $query->where(function ($query) use ($spek) {
-                    $query->where('spek', 'like', '%' . $spek . '%')
-                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                    $query->where('Spek', 'like', '%' . $spek . '%')
+                        ->orWhere('Document', 'like', '%' . $spek . '%');
                 });
             })
-            ->when($filter == 'SKPD', function ($query) use ($skpd) {
-                // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
-                return $query->where('skpd', $skpd);
-            })
-            // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
-            ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
-            // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('pages.usulanSBU.index', compact('sbu'));
     }
+
 
     public function create()
     {

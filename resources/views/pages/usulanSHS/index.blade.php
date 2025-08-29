@@ -44,7 +44,6 @@
                 <h2 class="section-title">Petunjuk</h2>
                 <ul>
                     <li>Anda dapat mengajukan Usulan Standar baru dengan cara klik tombol "Buat Usulan Baru".</li>
-                    <li>Anda dapat melakukan filter data dengan memilih "Data SKPD saya".</li>
                     <li>Jika Status "Proses Usul" berarti item tersebut masih dalam tahap pemeriksaan dan masih bisa diubah, "Disetujui" sudah dalam tahap penginputan di SIPD, dan "Ditolak" berarti usulan Anda tidak disetujui.</li>
                 </ul>
 
@@ -55,21 +54,13 @@
                                 <h4>Usulan SSH</h4>
                             </div>
                             <div class="card-body">
-                                <div class="float-left">
-                                    <form method="GET" action="{{ route('shs.index') }}">
-                                        <select class="form-control selectric" name="filter" onchange="this.form.submit()">
-                                            <option value="Semua" {{ request('filter') == 'Semua' ? 'selected' : '' }}>Semua</option>
-                                            <option value="SKPD" {{ request('filter') == 'SKPD' ? 'selected' : '' }}>Data SKPD Saya</option>
-                                        </select>
-                                    </form>
-                                </div>
-
                                 <div class="float-right">
                                     <form method="GET" action="{{route('shs.index')}}">
                                         <div class="input-group">
                                             <input type="text"
                                                 class="form-control"
-                                                placeholder="Pencarian" name="spek">
+                                                placeholder="Pencarian" name="spek"
+                                                value="{{ request('spek') }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>
@@ -235,7 +226,7 @@
                 var user = button.getAttribute('data-user');
                 var alasan = button.getAttribute('data-alasan');
 
-                // Isi data ke dalam modal dengan menggunakan textContent
+                // Isi data ke dalam modal
                 modalView.querySelector('#doc').textContent = doc;
                 modalView.querySelector('#uraian').textContent = uraian;
                 modalView.querySelector('#speck').textContent = speck;
@@ -246,16 +237,14 @@
                 modalView.querySelector('#user').textContent = user;
                 modalView.querySelector('#alasan').textContent = alasan;
 
-                // Jika nilai ket adalah "Ditolak", ubah warna teks menjadi merah
+                // Warna merah jika Ditolak
                 var ketElement = modalView.querySelector('#ket');
                 if (ket === 'Ditolak') {
                     ketElement.style.color = 'red';
                 } else {
-                    // Kembalikan ke warna default jika tidak "Ditolak"
                     ketElement.style.color = '';
                 }
             });
         });
     </script>
-
 @endpush

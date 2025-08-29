@@ -17,30 +17,50 @@ use App\Models\Proses_shs;
 
 class UsulSHSController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     // Ambil informasi user yang sedang login
+    //     $user = Auth::user();  // Ambil informasi user yang login
+    //     $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
+
+    //     $filter = $request->input('filter', 'Semua');
+
+    //     // Query data berdasarkan filter yang dipilih
+    //     $shs = DB::table('usulan_shs')
+    //     ->when($request->input('spek'), function ($query, $spek) {
+    //         return $query->where(function ($query) use ($spek) {
+    //             $query->where('spek', 'like', '%' . $spek . '%')
+    //                   ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+    //         });
+    //     })
+    //     ->when($filter == 'SKPD', function ($query) use ($skpd) {
+    //         // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
+    //         return $query->where('skpd', $skpd);
+    //     })
+    //     // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
+    //     ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
+    //     // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
+    //     ->paginate(10);
+
+    //     return view('pages.usulanSHS.index', compact('shs'));
+    // }
+
     public function index(Request $request)
     {
-        // Ambil informasi user yang sedang login
-        $user = Auth::user();  // Ambil informasi user yang login
-        $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
+        // Ambil user yang login
+        $user = Auth::user();
 
-        $filter = $request->input('filter', 'Semua');
-
-        // Query data berdasarkan filter yang dipilih
+        // Ambil data hanya berdasarkan user login (pakai kolom 'user' string)
         $shs = DB::table('usulan_shs')
-        ->when($request->input('spek'), function ($query, $spek) {
-            return $query->where(function ($query) use ($spek) {
-                $query->where('spek', 'like', '%' . $spek . '%')
-                      ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
-            });
-        })
-        ->when($filter == 'SKPD', function ($query) use ($skpd) {
-            // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
-            return $query->where('skpd', $skpd);
-        })
-        // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
-        ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
-        // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
-        ->paginate(10);
+            ->where('user', $user->name) // pakai $user->email kalau yg disimpan email
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where(function ($query) use ($spek) {
+                    $query->where('Spek', 'like', '%' . $spek . '%')
+                        ->orWhere('Document', 'like', '%' . $spek . '%');
+                });
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('pages.usulanSHS.index', compact('shs'));
     }
