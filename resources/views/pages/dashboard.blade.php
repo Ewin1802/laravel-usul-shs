@@ -71,20 +71,29 @@
                 <h1>Torang pe Dashboard</h1>
             </div> --}}
             <div class="rules-card">
-                <h2 class="section-title">KASE INGA ULANG</h2>
+                <h2 class="section-title">CARA PENGUSULAN STANDAR HARGA</h2>
+                <ul class="section-lead">
+                    <li>Surat Usulan dan lampiran di scan dibuat dalam 1 file bentuk PDF (Maks 500 Kb), kemudian diupload pada menu 1. Upload Usulan. Perlu diperhatikan pada saat menginput nomor dan tanggal harus sesuai dengan yang tertera pada surat usulan.</li>
+                    <li>Setelah usulan berhasil diupload, silahkan input di Menu 2.Usul SSH (Usulan Barang); 3. Usul SBU (Honor/Jasa); 4. Usul ASB (Kegiatan).</li>
+
+                </ul>
+            </div>
+            <div class="rules-card">
+                <h2 class="section-title">KETENTUAN</h2>
                 <ul class="section-lead">
                     <li>Usulan harga dalam bentuk Pembelian BARANG (SSH) harus melampirkan Price List/Nota/Catatan dari Pihak Penjual atau bisa juga dalam bentuk screenshot dari Online Shop (e-catalog dll).</li>
                     <li>Usulan harga dalam bentuk Pembayaran JASA/HONORARIUM (SBU) agar melampirkan Aturan yang mendukung Pembayaran Jasa/Honor tersebut.</li>
                     <li>Jika Ada yang mengusulkan terkait Pembangunan/Rehabilitasi Gedung Kantor (ASB Fisik) perlu dikoordinasikan dengan Dinas PUTR sebagai Dinas Teknis.</li>
-                    <li>Lampiran yang disebutkan diatas dibentuk dalam 1 file pdf bersama dengan Surat Usulan yang sudah tertanda dan cap SKPD kemudian di upload pada menu Usulan (Pdf).</li>
                 </ul>
             </div>
             <div class="rules-card">
-                <h2 class="section-title">Hadapi dengan Senyuman. Nda iko Aturan? Wajib ditolak !</h2>
+                <h2 class="section-title">ALUR PERSETUJUAN USULAN</h2>
+                <ul class="section-lead">
+                    <li>Usulan dilakukan oleh masing-masing SKPD.</li>
+                    <li>Di Verifikasi berdasarkan "Ketentuan" oleh Bidang BMD, jika terdapat usulan yang tidak memenuhi syarat maka Verifikator bisa menolak usulan tanpa melanjutkan ke Pimpinan.</li>
+                    <li>Disetujui/Ditolak oleh Kepala Badan Pengelolaan Keuangan dan Pendapatan Daerah.</li>
+                </ul>
             </div>
-
-
-
             {{-- <div class="row">
                 <!-- Admin SKPD Card -->
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">

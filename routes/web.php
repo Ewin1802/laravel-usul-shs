@@ -131,7 +131,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/create', [UserController::class, 'create'])->name('user.create');
         Route::post('user/store', [UserController::class, 'store'])->name('user.store');
         Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-        Route::delete('user/{id}/hapus', [UsulASBController::class, 'destroy'])->name('user.destroy');
+        Route::delete('user/{id}/hapus', [UserController::class, 'destroy'])->name('user.destroy');
         Route::put('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
 
         Route::get('/skpd', [SkpdController::class, 'index'])->name('skpd.index');
