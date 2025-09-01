@@ -74,9 +74,7 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th>Uraian Komponen</th>
-                                            <th>Spesifikasi</th>
-                                            <th>Satuan</th>
+                                            <th>Komponen</th>
                                             <th>Harga</th>
                                             <th>Dasar Surat</th>
                                             <th>SKPD</th>
@@ -87,13 +85,9 @@
                                         <tr>
 
                                             <td>
-                                                {{$s->Uraian}}
-                                            </td>
-                                            <td>
-                                                {{$s->Spek}}
-                                            </td>
-                                            <td>
-                                                {{$s->Satuan}}
+                                                {{ $s->Uraian }} <br>
+                                                <strong>Spesifikasi : {{ $s->Spek }}</strong> <br>
+                                                Satuan : {{ $s->Satuan }}
                                             </td>
 
                                             <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
