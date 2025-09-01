@@ -73,9 +73,7 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th>Uraian Komponen</th>
-                                            <th>Spesifikasi</th>
-                                            <th>Satuan</th>
+                                            <th>Komponen</th>
                                             <th>Harga</th>
                                             <th>Dasar Surat</th>
                                             <th>SKPD</th>
@@ -85,9 +83,11 @@
 
                                         @foreach ($shs as $s)
                                             <tr>
-                                                <td>{{ $s->Uraian }}</td>
-                                                <td>{{ $s->Spek }}</td>
-                                                <td>{{ $s->Satuan }}</td>
+                                                <td>
+                                                    {{ $s->Uraian }} <br>
+                                                    <strong>Spek : {{ $s->Spek }}</strong> <br>
+                                                    Satuan : {{ $s->Satuan }}
+                                                </td>
                                                 <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
                                                 <td>{{ $s->Document }}</td>
                                                 <td>{{ $s->skpd }}</td>
@@ -117,14 +117,12 @@
                                                             data-ket="{{ $s->ket }}"
                                                             data-user="{{ $s->user }}"
                                                             data-alasan="{{ $s->alasan }}">
-                                                            <i class="fas fa-eye"></i>
-                                                            Lihat
+                                                            <i class="fas fa-eye"></i> Lihat
                                                         </a>
                                                         <a href='{{ route('shs_user.edit', $s->id) }}'
                                                             class="btn btn-sm btn-info btn-icon ml-2
                                                             @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
+                                                            <i class="fas fa-edit"></i> Edit
                                                         </a>
                                                         @if($s->ket == 'Proses Usul')
                                                             <form action="{{ route('shs.hapus', $s->id) }}" method="POST" class="ml-2">
@@ -142,6 +140,7 @@
 
                                     </table>
                                 </div>
+
                                 <div class="float-right">
                                     {{ $shs->withQueryString()->links() }}
                                 </div>
