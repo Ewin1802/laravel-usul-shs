@@ -119,6 +119,15 @@
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
+                                                        @if($s->ket == 'Proses Usul')
+                                                            <form action="{{ route('sbu.hapus', $s->id) }}" method="POST" class="ml-2">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger btn-icon" onclick="return confirm('Yakin ingin menghapus item ini?')">
+                                                                    <i class="fas fa-trash"></i> Hapus
+                                                                </button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
