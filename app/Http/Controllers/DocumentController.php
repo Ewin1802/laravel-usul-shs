@@ -19,31 +19,49 @@ class DocumentController extends Controller
 
     public function index(Request $request)
     {
+        // // Ambil informasi user yang sedang login
+        // $user = Auth::user();  // Ambil informasi user yang login
+        // $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
+
+        // // Dapatkan filter dari request, default ke 'SKPD' jika tidak ada filter yang dipilih
+        // // $filter = $request->input('filter', 'SKPD');
+        // $filter = $request->input('filter', 'Semua');
+
+        // // Query data berdasarkan filter yang dipilih
+        // $docs = DB::table('documents')
+        //     ->when($request->input('judul'), function ($query, $judul) {
+        //         return $query->where('judul', 'like', '%' . $judul . '%');
+        //     })
+        //     ->when($filter == 'SKPD', function ($query) use ($skpd) {
+        //         // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
+        //         return $query->where('skpd', $skpd);
+        //     })
+        //     // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
+        //     ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
+        //     // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
+        //     ->paginate(10);
+
+        // $contohSurats = DB::table('contoh_surats')
+        //     ->orderBy('id', 'desc')
+        //     ->paginate(10); // Jika Anda ingin menggunakan pagination untuk contoh_surats juga
+
+        // return view('pages.documents.index', compact('docs'));
+
         // Ambil informasi user yang sedang login
-        $user = Auth::user();  // Ambil informasi user yang login
-        $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
+        $user = Auth::user();
+        $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login
 
-        // Dapatkan filter dari request, default ke 'SKPD' jika tidak ada filter yang dipilih
-        // $filter = $request->input('filter', 'SKPD');
-        $filter = $request->input('filter', 'Semua');
-
-        // Query data berdasarkan filter yang dipilih
+        // Ambil data documents hanya berdasarkan SKPD user login
         $docs = DB::table('documents')
-            ->when($request->input('judul'), function ($query, $judul) {
-                return $query->where('judul', 'like', '%' . $judul . '%');
-            })
-            ->when($filter == 'SKPD', function ($query) use ($skpd) {
-                // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
-                return $query->where('skpd', $skpd);
-            })
-            // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
-            ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
-            // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
+            ->where('skpd', $skpd)
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+        // Jika contoh_surats tidak dipakai, bisa dihapus
+        // Kalau masih dipakai, boleh tetap disertakan
         $contohSurats = DB::table('contoh_surats')
             ->orderBy('id', 'desc')
-            ->paginate(10); // Jika Anda ingin menggunakan pagination untuk contoh_surats juga
+            ->paginate(10);
 
         return view('pages.documents.index', compact('docs'));
     }
@@ -213,36 +231,6 @@ class DocumentController extends Controller
         return redirect()->back()->with('error', 'File contoh surat tidak ditemukan.');
     }
 
-    // public function destroy($id)
-    // {
-    //     // Cari dokumen berdasarkan ID
-    //     $document = Document::findOrFail($id);
-
-    //     // Cek apakah judul dokumen sudah digunakan di tabel usulan_shs
-    //     $isUsed = DB::table('usulan_shs')
-    //                 ->where('Document', $document->judul)
-    //                 ->exists();
-
-    //     if ($isUsed) {
-    //         // Jika sudah digunakan, kembalikan dengan pesan error
-    //         return redirect()->route('docs_admin')->with('error', 'Dokumen sudah digunakan.');
-    //     }
-
-    //     // Ambil path file relatif dari storage
-    //     $relativePath = str_replace(request()->getSchemeAndHttpHost() . '/storage/', '', $document->file_path);
-
-    //     // Hapus file dari storage jika ada
-    //     if ($relativePath && Storage::disk('public')->exists($relativePath)) {
-    //         Storage::disk('public')->delete($relativePath);
-    //     }
-
-    //     // Hapus entri dokumen dari database
-    //     $document->delete();
-
-    //     // Redirect ke halaman dokumen admin/index
-    //     return redirect()->route('docs_admin')->with('success', 'Dokumen dan file terkait berhasil dihapus.');
-    // }
-
     public function destroy($id)
     {
         $document = Document::findOrFail($id);
@@ -250,13 +238,21 @@ class DocumentController extends Controller
         // Cek apakah dokumen sudah digunakan di salah satu tabel usulan
         $judul = $document->judul;
 
-        $usedInSHS = UsulanShs::where('Document', $judul)->exists();
-        $usedInSBUS = UsulanSbu::where('Document', $judul)->exists();
-        $usedInASBS = UsulanAsb::where('Document', $judul)->exists();
+        $usedInSHS   = UsulanShs::where('Document', $judul)->exists();
+        $usedInSBUS  = UsulanSbu::where('Document', $judul)->exists();
+        $usedInASBS  = UsulanAsb::where('Document', $judul)->exists();
         $usedInHSPKS = UsulanHspk::where('Document', $judul)->exists();
 
+        $user = auth()->user();
+
         if ($usedInSHS || $usedInSBUS || $usedInASBS || $usedInHSPKS) {
-            return redirect()->route('docs_admin')->with('error', 'Dokumen sudah digunakan dalam salah satu usulan dan tidak dapat dihapus.');
+            if ($user->role === 'ADMIN') {
+                return redirect()->route('docs_admin')->with('error', 'Dokumen sudah digunakan dalam salah satu usulan dan tidak dapat dihapus.');
+            } elseif ($user->role === 'SKPD') {
+                return redirect()->route('documents.index')->with('error', 'Dokumen sudah digunakan dalam salah satu usulan dan tidak dapat dihapus.');
+            }
+
+            return redirect()->back()->with('error', 'Dokumen sudah digunakan dalam salah satu usulan. Silahkan hapus inputan yang berkaitan dengan surat ini.');
         }
 
         // Ambil path file relatif dari storage
@@ -270,8 +266,16 @@ class DocumentController extends Controller
         // Hapus entri dokumen dari database
         $document->delete();
 
-        return redirect()->route('docs_admin')->with('success', 'Dokumen dan file terkait berhasil dihapus.');
+        // Cek role user
+        if ($user->role === 'ADMIN') {
+            return redirect()->route('docs_admin')->with('success', 'Data Usulan berhasil dihapus.');
+        } elseif ($user->role === 'SKPD') {
+            return redirect()->route('documents.index')->with('success', 'Data Usulan berhasil dihapus.');
+        }
+
+        return redirect()->back()->with('success', 'Dokumen dan file terkait berhasil dihapus.');
     }
+
 
 
 

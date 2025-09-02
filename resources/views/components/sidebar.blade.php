@@ -25,36 +25,38 @@
             </li>
 
             @if (auth()->user()->roles == 'SKPD')
-                <li class="menu-header">Akses SKPD</li>
+                <li class="menu-header">Upload Surat</li>
 
                 <li class="nav-item {{ Request::is('documents*', 'docs_user*') ? 'active' : '' }}">
                     <a href="{{ route('documents.index') }}" class="nav-link">
                         <i class="fas fa-file-alt"></i>
-                        <span>1. Upload Usulan (Pdf)</span>
+                        <span>Upload Surat Usulan<Br>(Pdf Maks 500 Kb)</span>
                     </a>
                 </li>
 
+                <li class="menu-header">Input Data</li>
+
                 <li class="nav-item {{ Request::is('shs*') && !Request::is('shs/admin_shs') && !Request::is('shs/export_shs') ? 'active' : '' }}">
                     <a href="{{ route('shs.index') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>2. Usul SSH (Barang)</span>
+                        <i class="fas fa-fire"></i><span>Usul SSH (Barang)</span>
                     </a>
                 </li>
 
                 <li class="nav-item {{ Request::is('sbu*') && !Request::is('sbu/admin_sbu') && !Request::is('sbu/export_sbu') ? 'active' : '' }}">
                     <a href="{{ route('sbu.index') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>3. Usul SBU (Jasa)</span>
+                        <i class="fas fa-fire"></i><span>Usul SBU (Jasa/Honor)</span>
                     </a>
                 </li>
 
                 <li class="nav-item {{ Request::is('asb*') && !Request::is('asb/admin_asb') && !Request::is('asb/export_asb') ? 'active' : '' }}">
                     <a href="{{ route('asb.index') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>4. Usul ASB (Kegiatan)</span>
+                        <i class="fas fa-fire"></i><span>Usul ASB (Kegiatan)</span>
                     </a>
                 </li>
 
                 <li class="nav-item {{ Request::is('hspk*') && !Request::is('hspk/admin_hspk') && !Request::is('hspk/export_hspk') ? 'active' : '' }}">
                     <a href="javascript:void(0);" class="nav-link text-muted" tabindex="-1" aria-disabled="true" style="pointer-events: none; color: rgb(198, 17, 17);">
-                        <i class="fas fa-fire"></i><span>5. Usul HSPK</span>
+                        <i class="fas fa-fire"></i><span>Usul HSPK</span>
                     </a>
                 </li>
             @endif

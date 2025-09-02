@@ -30,7 +30,7 @@
                     <li>Surat Usulan yang diupload harus ditandatangani oleh Pimpinan dan dicap basah, serta memuat lampiran yang bisa dijadikan dasar harga dari usulan tersebut.</li>
                     <li>Nomor Surat tidak boleh sama dengan nomor yang pernah digunakan sebelumnya.</li>
                     <li>Tanggal Pengajuan disesuaikan dengan tanggal Surat Usulan.</li>
-                    <li>Ukuran Dokumen yang diupload tidak melebihi 2 MB.</li>
+                    <li>Ukuran Dokumen yang diupload tidak melebihi 500Kb.</li>
                 </ul>
 
                 <div class="row justify-content-center mt-5">

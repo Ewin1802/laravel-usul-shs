@@ -194,9 +194,23 @@ class UsulASBController extends Controller
 
     public function destroy($id)
     {
-        $shs = UsulanAsb::findOrFail($id);
-        $shs->delete();
-        return redirect()->route('asb.admin_asb')->with('success', 'Item successfully deleted');
+        // $shs = UsulanAsb::findOrFail($id);
+        // $shs->delete();
+        // return redirect()->route('asb.admin_asb')->with('success', 'Item successfully deleted');
+        $asb = UsulanAsb::findOrFail($id);
+        $asb->delete();
+
+        $user = auth()->user();
+
+        // Cek role user
+        if ($user->role === 'ADMIN') {
+            return redirect()->route('asb.admin_asb')->with('success', 'Data Usulan berhasil dihapus.');
+        } elseif ($user->role === 'SKPD') {
+            return redirect()->route('asb.index')->with('success', 'Data Usulan berhasil dihapus.');
+        }
+
+        // fallback
+        return redirect()->back()->with('success', 'Data Usulan berhasil dihapus.');
     }
 
     public function edit($id)

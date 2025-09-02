@@ -224,9 +224,23 @@ class UsulSBUController extends Controller
 
     public function destroy($id)
     {
-        $shs = UsulanSbu::findOrFail($id);
-        $shs->delete();
-        return redirect()->route('sbu.admin_sbu')->with('success', 'Item successfully deleted');
+        // $shs = UsulanSbu::findOrFail($id);
+        // $shs->delete();
+        // return redirect()->route('sbu.admin_sbu')->with('success', 'Item successfully deleted');
+        $sbu = UsulanSbu::findOrFail($id);
+        $sbu->delete();
+
+        $user = auth()->user();
+
+        // Cek role user
+        if ($user->role === 'ADMIN') {
+            return redirect()->route('sbu.admin_sbu')->with('success', 'Data Usulan berhasil dihapus.');
+        } elseif ($user->role === 'SKPD') {
+            return redirect()->route('sbu.index')->with('success', 'Data Usulan berhasil dihapus.');
+        }
+
+        // fallback
+        return redirect()->back()->with('success', 'Data Usulan berhasil dihapus.');
     }
 
     public function edit($id)

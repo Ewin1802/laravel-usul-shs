@@ -17,33 +17,6 @@ use App\Models\Proses_shs;
 
 class UsulSHSController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     // Ambil informasi user yang sedang login
-    //     $user = Auth::user();  // Ambil informasi user yang login
-    //     $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
-
-    //     $filter = $request->input('filter', 'Semua');
-
-    //     // Query data berdasarkan filter yang dipilih
-    //     $shs = DB::table('usulan_shs')
-    //     ->when($request->input('spek'), function ($query, $spek) {
-    //         return $query->where(function ($query) use ($spek) {
-    //             $query->where('spek', 'like', '%' . $spek . '%')
-    //                   ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
-    //         });
-    //     })
-    //     ->when($filter == 'SKPD', function ($query) use ($skpd) {
-    //         // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
-    //         return $query->where('skpd', $skpd);
-    //     })
-    //     // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
-    //     ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
-    //     // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
-    //     ->paginate(10);
-
-    //     return view('pages.usulanSHS.index', compact('shs'));
-    // }
 
     public function index(Request $request)
     {
@@ -223,9 +196,24 @@ class UsulSHSController extends Controller
 
     public function destroy($id)
     {
+        // $shs = UsulanShs::findOrFail($id);
+        // $shs->delete();
+        // return redirect()->route('shs.admin_shs')->with('success', 'Item successfully deleted');
+
         $shs = UsulanShs::findOrFail($id);
         $shs->delete();
-        return redirect()->route('shs.admin_shs')->with('success', 'Item successfully deleted');
+
+        $user = auth()->user();
+
+        // Cek role user
+        if ($user->role === 'ADMIN') {
+            return redirect()->route('shs.admin_shs')->with('success', 'Data Usulan berhasil dihapus.');
+        } elseif ($user->role === 'SKPD') {
+            return redirect()->route('shs.index')->with('success', 'Data Usulan berhasil dihapus.');
+        }
+
+        // fallback
+        return redirect()->back()->with('success', 'Data Usulan berhasil dihapus.');
     }
 
     public function edit($id)

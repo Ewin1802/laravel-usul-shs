@@ -52,10 +52,13 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->route('dashboard');
         })->name('home');
     Route::get('/dashboard', [UserController::class, 'showData'])->name('dashboard');
+    Route::delete('shs/{id}/hapus', [UsulSHSController::class, 'destroy'])->name('shs.hapus');
+    Route::delete('sbu/{id}/hapus', [UsulSBUController::class, 'destroy'])->name('sbu.hapus');
+    Route::delete('asb/{id}/hapus', [UsulASBController::class, 'destroy'])->name('asb.hapus');
+    Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
 
     // SKPD bisa mengakses dashboard, documents, shs, dan sbu
     Route::middleware(['auth', 'role:SKPD'])->group(function () {
-        // Route::resource('documents', DocumentController::class);
         Route::get('/docs_user', [DocumentController::class, 'index'])->name('documents.index');
         Route::get('/docs_create', [DocumentController::class, 'create'])->name('documents.create');
         Route::post('/docs_store', [DocumentController::class, 'store'])->name('documents.store');
@@ -64,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('shs/index', [UsulSHSController::class, 'index'])->name('shs.index');
         Route::get('shs/create', [UsulSHSController::class, 'create'])->name('shs.create');
         Route::post('shs/store', [UsulSHSController::class, 'store'])->name('shs.store');
+        // Route::delete('shs/{id}/hapus', [UsulSHSController::class, 'destroy'])->name('shs_user.hapus');
         Route::get('shs/{id}/useredit', [UsulSHSController::class, 'edituser'])->name('shs_user.edit');
         Route::put('/shs/{id}', [UsulSHSController::class, 'updateuser'])->name('shs_user.ubah');
 
@@ -91,14 +95,14 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:ADMIN'])->group(function () {
 
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
-        Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
+        // Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
         Route::get('admin/contohsurat_create', [DocumentController::class, 'createContohSurat'])->name('docs_admin.create');
         Route::post('admin/contohsurat_store', [DocumentController::class, 'upload'])->name('docs_admin.store');
 
         Route::get('shs/admin_shs', [UsulSHSController::class, 'admin_shs'])->name('shs.admin_shs');
         Route::post('shs/{id}/verified', [UsulSHSController::class, 'verified'])->name('shs.verified');
         Route::post('shs/{id}/tolak', [UsulSHSController::class, 'tolak'])->name('shs.tolak');
-        Route::delete('shs/{id}/hapus', [UsulSHSController::class, 'destroy'])->name('shs.hapus');
+        // Route::delete('shs/{id}/hapus', [UsulSHSController::class, 'destroy'])->name('shs.hapus');
         Route::get('shs/export_shs', [UsulSHSController::class, 'admin_export_shs'])->name('shs.export_shs');
         Route::get('shs/{id}/edit', [UsulSHSController::class, 'edit'])->name('shs_admin.edit');
         Route::put('/shs/{usulan}/update', [UsulSHSController::class, 'update'])->name('shs.ubah');
@@ -106,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('sbu/admin_sbu', [UsulSBUController::class, 'admin_sbu'])->name('sbu.admin_sbu');
         Route::post('sbu/{id}/verified', [UsulSBUController::class, 'verified'])->name('sbu.verified');
         Route::post('sbu/{id}/tolak', [UsulSBUController::class, 'tolak'])->name('sbu.tolak');
-        Route::delete('sbu/{id}/hapus', [UsulSBUController::class, 'destroy'])->name('sbu.hapus');
+        // Route::delete('sbu/{id}/hapus', [UsulSBUController::class, 'destroy'])->name('sbu.hapus');
         Route::get('sbu/export_sbu', [UsulSBUController::class, 'admin_export_sbu'])->name('sbu.export_sbu');
         Route::get('sbu/{id}/edit', [UsulSBUController::class, 'edit'])->name('sbu_admin.edit');
         Route::put('/sbu/{usulan}/update', [UsulSBUController::class, 'update'])->name('sbu.ubah');
@@ -114,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('asb/admin_asb', [UsulASBController::class, 'admin_asb'])->name('asb.admin_asb');
         Route::post('asb/{id}/verified', [UsulASBController::class, 'verified'])->name('asb.verified');
         Route::post('asb/{id}/tolak', [UsulASBController::class, 'tolak'])->name('asb.tolak');
-        Route::delete('asb/{id}/hapus', [UsulASBController::class, 'destroy'])->name('asb.hapus');
+        // Route::delete('asb/{id}/hapus', [UsulASBController::class, 'destroy'])->name('asb.hapus');
         Route::get('asb/export_asb', [UsulASBController::class, 'admin_export_asb'])->name('asb.export_asb');
         Route::get('asb/{id}/edit', [UsulASBController::class, 'edit'])->name('asb_admin.edit');
         Route::put('/asb/{usulan}/update', [UsulASBController::class, 'update'])->name('asb.ubah');

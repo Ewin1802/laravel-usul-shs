@@ -14,15 +14,15 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Dokumen Surat Usulan</h1>
+                <h1>Upload Surat Usulan</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('documents.create') }}" class="btn btn-primary">Upload Surat Usulan</a>
+                    <a href="{{ route('documents.create') }}" class="btn btn-primary">Upload Disini</a>
                     {{-- <a href="{{ route('contoh_surats.download') }}" class="btn btn-success">Download Contoh Surat</a> --}}
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Akses SKPD</a></div>
                     <div class="breadcrumb-item"><a href="#">Surat Usulan</a></div>
-                    <div class="breadcrumb-item">Dokumen Surat Usulan</div>
+                    <div class="breadcrumb-item">Upload Surat Usulan</div>
                 </div>
             </div>
             <div class="section-body">
@@ -50,14 +50,14 @@
                                 <h4>Semua Dokumen Surat Usulan</h4>
                             </div>
                             <div class="card-body">
-                                <div class="float-left">
+                                {{-- <div class="float-left">
                                     <form method="GET" action="{{ route('documents.index') }}">
                                         <select class="form-control selectric" name="filter" onchange="this.form.submit()">
                                             <option value="Semua" {{ request('filter') == 'Semua' ? 'selected' : '' }}>Semua</option>
                                             <option value="SKPD" {{ request('filter') == 'SKPD' ? 'selected' : '' }}>Data SKPD Saya</option>
                                         </select>
                                     </form>
-                                </div>
+                                </div> --}}
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('documents.index') }}">
                                         <div class="input-group">
@@ -86,10 +86,6 @@
                                             <td>{{ $doc->judul }}</td>
                                             <td>{{ $doc->tgl_pengajuan }}</td>
                                             <td>{{ $doc->user }}</td>
-                                            {{-- <td>
-                                                <button class="btn btn-primary" onclick="showPDFModal('{{ $doc->file_path }}')">Preview</button>
-                                                <button class="btn btn-success" onclick="downloadPDF('{{ $doc->file_path }}', '{{ $doc->file_name }}')">Download</button>
-                                            </td> --}}
                                             <td>
                                                 <!-- Tombol Preview dengan ikon mata -->
                                                 <button class="btn btn-primary" onclick="showPDFModal('{{ $doc->file_path }}')">
@@ -100,6 +96,13 @@
                                                 <button class="btn btn-success" onclick="downloadPDF('{{ $doc->file_path }}', '{{ $doc->file_name }}')">
                                                     <i class="fas fa-download"></i>
                                                 </button>
+
+                                                <form action="{{ route('documents.destroy', $doc->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokumen ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                                </form>
+
                                             </td>
 
                                         </tr>
