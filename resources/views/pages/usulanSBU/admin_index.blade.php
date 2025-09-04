@@ -111,70 +111,70 @@
 
                                             </td>
                                             <td>
-    <div class="dropdown text-center">
-        <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuSBU{{ $s->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
+                                                <div class="dropdown text-center">
+                                                    <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuSBU{{ $s->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
 
-        <div class="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="dropdownMenuSBU{{ $s->id }}">
+                                                    <div class="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="dropdownMenuSBU{{ $s->id }}">
 
-            {{-- View --}}
-            <a href="#"
-                class="dropdown-item text-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#modalView"
-                data-doc="{{ $s->Document }}"
-                data-uraian="{{ $s->Uraian }}"
-                data-speck="{{ $s->Spek }}"
-                data-satuan="{{ $s->Satuan }}"
-                data-akun_belanja="{{ $s->akun_belanja }}"
-                data-rekening_1="{{ $s->rekening_1 }}"
-                data-ket="{{ $s->ket }}"
-                data-user="{{ $s->user }}"
-                data-alasan="{{ $s->alasan }}">
-                <i class="fas fa-eye"></i> View
-            </a>
+                                                        {{-- View --}}
+                                                        <a href="#"
+                                                            class="dropdown-item text-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalView"
+                                                            data-doc="{{ $s->Document }}"
+                                                            data-uraian="{{ $s->Uraian }}"
+                                                            data-speck="{{ $s->Spek }}"
+                                                            data-satuan="{{ $s->Satuan }}"
+                                                            data-akun_belanja="{{ $s->akun_belanja }}"
+                                                            data-rekening_1="{{ $s->rekening_1 }}"
+                                                            data-ket="{{ $s->ket }}"
+                                                            data-user="{{ $s->user }}"
+                                                            data-alasan="{{ $s->alasan }}">
+                                                            <i class="fas fa-eye"></i> View
+                                                        </a>
 
-            {{-- Edit --}}
-            <a href="{{ route('sbu_admin.edit', $s->id) }}"
-                class="dropdown-item text-info
-                    @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                <i class="fas fa-edit"></i> Edit
-            </a>
+                                                        {{-- Edit --}}
+                                                        <a href="{{ route('sbu_admin.edit', $s->id) }}"
+                                                            class="dropdown-item text-info
+                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
 
-            {{-- Verifikasi --}}
-            <a href="#"
-                class="dropdown-item text-success
-                    @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                data-bs-toggle="modal"
-                data-bs-target="#modalVerifikasi"
-                data-url="{{ route('sbu.verified', $s->id) }}">
-                <i class="fas fa-check-circle"></i> Verifikasi
-            </a>
+                                                        {{-- Verifikasi --}}
+                                                        <a href="#"
+                                                            class="dropdown-item text-success
+                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalVerifikasi"
+                                                            data-url="{{ route('sbu.verified', $s->id) }}">
+                                                            <i class="fas fa-check-circle"></i> Verifikasi
+                                                        </a>
 
-            {{-- Tolak --}}
-            <a href="#"
-                class="dropdown-item text-warning
-                    @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                data-bs-toggle="modal"
-                data-bs-target="#modalTolak"
-                data-url="{{ route('sbu.tolak', $s->id) }}">
-                <i class="fas fa-hand-paper"></i> Tolak
-            </a>
+                                                        {{-- Tolak --}}
+                                                        <a href="#"
+                                                            class="dropdown-item text-warning
+                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalTolak"
+                                                            data-url="{{ route('sbu.tolak', $s->id) }}">
+                                                            <i class="fas fa-hand-paper"></i> Tolak
+                                                        </a>
 
-            {{-- Hapus --}}
-            <form action="{{ route('sbu.hapus', $s->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus data ini?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="dropdown-item text-danger
-                    @if($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                    <i class="fas fa-times"></i> Delete
-                </button>
-            </form>
+                                                        {{-- Hapus --}}
+                                                        <form action="{{ route('sbu.hapus', $s->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus data ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item text-danger
+                                                                @if($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
+                                                        </form>
 
-        </div>
-    </div>
-</td>
+                                                    </div>
+                                                </div>
+                                            </td>
 
                                         </tr>
                                         @endforeach
