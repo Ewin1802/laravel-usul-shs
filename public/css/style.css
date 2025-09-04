@@ -2186,6 +2186,11 @@ h6 .badge {
   }
 }
 /* 3.19 Dropdown */
+.custom-dropdown {
+    max-height: 200px; /* sesuaikan */
+    overflow-y: auto;
+}
+
 .dropdown-item.has-icon i {
   margin-top: -1px;
   font-size: 13px;

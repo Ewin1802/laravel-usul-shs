@@ -115,65 +115,70 @@
 
                                             </td>
                                             <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <a href='#'
-                                                        class="btn btn-sm btn-icon btn-primary ml-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalView"
-                                                        data-doc="{{ $s->Document }}"
-                                                        data-uraian="{{ $s->Uraian }}"
-                                                        data-speck="{{ $s->Spek }}"
-                                                        data-satuan="{{ $s->Satuan }}"
-                                                        data-akun_belanja="{{ $s->akun_belanja }}"
-                                                        data-rekening_1="{{ $s->rekening_1 }}"
-                                                        data-ket="{{ $s->ket }}"
-                                                        data-user="{{ $s->user }}"
-                                                        data-alasan="{{ $s->alasan }}">
-                                                        <i class="fas fa-eye"></i>
-                                                        View
-                                                    </a>
+                                                <div class="dropdown text-center">
+                                                    <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenu{{ $s->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
 
-                                                    <a href='{{ route('shs_admin.edit', $s->id) }}'
-                                                        class="btn btn-sm btn-info btn-icon ml-2
-                                                        @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                                                        <i class="fas fa-edit"></i>
-                                                        Edit
-                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="dropdownMenu{{ $s->id }}">
+                                                        {{-- View --}}
+                                                        <a href="#"
+                                                            class="dropdown-item text-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalView"
+                                                            data-doc="{{ $s->Document }}"
+                                                            data-uraian="{{ $s->Uraian }}"
+                                                            data-speck="{{ $s->Spek }}"
+                                                            data-satuan="{{ $s->Satuan }}"
+                                                            data-akun_belanja="{{ $s->akun_belanja }}"
+                                                            data-rekening_1="{{ $s->rekening_1 }}"
+                                                            data-ket="{{ $s->ket }}"
+                                                            data-user="{{ $s->user }}"
+                                                            data-alasan="{{ $s->alasan }}">
+                                                            <i class="fas fa-eye"></i> View
+                                                        </a>
 
-                                                    <a href='#'
-                                                        class="btn btn-sm btn-icon btn-info ml-2
-                                                        @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalVerifikasi"
-                                                        data-url="{{ route('shs.verified', $s->id) }}">
-                                                        <i class="fas fa-check-circle"></i> <!-- Ikon check -->
-                                                        Verifikasi
-                                                    </a>
+                                                        {{-- Edit --}}
+                                                        <a href="{{ route('shs_admin.edit', $s->id) }}"
+                                                            class="dropdown-item text-info
+                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
 
-                                                    <a href='#'
-                                                        class="btn btn-sm btn-icon btn-danger ml-2
-                                                        @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalTolak"
-                                                        data-url="{{ route('shs.tolak', $s->id) }}">
-                                                        <i class="fas fa-hand-paper"></i> <!-- Ikon times (x) -->
-                                                        Tolak
-                                                    </a>
+                                                        {{-- Verifikasi --}}
+                                                        <a href="#"
+                                                            class="dropdown-item text-success
+                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalVerifikasi"
+                                                            data-url="{{ route('shs.verified', $s->id) }}">
+                                                            <i class="fas fa-check-circle"></i> Verifikasi
+                                                        </a>
 
-                                                    <form action="{{ route('shs.hapus', $s->id) }}" method="POST" class="ml-2">
-                                                        @csrf
-                                                        @method('DELETE') <!-- Menyimulasikan metode DELETE -->
+                                                        {{-- Tolak --}}
+                                                        <a href="#"
+                                                            class="dropdown-item text-warning
+                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalTolak"
+                                                            data-url="{{ route('shs.tolak', $s->id) }}">
+                                                            <i class="fas fa-hand-paper"></i> Tolak
+                                                        </a>
 
-                                                        <!-- Modifikasi logika disable tombol hapus -->
-                                                        <button class="btn btn-sm btn-danger btn-icon
-                                                            @if($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                                                            onclick="return confirm('Yakin mau hapus data ini?')">
-                                                            <i class="fas fa-times"></i> Delete
-                                                        </button>
-                                                    </form>
+                                                        {{-- Hapus --}}
+                                                        <form action="{{ route('shs.hapus', $s->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus data ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item text-danger
+                                                                @if($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
-
                                             </td>
+
+
                                         </tr>
                                         @endforeach
 
@@ -416,5 +421,21 @@
             document.getElementById("yearForm").submit();
         }
     </script>
+
+    <script>
+        document.querySelectorAll('.dropdown').forEach(function (el) {
+            el.addEventListener('shown.bs.dropdown', function (e) {
+                const dropdownMenu = e.target.querySelector('.dropdown-menu');
+                const rect = dropdownMenu.getBoundingClientRect();
+
+                if (rect.bottom > window.innerHeight) {
+                    e.target.classList.add('dropup');
+                } else {
+                    e.target.classList.remove('dropup');
+                }
+            });
+        });
+    </script>
+
 
 @endpush

@@ -231,9 +231,11 @@
     <div class="modal-box" style="max-width:400px;text-align:center;" data-aos="zoom-in">
       <h3 style="color:#800000;">CUMA MO KASE INGA</h3>
       <p style="font-size:.95rem;line-height:1.5;color:#444;">
-        Ajukan harga wajar dengan bukti dukung jelas.
+        {{-- Ajukan harga wajar dengan bukti dukung jelas.
         Bukti bisa berupa aturan atau daftar harga resmi.<br><br>
-        File bukti dukung wajib dilampirkan dalam surat usulan (PDF, maks 500Kb).
+        File bukti dukung wajib dilampirkan dalam surat usulan (PDF, maks 500Kb). --}}
+        Anda yang mengusulkan standar harga saat ini, ANDA PULA YANG AKAN BERTANGGUNG JAWAB DIKEMUDIAN HARI.<br><br>
+        Gunakan data dan informasi yang AKURAT, BENAR, dan WAJAR.
       </p>
       <button id="closeAudioBtn">Tutup</button>
     </div>
