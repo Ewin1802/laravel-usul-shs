@@ -234,7 +234,7 @@
         {{-- Ajukan harga wajar dengan bukti dukung jelas.
         Bukti bisa berupa aturan atau daftar harga resmi.<br><br>
         File bukti dukung wajib dilampirkan dalam surat usulan (PDF, maks 500Kb). --}}
-        Anda yang mengusulkan standar harga saat ini, ANDA PULA YANG AKAN BERTANGGUNG JAWAB DIKEMUDIAN HARI.<br><br>
+        Anda yang mengusulkan standar harga saat ini, ANDA PULA YANG AKAN BERTANGGUNG JAWAB DIPEMERIKSAAN NANTI.<br><br>
         Gunakan data dan informasi yang AKURAT, BENAR, dan WAJAR.
       </p>
       <button id="closeAudioBtn">Tutup</button>
