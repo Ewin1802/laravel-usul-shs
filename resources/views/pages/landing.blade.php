@@ -181,7 +181,7 @@
   <main class="hero">
     <div class="text" data-aos="fade-right">
       <h1 class="neon-text">Usulan Standar Harga</h1>
-      <p>Website ini dibuat agar Proses pengusulan standar harga satuan (SHS) lebih mudah serta bisa diakses kapan saja selama koneksi internet Anda dalam keadaan baik-baik saja.<Br><Br>SHS merupakan Batasan Tertinggi serta sebagai acuan dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi, transparansi, dan akuntabilitas penggunaan anggaran.</p>
+      <p>Website ini dibuat agar Proses pengusulan standar harga satuan (SHS) lebih mudah serta bisa diakses kapan saja selama koneksi internet Anda dalam keadaan baik-baik saja.<Br><Br>SHS merupakan Batasan Harga Tertinggi dalam penyusunan Anggaran Belanja Pemerintah Daerah, memastikan efisiensi, transparansi, dan akuntabilitas penggunaan anggaran.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <form action="{{ route('login') }}" method="GET">
           <button type="submit" class="neon-btn">Mulai</button>
@@ -234,7 +234,7 @@
         {{-- Ajukan harga wajar dengan bukti dukung jelas.
         Bukti bisa berupa aturan atau daftar harga resmi.<br><br>
         File bukti dukung wajib dilampirkan dalam surat usulan (PDF, maks 500Kb). --}}
-        Anda yang mengusulkan standar harga saat ini, ANDA PULA YANG AKAN BERTANGGUNG JAWAB DIPEMERIKSAAN NANTI.<br><br>
+        Anda yang mengusulkan standar harga saat ini, <strong>ANDA PULA YANG AKAN BERTANGGUNG JAWAB DIPEMERIKSAAN NANTI.</strong><br><br>
         Gunakan data dan informasi yang AKURAT, BENAR, dan WAJAR.
       </p>
       <button id="closeAudioBtn">Tutup</button>
