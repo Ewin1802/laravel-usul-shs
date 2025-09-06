@@ -168,7 +168,7 @@
 
   <!-- HEADER -->
   <header data-aos="fade-down">
-    <div class="logo neon-text">APLIKASI PENUNJANG BMD</div>
+    <div class="logo neon-text">BMD KAB. BOLAANG MONGONDOW UTARA</div>
     <nav>
       <a href="https://sipd-ri.kemendagri.go.id/auth/login">SIPD-RI</a>
       <a href="https://bolaangmongondowutara.e-bmd.co.id/">E-BMD</a>
