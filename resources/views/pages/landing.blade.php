@@ -183,7 +183,7 @@
       <h1 class="neon-text">Usulan Standar Harga</h1>
       <p>Website ini dibuat agar Proses pengusulan standar harga satuan (SHS) lebih mudah serta bisa diakses kapan saja selama koneksi internet Anda dalam keadaan baik-baik saja.
         <Br><Br>SHS merupakan Batasan Tertinggi yang tidak bisa dilampaui dalam penyusunan Anggaran Belanja Pemerintah Daerah.
-        <br>Kepala Daerah juga dapat menambah item belanja lain yang tidak diatur dalam Perpres asalkan tetap sesuai Prinsip dan Aturan dengan menggunakan standar harga yang wajar, efisien, transparan, dan akuntabel untuk menghindari perbedaan harga yang ekstrem serta menyelaraskan kebutuhan pembangunan daerah seperti disebutkan pada Perpres No 72 Tahun 2025 tentang SHSR, Pasal 3 :
+        <br>Kepala Daerah juga dapat menambah item belanja lain yang tidak diatur dalam Perpres dengan menggunakan standar harga yang wajar, efisien, transparan, dan akuntabel untuk menghindari perbedaan harga yang ekstrem, Hal ini disebutkan pada Perpres No 72 Tahun 2025 tentang SHSR, Pasal 3 :
         <br><br>(1) Kepala daerah menetapkan standar harga satuan biaya honorarium, perjalanan dinas dalam negeri, rapat atau pertemuan di dalam dan di luar kantor, pengadaan kendaraan dinas, dan pemeliharaan berpedoman pada standar harga satuan regional sebagaimana diatur dalam Pasal 1 dengan memperhatikan prinsip efisiensi, efektivitas, kepatutan, dan kewajaran.
         <br><br>(2) Kepala daerah dapat menetapkan standar harga satuan SELAIN sebagaimana dimaksud pada ayat (1) dengan memperhatikan prinsip efisiensi, efektivitas, kepatutan, dan kewajaran sesuai dengan ketentuan peraturan perundang-undangan
         </p>
