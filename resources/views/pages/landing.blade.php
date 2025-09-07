@@ -118,7 +118,7 @@
     .hero .text h1 {font-size:2.5rem;margin-bottom:1rem;}
     .hero .text p {color:#ccc;line-height:1.6;margin-bottom:1.5rem;}
     .hero .product img {
-      width:100%;max-width:420px;display:block;margin:auto;
+      width:100%;max-width:500px;display:block;margin:auto;
       transition:transform .6s ease, filter .3s ease;
       filter:drop-shadow(0 0 15px #00eaff);
     }
