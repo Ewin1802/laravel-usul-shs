@@ -129,6 +129,7 @@
                     <th>No. Surat</th>
                     <th>Instansi</th>
                     <th>Diajukan oleh</th>
+                    <th>Ket</th>
                     <th>Status</th>
                     <th>Persetujuan</th>
                 </tr>
@@ -144,6 +145,7 @@
                         <td>{{ $pdf->Document }}</td>
                         <td>{{ $pdf->skpd }}</td>
                         <td>{{ $pdf->user }}</td>
+                        <td style="text-align: center;">{{ $pdf->alasan }}</td>
                         <td style="text-align: center;">{{ $pdf->ket }}</td>
                         <td>{{ $pdf->disetujui }}</td>
                     </tr>
