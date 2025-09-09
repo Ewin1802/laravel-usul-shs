@@ -298,35 +298,46 @@
     <!-- Modal untuk memilih tahun -->
     <div class="modal fade" id="yearModal" tabindex="-1" role="dialog" aria-labelledby="yearModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="yearModalLabel">Pilih Tahun</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            <!-- Form untuk memilih tahun -->
-            <form id="yearForm" action="{{ url('/sbu/generate-pdf') }}" method="GET" target="_blank">
-                <div class="form-group">
-                <label for="year">Tahun:</label>
-                <select class="form-control" id="year" name="year" required>
-                    <option value="" disabled selected>Pilih tahun</option>
-                    @php
-                    $currentYear = date('Y');
-                    for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
-                        echo "<option value='$year'>$year</option>";
-                    }
-                    @endphp
-                </select>
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="yearModalLabelSBU">Pilih Tahun & Penyetuju</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </form>
+
+                <div class="modal-body">
+                    <!-- Form -->
+                    <form id="yearFormSBU" action="{{ url('/sbu/generate-pdf') }}" method="GET" target="_blank">
+                        <div class="form-group">
+                            <label for="year">Tahun:</label>
+                            <select class="form-control" id="year" name="year" required>
+                                <option value="" disabled selected>Pilih tahun</option>
+                                @php
+                                    $currentYear = date('Y');
+                                    for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
+                                        echo "<option value='$year'>$year</option>";
+                                    }
+                                @endphp
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="disetujui">Disetujui oleh:</label>
+                            <select class="form-control" id="disetujui" name="disetujui">
+                                <option value="" selected>Semua</option>
+                                @foreach($disetujuList as $user)
+                                    <option value="{{ $user }}">{{ $user }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" onclick="document.getElementById('yearFormSBU').submit();">Download</button>
+                </div>
             </div>
-            <div class="modal-footer">
-            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-            <button type="submit" class="btn btn-primary" onclick="submitForm()">Download</button>
-            </div>
-        </div>
         </div>
     </div>
 

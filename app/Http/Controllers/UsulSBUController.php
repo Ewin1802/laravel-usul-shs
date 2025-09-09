@@ -17,35 +17,6 @@ use App\Http\Requests\UpdateUsulanRequest;
 
 class UsulSBUController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     // Ambil informasi user yang sedang login
-    //     $user = Auth::user();  // Ambil informasi user yang login
-    //     $skpd = $user->skpd;   // Ambil nilai 'skpd' dari user yang login (huruf kecil)
-
-    //     // Dapatkan filter dari request, default ke 'SKPD' jika tidak ada filter yang dipilih
-    //     // $filter = $request->input('filter', 'SKPD');
-    //     $filter = $request->input('filter', 'Semua');
-
-    //     // Query data berdasarkan filter yang dipilih
-    //     $sbu = DB::table('usulan_sbus')
-    //         ->when($request->input('spek'), function ($query, $spek) {
-    //             return $query->where(function ($query) use ($spek) {
-    //                 $query->where('spek', 'like', '%' . $spek . '%')
-    //                     ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
-    //             });
-    //         })
-    //         ->when($filter == 'SKPD', function ($query) use ($skpd) {
-    //             // Jika filter 'SKPD' dipilih, tampilkan data berdasarkan skpd user yang login
-    //             return $query->where('skpd', $skpd);
-    //         })
-    //         // Jika filter 'Semua' dipilih, tidak ada filter berdasarkan skpd
-    //         ->orderBy('created_at', 'desc')  // Urutkan berdasarkan tanggal input terbaru
-    //         // ->orderBy('skpd', 'asc')         // Urutkan berdasarkan nama SKPD (huruf kecil)
-    //         ->paginate(10);
-
-    //     return view('pages.usulanSBU.index', compact('sbu'));
-    // }
 
     public function index(Request $request)
     {
@@ -135,12 +106,14 @@ class UsulSBUController extends Controller
     public function admin_sbu(Request $request)
     {
         $admin_sbu = DB::table('usulan_sbus')
+            // Filter berdasarkan 'spek' atau 'document'
             ->when($request->input('spek'), function ($query, $spek) {
                 return $query->where(function ($query) use ($spek) {
                     $query->where('spek', 'like', '%' . $spek . '%')
-                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                        ->orWhere('document', 'like', '%' . $spek . '%');
                 });
             })
+            // Filter berdasarkan 'ket' (status)
             ->when($request->input('filter'), function ($query, $filter) {
                 if ($filter == 'Usul Baru') {
                     return $query->where('ket', 'Proses Usul');
@@ -150,10 +123,39 @@ class UsulSBUController extends Controller
                     return $query->where('ket', 'Ditolak');
                 }
             })
+            // Filter berdasarkan tahun
+            ->when($request->input('year'), function ($query, $year) {
+                return $query->whereYear('created_at', $year);
+            })
+            // Filter berdasarkan siapa yang menyetujui
+            ->when($request->input('disetujui'), function ($query, $disetujui) {
+                return $query->where('disetujui', $disetujui);
+            })
+            // Filter berdasarkan SKPD
+            ->when($request->input('skpd'), function ($query, $skpd) {
+                return $query->where('skpd', $skpd);
+            })
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanSBU.admin_index', compact ('admin_sbu'), );
+
+        // Ambil daftar unik untuk dropdown filter
+        $years = DB::table('usulan_sbus')
+            ->selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->pluck('year');
+
+        $disetujuList = DB::table('usulan_sbus')
+            ->whereNotNull('disetujui')
+            ->distinct()
+            ->pluck('disetujui');
+
+        $skpdList = DB::table('usulan_sbus')
+            ->distinct()
+            ->pluck('skpd');
+
+        return view('pages.usulanSBU.admin_index', compact('admin_sbu', 'years', 'disetujuList', 'skpdList'));
     }
+
 
     public function admin_export_sbu(Request $request)
     {

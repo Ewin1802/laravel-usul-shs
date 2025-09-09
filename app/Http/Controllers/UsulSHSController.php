@@ -38,14 +38,15 @@ class UsulSHSController extends Controller
         return view('pages.usulanSHS.index', compact('shs'));
     }
 
+
     public function admin_shs(Request $request)
     {
         $admin_shs = DB::table('usulan_shs')
-            // Filter berdasarkan 'spek'
+            // Filter berdasarkan 'spek' atau 'document'
             ->when($request->input('spek'), function ($query, $spek) {
                 return $query->where(function ($query) use ($spek) {
                     $query->where('spek', 'like', '%' . $spek . '%')
-                          ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                        ->orWhere('document', 'like', '%' . $spek . '%');
                 });
             })
             // Filter berdasarkan 'ket' (status)
@@ -58,11 +59,39 @@ class UsulSHSController extends Controller
                     return $query->where('ket', 'Ditolak');
                 }
             })
+            // Filter berdasarkan tahun
+            ->when($request->input('year'), function ($query, $year) {
+                return $query->whereYear('created_at', $year);
+            })
+            // Filter berdasarkan siapa yang menyetujui
+            ->when($request->input('disetujui'), function ($query, $disetujui) {
+                return $query->where('disetujui', $disetujui);
+            })
+            // Filter berdasarkan SKPD
+            ->when($request->input('skpd'), function ($query, $skpd) {
+                return $query->where('skpd', $skpd);
+            })
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('pages.usulanSHS.admin_index', compact('admin_shs'));
+        // Ambil daftar unik untuk dropdown filter
+        $years = DB::table('usulan_shs')
+            ->selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->pluck('year');
+
+        $disetujuList = DB::table('usulan_shs')
+            ->whereNotNull('disetujui')
+            ->distinct()
+            ->pluck('disetujui');
+
+        $skpdList = DB::table('usulan_shs')
+            ->distinct()
+            ->pluck('skpd');
+
+        return view('pages.usulanSHS.admin_index', compact('admin_shs', 'years', 'disetujuList', 'skpdList'));
     }
+
 
     public function admin_export_shs(Request $request)
     {
@@ -196,9 +225,6 @@ class UsulSHSController extends Controller
 
     public function destroy($id)
     {
-        // $shs = UsulanShs::findOrFail($id);
-        // $shs->delete();
-        // return redirect()->route('shs.admin_shs')->with('success', 'Item successfully deleted');
 
         $shs = UsulanShs::findOrFail($id);
         $shs->delete();

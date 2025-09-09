@@ -6,9 +6,9 @@
     <!-- CSS Libraries -->
     <link rel="stylesheet"
         href="{{ asset('library/selectric/public/selectric.css') }}">
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
     {{-- Favicon - Logo web disamping title --}}
     <link rel="icon" href="{{ asset('img/logo_pemda.png') }}" type="image/png">
 @endpush
@@ -21,6 +21,7 @@
                 <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#yearModal">
                     Download Laporan
                 </button>
+
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Akses Admin</a></div>
                     <div class="breadcrumb-item"><a href="#">Proses Usulan</a></div>
@@ -301,37 +302,51 @@
     <!-- Modal untuk memilih tahun -->
     <div class="modal fade" id="yearModal" tabindex="-1" role="dialog" aria-labelledby="yearModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="yearModalLabel">Pilih Tahun</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            <!-- Form untuk memilih tahun -->
-            <form id="yearForm" action="{{ url('/shs/generate-pdf') }}" method="GET" target="_blank">
-                <div class="form-group">
-                <label for="year">Tahun:</label>
-                <select class="form-control" id="year" name="year" required>
-                    <option value="" disabled selected>Pilih tahun</option>
-                    @php
-                    $currentYear = date('Y');
-                    for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
-                        echo "<option value='$year'>$year</option>";
-                    }
-                    @endphp
-                </select>
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="yearModalLabel">Pilih Tahun & Penyetuju</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </form>
+
+
+                <div class="modal-body">
+                    <!-- Form -->
+                    <form id="yearForm" action="{{ url('/shs/generate-pdf') }}" method="GET" target="_blank">
+                        <div class="form-group">
+                            <label for="year">Tahun:</label>
+                            <select class="form-control" id="year" name="year" required>
+                                <option value="" disabled selected>Pilih tahun</option>
+                                @php
+                                    $currentYear = date('Y');
+                                    for ($year = $currentYear; $year >= $currentYear - 10; $year--) {
+                                        echo "<option value='$year'>$year</option>";
+                                    }
+                                @endphp
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="disetujui">Disetujui oleh:</label>
+                            <select class="form-control" id="disetujui" name="disetujui">
+                                <option value="" selected>Semua</option>
+                                @foreach($disetujuList as $user)
+                                    <option value="{{ $user }}">{{ $user }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+
+                    <button type="submit" class="btn btn-primary" onclick="submitForm()">Download</button>
+                </div>
             </div>
-            <div class="modal-footer">
-            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-            <button type="submit" class="btn btn-primary" onclick="submitForm()">Download</button>
-            </div>
-        </div>
         </div>
     </div>
+
 
 
 
@@ -343,6 +358,13 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/features-posts.js') }}"></script>
+    <!-- Bootstrap 5 JS + Popper -->
+    <!-- Bootstrap 5 CSS -->
+
+    <!-- Bootstrap 5 JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 
     {{-- verifikasi --}}
     <script>
