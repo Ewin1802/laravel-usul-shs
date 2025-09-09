@@ -14,6 +14,12 @@
             font-size: 12px;
         }
 
+        /* Atur ukuran kertas cetak */
+        @page {
+            size: A4 portrait;
+            margin: 20mm;
+        }
+
         /* Header */
         .header {
             display: flex;
@@ -65,19 +71,22 @@
             border-collapse: collapse;
             border-radius: 8px;
             overflow: hidden;
+            table-layout: fixed; /* <-- biar auto fit */
+            word-wrap: break-word;
         }
         .table th {
             background: #0d6efd;
             color: #fff;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
-            padding: 8px;
+            padding: 6px;
         }
         .table td {
             border: 1px solid #ddd;
-            padding: 6px 8px;
-            font-size: 11px;
+            padding: 5px 6px;
+            font-size: 10px;
+            vertical-align: top;
         }
         .table tbody tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -129,15 +138,15 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Spesifikasi</th>
-                    <th>Satuan</th>
-                    <th>Harga</th>
-                    <th>No. Surat</th>
-                    <th>Instansi</th>
-                    <th>Diajukan oleh</th>
-                    <th>Status</th>
-                    <th>Persetujuan</th>
+                    <th style="width: 4%;">No</th>
+                    <th style="width: 25%;">Spesifikasi</th>
+                    <th style="width: 7%;">Satuan</th>
+                    <th style="width: 10%;">Harga</th>
+                    <th style="width: 12%;">No. Surat</th>
+                    <th style="width: 14%;">Instansi</th>
+                    <th style="width: 12%;">Diajukan oleh</th>
+                    <th style="width: 8%;">Status</th>
+                    <th style="width: 8%;">Persetujuan</th>
                 </tr>
             </thead>
             <tbody>
