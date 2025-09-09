@@ -14,42 +14,32 @@
             font-size: 12px;
         }
 
-        /* Atur ukuran kertas cetak */
-        @page {
-            size: A4 portrait;
-            margin: 20mm;
-        }
-
         /* Header */
         .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            border-bottom: 3px solid #0d6efd;
-            padding-bottom: 10px;
+            border-bottom: 3px solid #03064e;
+            padding-bottom: 15px;
             margin-bottom: 25px;
-            position: relative;
         }
         .header img {
-            position: absolute;
-            left: 0;
-            width: 80px;
+            width: 90px;
+            height: auto;
+            margin-bottom: 10px;
         }
         .header h1 {
-            font-size: 14px;
+            font-size: 16px;
             margin: 0;
             color: #555;
             letter-spacing: 1px;
         }
         .header h2 {
-            font-size: 22px;
+            font-size: 24px;
             margin: 3px 0;
-            color: #0d6efd;
+            color: #03064e;
             font-weight: bold;
         }
         .header h3 {
-            font-size: 16px;
+            font-size: 18px;
             margin: 0;
             color: #444;
         }
@@ -61,9 +51,9 @@
         .table-container h4 {
             font-size: 16px;
             margin-bottom: 10px;
-            color: #0d6efd;
+            color: #03064e;
             text-align: left;
-            border-left: 4px solid #0d6efd;
+            border-left: 4px solid #03064e;
             padding-left: 8px;
         }
         .table {
@@ -71,22 +61,19 @@
             border-collapse: collapse;
             border-radius: 8px;
             overflow: hidden;
-            table-layout: fixed; /* <-- biar auto fit */
-            word-wrap: break-word;
         }
         .table th {
-            background: #0d6efd;
+            background: #03064e;
             color: #fff;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
-            padding: 6px;
+            padding: 8px;
         }
         .table td {
             border: 1px solid #ddd;
-            padding: 5px 6px;
-            font-size: 10px;
-            vertical-align: top;
+            padding: 6px 8px;
+            font-size: 11px;
         }
         .table tbody tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -121,14 +108,13 @@
 <body>
 
     <!-- Header -->
-    <div class="header" style="display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 10px;">
-        <img src="{{ public_path('img/logo_pemda.png') }}" alt="Logo Pemda"
-            style="position: absolute; left: 0; width: 70px; height: auto; top: 10px;">
+    <div class="header">
+        <img src="{{ public_path('img/logo_pemda.png') }}" alt="Logo Pemda">
         <div style="text-align: center; padding-top: 10px;">
-            <h1 style="font-size: 16px; margin: 0;">LAPORAN</h1>
-            <h2 style="font-size: 24px; margin: 0;">USULAN STANDAR HARGA</h2>
-            <h3 style="font-size: 18px; margin: 0;">KABUPATEN BOLAANG MONGONDOW UTARA</h3>
-            <h3 style="font-size: 18px; margin: 0;">TAHUN ANGGARAN {{ $year }}</h3>
+            <h1>LAPORAN</h1>
+            <h2>USULAN STANDAR SATUAN HARGA</h2>
+            <h3>KABUPATEN BOLAANG MONGONDOW UTARA</h3>
+            <h3>TAHUN ANGGARAN {{ $year }}</h3>
         </div>
     </div>
 
@@ -138,15 +124,16 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th style="width: 4%;">No</th>
-                    <th style="width: 25%;">Spesifikasi</th>
-                    <th style="width: 7%;">Satuan</th>
-                    <th style="width: 10%;">Harga</th>
-                    <th style="width: 12%;">No. Surat</th>
-                    <th style="width: 14%;">Instansi</th>
-                    <th style="width: 12%;">Diajukan oleh</th>
-                    <th style="width: 8%;">Status</th>
-                    <th style="width: 8%;">Persetujuan</th>
+                    <th>No</th>
+                    <th>Spesifikasi</th>
+                    <th>Satuan</th>
+                    <th>Harga</th>
+                    <th>No. Surat</th>
+                    <th>Instansi</th>
+                    <th>Diajukan oleh</th>
+                    <th>Ket</th>
+                    <th>Status</th>
+                    <th>Persetujuan</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,6 +147,7 @@
                         <td>{{ $pdf->Document }}</td>
                         <td>{{ $pdf->skpd }}</td>
                         <td>{{ $pdf->user }}</td>
+                        <td style="text-align: center;">{{ $pdf->alasan }}</td>
                         <td style="text-align: center;">{{ $pdf->ket }}</td>
                         <td>{{ $pdf->disetujui }}</td>
                     </tr>

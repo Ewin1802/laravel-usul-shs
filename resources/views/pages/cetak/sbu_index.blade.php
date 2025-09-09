@@ -16,34 +16,30 @@
 
         /* Header */
         .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            border-bottom: 3px solid #0d6efd;
-            padding-bottom: 10px;
+            border-bottom: 3px solid #03064e;
+            padding-bottom: 15px;
             margin-bottom: 25px;
-            position: relative;
         }
         .header img {
-            position: absolute;
-            left: 0;
-            width: 80px;
+            width: 90px;
+            height: auto;
+            margin-bottom: 10px;
         }
         .header h1 {
-            font-size: 14px;
+            font-size: 16px;
             margin: 0;
             color: #555;
             letter-spacing: 1px;
         }
         .header h2 {
-            font-size: 22px;
+            font-size: 24px;
             margin: 3px 0;
-            color: #0d6efd;
+            color: #03064e;
             font-weight: bold;
         }
         .header h3 {
-            font-size: 16px;
+            font-size: 18px;
             margin: 0;
             color: #444;
         }
@@ -55,9 +51,9 @@
         .table-container h4 {
             font-size: 16px;
             margin-bottom: 10px;
-            color: #0d6efd;
+            color: #03064e;
             text-align: left;
-            border-left: 4px solid #0d6efd;
+            border-left: 4px solid #03064e;
             padding-left: 8px;
         }
         .table {
@@ -67,7 +63,7 @@
             overflow: hidden;
         }
         .table th {
-            background: #0d6efd;
+            background: #03064e;
             color: #fff;
             font-weight: bold;
             font-size: 12px;
@@ -114,12 +110,10 @@
     <!-- Header -->
     <div class="header">
         <img src="{{ public_path('img/logo_pemda.png') }}" alt="Logo Pemda">
-        <div style="text-align: center; padding-top: 10px;">
-            <h1>LAPORAN</h1>
-            <h2>USULAN STANDAR BIAYA UMUM</h2>
-            <h3>KABUPATEN BOLAANG MONGONDOW UTARA</h3>
-            <h3>TAHUN ANGGARAN {{ $year }}</h3>
-        </div>
+        <h1>LAPORAN</h1>
+        <h2>USULAN STANDAR BIAYA UMUM</h2>
+        <h3>KABUPATEN BOLAANG MONGONDOW UTARA</h3>
+        <h3>TAHUN ANGGARAN {{ $year }}</h3>
     </div>
 
     <!-- Tabel -->

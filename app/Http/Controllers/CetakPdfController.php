@@ -52,43 +52,39 @@ class CetakPdfController extends Controller
             'disetujui' => $disetujui
         ];
 
-        $pdf = PDF::loadView('pages.cetak.ssh_index', $mergedData);
+        $pdf = PDF::loadView('pages.cetak.ssh_index', $mergedData)
+                ->setPaper([0, 0, 595.28, 935.43], 'landscape');
+                // 210mm × 330mm = 595.28pt × 935.43pt
 
         return $pdf->stream('rekap_usulan_'.$year.'.pdf');
     }
-
 
     public function sbugeneratePDF(Request $request)
     {
         $year = $request->input('year');
         $disetujui = $request->input('disetujui');
 
-        // Query awal berdasarkan tahun
         $query = DB::table('usulan_sbus')
             ->whereYear('created_at', $year);
 
-        // Jika ada filter disetujui
         if (!empty($disetujui)) {
             $query->where('disetujui', $disetujui);
         }
 
-        // Ambil hasil query
         $sbucetaks = $query->get();
 
-        // Gabungkan data untuk dikirim ke view
         $mergedData = [
             'sbucetaks' => $sbucetaks,
             'year' => $year,
             'disetujui' => $disetujui
         ];
 
-        // Load view PDF
-        $pdf = PDF::loadView('pages.cetak.sbu_index', $mergedData);
+        $pdf = PDF::loadView('pages.cetak.sbu_index', $mergedData)
+                ->setPaper([0, 0, 595.28, 935.43], 'landscape');
+                // ukuran F4 custom
 
-        // Stream PDF
         return $pdf->stream('rekap_usulan_'.$year.'.pdf');
     }
-
 
     public function asbgeneratePDF(Request $request)
     {
