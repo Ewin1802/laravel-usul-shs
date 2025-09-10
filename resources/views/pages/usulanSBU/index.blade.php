@@ -16,7 +16,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Usulan Standar Biaya Umum</h1>
+                <h1>Standar Biaya Umum (SBU)</h1>
                 <div class="section-header-button">
                     <a href="{{ route('sbu.create') }}" class="btn btn-primary">Buat Usulan Baru</a>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Usulan SBU</h4>
+                                <h4>Silahkan Periksa Usulan Anda</h4>
                             </div>
                             <div class="card-body">
                                 <div class="float-right">

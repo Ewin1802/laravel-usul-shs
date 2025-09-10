@@ -18,7 +18,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Usulan Standar Harga Satuan</h1>
+                <h1>Standar Satuan Harga (SSH)</h1>
                 <div class="section-header-button">
                     <a href="{{ route('shs.create') }}"
                         class="btn btn-primary">Buat Usulan Baru</a>
@@ -51,7 +51,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Usulan SSH</h4>
+                                <h4>Silahkan Periksa Usulan Anda</h4>
                             </div>
                             <div class="card-body">
                                 <div class="float-right">
