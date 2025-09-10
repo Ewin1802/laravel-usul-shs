@@ -7,11 +7,11 @@
     <style>
         body {
             font-family: "Segoe UI", Tahoma, sans-serif;
-            margin: 0;
-            padding: 30px;
+            margin: 5px;
+            padding: 5px;
             background-color: #fff;
             color: #333;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         /* Header */
@@ -46,7 +46,7 @@
 
         /* Table */
         .table-container {
-            margin-top: 30px;
+            margin-top: 10px;
         }
         .table-container h4 {
             font-size: 16px;
@@ -66,7 +66,7 @@
             background: #03064e;
             color: #fff;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
             padding: 8px;
         }
