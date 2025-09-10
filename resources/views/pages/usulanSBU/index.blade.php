@@ -70,7 +70,6 @@
                                             <th>Komponen</th>
                                             <th>Harga</th>
                                             <th>Dasar Surat</th>
-                                            <th>SKPD</th>
                                             <th>Status</th>
                                             <th>Catatan</th>
                                             <th>Action</th>
@@ -84,7 +83,6 @@
                                                 </td>
                                                 <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
                                                 <td>{{ $s->Document }}</td>
-                                                <td>{{ $s->skpd }}</td>
                                                 <td>
                                                     @if($s->ket == 'Proses Usul')
                                                         <span style="color: #d0cdcd;"><strong>{{ $s->ket }}</strong></span>
