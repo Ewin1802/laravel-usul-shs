@@ -78,6 +78,7 @@
                                             <th>Dasar Surat</th>
                                             <th>SKPD</th>
                                             <th>Status</th>
+                                            <th>Catatan</th>
                                             <th>Action</th>
                                         </tr>
 
@@ -102,6 +103,7 @@
                                                         <span><strong>{{ $s->ket }}</strong></span>
                                                     @endif
                                                 </td>
+                                                <td>{{ $s->alasan }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <!-- Tombol View -->
