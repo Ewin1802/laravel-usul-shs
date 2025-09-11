@@ -114,9 +114,9 @@
                                                     @endphp
 
                                                     @if($status == 'Proses Usul')
-                                                        <span style="color: #2107c9;"><strong>{{ $displayText }}</strong></span>
+                                                        <span style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
                                                     @elseif($status == 'Disetujui')
-                                                        <span style="color: #03761e;"><strong>{{ $displayText }}</strong></span>
+                                                        <span style="color: #029925;"><strong>{{ $displayText }}</strong></span>
                                                     @elseif($status == 'Ditolak')
                                                         <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
                                                     @elseif($status == 'Verified')
