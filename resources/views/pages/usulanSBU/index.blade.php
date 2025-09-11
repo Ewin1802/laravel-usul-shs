@@ -84,16 +84,34 @@
                                                 <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
                                                 <td>{{ $s->Document }}</td>
                                                 <td>
-                                                    @if($s->ket == 'Proses Usul')
-                                                        <span style="color: #d0cdcd;"><strong>{{ $s->ket }}</strong></span>
-                                                    @elseif($s->ket == 'Disetujui')
-                                                        <span style="color: #07e93b;"><strong>{{ $s->ket }}</strong></span>
-                                                    @elseif($s->ket == 'Ditolak')
-                                                        <span style="color: #ff0000;"><strong>{{ $s->ket }}</strong></span>
+                                                    @php
+                                                        $status = $s->ket;
+                                                        $displayText = $status; // default
+
+                                                        if ($status == 'Proses Usul') {
+                                                            $displayText = 'Menunggu Verifikasi Admin';
+                                                        } elseif ($status == 'Verified') {
+                                                            $displayText = 'Menunggu Persetujuan Pimpinan';
+                                                        } elseif ($status == 'Ditolak') {
+                                                            $displayText = 'Usulan tidak memenuhi syarat';
+                                                        } elseif ($status == 'Disetujui') {
+                                                            $displayText = 'Usulan Disetujui';
+                                                        }
+                                                    @endphp
+
+                                                    @if($status == 'Proses Usul')
+                                                        <span style="color: #2107c9;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Disetujui')
+                                                        <span style="color: #03761e;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Ditolak')
+                                                        <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Verified')
+                                                        <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
                                                     @else
-                                                        <span><strong>{{ $s->ket }}</strong></span>
+                                                        <span><strong>{{ $displayText }}</strong></span>
                                                     @endif
                                                 </td>
+
                                                 <td>{{ $s->alasan }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
