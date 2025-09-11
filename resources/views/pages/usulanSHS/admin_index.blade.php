@@ -103,18 +103,33 @@
                                                 {{$s->skpd}}
                                             </td>
                                             <td>
-                                                @if($s->ket == 'Proses Usul')
-                                                    <span style="color: #d0cdcd;"><strong>{{ $s->ket }}</strong></span> <!-- Warna abu-abu tua -->
-                                                @elseif($s->ket == 'Disetujui')
-                                                    <span style="color: #07e93b;"><strong>{{ $s->ket }}</strong></span> <!-- Warna hijau -->
-                                                @elseif($s->ket == 'Ditolak')
-                                                    <span style="color: #ff0000;"><strong>{{ $s->ket }}</strong></span> <!-- Warna merah -->
-                                                @else
-                                                    <span><strong>{{ $s->ket }}</strong></span> <!-- Default warna hitam -->
-                                                @endif
+                                                    @php
+                                                        $status = $s->ket;
+                                                        $displayText = $status; // default
 
+                                                        if ($status == 'Proses Usul') {
+                                                            $displayText = 'Menunggu Verifikasi Admin';
+                                                        } elseif ($status == 'Verified') {
+                                                            $displayText = 'Menunggu Persetujuan Pimpinan';
+                                                        } elseif ($status == 'Ditolak') {
+                                                            $displayText = 'Usulan tidak memenuhi syarat';
+                                                        } elseif ($status == 'Disetujui') {
+                                                            $displayText = 'Usulan Disetujui';
+                                                        }
+                                                    @endphp
 
-                                            </td>
+                                                    @if($status == 'Proses Usul')
+                                                        <span style="color: #2107c9;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Disetujui')
+                                                        <span style="color: #03761e;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Ditolak')
+                                                        <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Verified')
+                                                        <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
+                                                    @else
+                                                        <span><strong>{{ $displayText }}</strong></span>
+                                                    @endif
+                                                </td>
                                             <td>
                                                 <div class="dropdown text-center">
                                                     <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenu{{ $s->id }}" data-bs-toggle="dropdown" aria-expanded="false">
