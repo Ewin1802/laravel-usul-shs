@@ -72,75 +72,107 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th>Uraian Komponen</th>
-                                            <th>Spesifikasi</th>
-                                            <th>Satuan</th>
+                                            <th>Uraian Usulan</th>
                                             <th>Harga</th>
-                                            <th>Dasar Surat</th>
-                                            <th>SKPD</th>
                                             <th>Status</th>
+                                            <th>Ket.</th>
                                             <th>Action</th>
                                         </tr>
 
                                         @foreach ($asb as $s)
-                                            <tr>
-                                                <td>{{ $s->Uraian }}</td>
-                                                <td>{{ $s->Spek }}</td>
-                                                <td>{{ $s->Satuan }}</td>
-                                                <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
-                                                <td>{{ $s->Document }}</td>
-                                                <td>{{ $s->skpd }}</td>
-                                                <td>
-                                                    @if($s->ket == 'Proses Usul')
-                                                        <span style="color: #d0cdcd;"><strong>{{ $s->ket }}</strong></span>
-                                                    @elseif($s->ket == 'Disetujui')
-                                                        <span style="color: #07e93b;"><strong>{{ $s->ket }}</strong></span>
-                                                    @elseif($s->ket == 'Ditolak')
-                                                        <span style="color: #ff0000;"><strong>{{ $s->ket }}</strong></span>
-                                                    @else
-                                                        <span><strong>{{ $s->ket }}</strong></span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-center">
-                                                        <!-- Tombol View -->
-                                                        <a href='#' class="btn btn-sm btn-icon btn-primary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalView"
-                                                            data-uraian="{{ $s->Uraian }}"
-                                                            data-doc="{{ $s->Document }}"
-                                                            data-speck="{{ $s->Spek }}"
-                                                            data-satuan="{{ $s->Satuan }}"
-                                                            data-akun_belanja="{{ $s->akun_belanja }}"
-                                                            data-rekening_1="{{ $s->rekening_1 }}"
-                                                            data-ket="{{ $s->ket }}"
-                                                            data-user="{{ $s->user }}"
-                                                            data-alasan="{{ $s->alasan }}">
-                                                            <i class="fas fa-eye"></i>
-                                                            Lihat
-                                                        </a>
-                                                        <a href='{{ route('asb_user.edit', $s->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon ml-2
-                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        @if($s->ket == 'Proses Usul')
-                                                            <form action="{{ route('asb.hapus', $s->id) }}" method="POST" class="ml-2">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-sm btn-danger btn-icon" onclick="return confirm('Yakin ingin menghapus item ini?')">
-                                                                    <i class="fas fa-trash"></i> Hapus
-                                                                </button>
-                                                            </form>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        <tr>
+                                            {{-- Uraian Usulan --}}
+                                            <td style="line-height: 1.6">
+                                                <strong>Dasar Surat:</strong><br>
+                                                {{ $s->Document }}<br><br>
 
+                                                <strong>Komponen:</strong><br>
+                                                {{ $s->Uraian }}<br>
+
+                                                <strong>Spek:</strong><br>
+                                                {{ $s->Spek }}
+                                            </td>
+
+                                            {{-- Harga + Satuan --}}
+                                            <td>
+                                                <strong>Rp {{ number_format((float) $s->Harga, 0, ',', '.') }}</strong><br>
+                                                <span class="text-muted">Satuan: {{ $s->Satuan }}</span>
+                                            </td>
+
+                                            {{-- Status --}}
+                                            <td>
+                                                @php
+                                                    $status = $s->ket;
+                                                @endphp
+
+                                                @if($status == 'Proses Usul')
+                                                    <span style="color: #07c9c9;"><strong>Menunggu Verifikasi Admin</strong></span>
+                                                @elseif($status == 'Verified')
+                                                    <span style="color: #e0a800;"><strong>Menunggu Persetujuan Pimpinan</strong></span>
+                                                @elseif($status == 'Disetujui')
+                                                    <span style="color: #029925;"><strong>Usulan Disetujui</strong></span>
+                                                @elseif($status == 'Ditolak')
+                                                    <span style="color: #ff0000;"><strong>Usulan tidak memenuhi syarat</strong></span>
+                                                @else
+                                                    <span><strong>{{ $status }}</strong></span>
+                                                @endif
+                                            </td>
+
+                                            {{-- Catatan --}}
+                                            <td>
+                                                @if($s->alasan)
+                                                    {{ $s->alasan }}
+                                                @else
+                                                    <em>-</em>
+                                                @endif
+                                            </td>
+
+                                            {{-- Action (TIDAK DIUBAH) --}}
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    {{-- View --}}
+                                                    <a href="#"
+                                                        class="btn btn-sm btn-icon btn-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalView"
+                                                        data-uraian="{{ $s->Uraian }}"
+                                                        data-doc="{{ $s->Document }}"
+                                                        data-speck="{{ $s->Spek }}"
+                                                        data-satuan="{{ $s->Satuan }}"
+                                                        data-akun_belanja="{{ $s->akun_belanja }}"
+                                                        data-rekening_1="{{ $s->rekening_1 }}"
+                                                        data-ket="{{ $s->ket }}"
+                                                        data-user="{{ $s->user }}"
+                                                        data-alasan="{{ $s->alasan }}">
+                                                        <i class="fas fa-eye"></i> Lihat
+                                                    </a>
+
+                                                    {{-- Edit --}}
+                                                    <a href="{{ route('asb_user.edit', $s->id) }}"
+                                                        class="btn btn-sm btn-info btn-icon ml-2
+                                                        @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+
+                                                    {{-- Hapus --}}
+                                                    @if($s->ket == 'Proses Usul')
+                                                        <form action="{{ route('asb.hapus', $s->id) }}" method="POST" class="ml-2">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-danger btn-icon"
+                                                                onclick="return confirm('Yakin ingin menghapus item ini?')">
+                                                                <i class="fas fa-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                     </table>
                                 </div>
+
                                 <div class="float-right">
                                     {{ $asb->withQueryString()->links() }}
                                 </div>

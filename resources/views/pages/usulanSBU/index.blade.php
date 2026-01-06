@@ -67,89 +67,118 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th>Komponen</th>
+                                            <th>Uraian Usulan</th>
                                             <th>Harga</th>
-                                            <th>Dasar Surat</th>
                                             <th>Status</th>
-                                            <th>Catatan</th>
+                                            <th>Ket.</th>
                                             <th>Action</th>
                                         </tr>
+
                                         @foreach ($sbu as $s)
-                                            <tr>
-                                                <td>
-                                                    {{ $s->Uraian }} <br>
-                                                    <strong>Spesifikasi : {{ $s->Spek }}</strong> <br>
-                                                    Satuan : {{ $s->Satuan }}
-                                                </td>
-                                                <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
-                                                <td>{{ $s->Document }}</td>
-                                                <td>
-                                                    @php
-                                                        $status = $s->ket;
-                                                        $displayText = $status; // default
+                                        <tr>
+                                            {{-- Uraian Usulan --}}
+                                            <td style="line-height: 1.6">
+                                                <strong>Dasar Surat:</strong><br>
+                                                {{ $s->Document }}<br><br>
 
-                                                        if ($status == 'Proses Usul') {
-                                                            $displayText = 'Menunggu Verifikasi Admin';
-                                                        } elseif ($status == 'Verified') {
-                                                            $displayText = 'Menunggu Persetujuan Pimpinan';
-                                                        } elseif ($status == 'Ditolak') {
-                                                            $displayText = 'Usulan tidak memenuhi syarat';
-                                                        } elseif ($status == 'Disetujui') {
-                                                            $displayText = 'Usulan Disetujui';
-                                                        }
-                                                    @endphp
+                                                <strong>Komponen:</strong><br>
+                                                {{ $s->Uraian }}<br>
 
-                                                    @if($status == 'Proses Usul')
-                                                        <span style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
-                                                    @elseif($status == 'Disetujui')
-                                                        <span style="color: #029925;"><strong>{{ $displayText }}</strong></span>
-                                                    @elseif($status == 'Ditolak')
-                                                        <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
-                                                    @elseif($status == 'Verified')
-                                                        <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
-                                                    @else
-                                                        <span><strong>{{ $displayText }}</strong></span>
+                                                <strong>Spek:</strong><br>
+                                                {{ $s->Spek }}
+                                            </td>
+
+                                            {{-- Harga + Satuan --}}
+                                            <td>
+                                                <strong>Rp {{ number_format((float) $s->Harga, 0, ',', '.') }}</strong><br>
+                                                <span class="text-muted">Satuan: {{ $s->Satuan }}</span>
+                                            </td>
+
+                                            {{-- Status --}}
+                                            <td>
+                                                @php
+                                                    $status = $s->ket;
+                                                    $displayText = $status;
+
+                                                    if ($status == 'Proses Usul') {
+                                                        $displayText = 'Menunggu Verifikasi Admin';
+                                                    } elseif ($status == 'Verified') {
+                                                        $displayText = 'Menunggu Persetujuan Pimpinan';
+                                                    } elseif ($status == 'Ditolak') {
+                                                        $displayText = 'Usulan tidak memenuhi syarat';
+                                                    } elseif ($status == 'Disetujui') {
+                                                        $displayText = 'Usulan Disetujui';
+                                                    }
+                                                @endphp
+
+                                                @if($status == 'Proses Usul')
+                                                    <span style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
+                                                @elseif($status == 'Disetujui')
+                                                    <span style="color: #029925;"><strong>{{ $displayText }}</strong></span>
+                                                @elseif($status == 'Ditolak')
+                                                    <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
+                                                @elseif($status == 'Verified')
+                                                    <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
+                                                @else
+                                                    <span><strong>{{ $displayText }}</strong></span>
+                                                @endif
+                                            </td>
+
+                                            {{-- Catatan --}}
+                                            <td>
+                                                @if($s->alasan)
+                                                    {{ $s->alasan }}
+                                                @else
+                                                    <em>-</em>
+                                                @endif
+                                            </td>
+
+                                            {{-- Action (TIDAK DIUBAH) --}}
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    {{-- View --}}
+                                                    <a href="#"
+                                                        class="btn btn-sm btn-icon btn-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalView"
+                                                        data-uraian="{{ $s->Uraian }}"
+                                                        data-doc="{{ $s->Document }}"
+                                                        data-speck="{{ $s->Spek }}"
+                                                        data-satuan="{{ $s->Satuan }}"
+                                                        data-akun_belanja="{{ $s->akun_belanja }}"
+                                                        data-rekening_1="{{ $s->rekening_1 }}"
+                                                        data-ket="{{ $s->ket }}"
+                                                        data-user="{{ $s->user }}"
+                                                        data-alasan="{{ $s->alasan }}">
+                                                        <i class="fas fa-eye"></i> Lihat
+                                                    </a>
+
+                                                    {{-- Edit --}}
+                                                    <a href="{{ route('sbu_user.edit', $s->id) }}"
+                                                        class="btn btn-sm btn-info btn-icon ml-2
+                                                        @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+
+                                                    {{-- Hapus --}}
+                                                    @if($s->ket == 'Proses Usul')
+                                                        <form action="{{ route('sbu.hapus', $s->id) }}" method="POST" class="ml-2">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-danger btn-icon"
+                                                                onclick="return confirm('Yakin ingin menghapus item ini?')">
+                                                                <i class="fas fa-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
                                                     @endif
-                                                </td>
-
-                                                <td>{{ $s->alasan }}</td>
-                                                <td>
-                                                    <div class="d-flex justify-content-center">
-                                                        <!-- Tombol View -->
-                                                        <a href='#' class="btn btn-sm btn-icon btn-primary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalView"
-                                                            data-uraian="{{ $s->Uraian }}"
-                                                            data-doc="{{ $s->Document }}"
-                                                            data-speck="{{ $s->Spek }}"
-                                                            data-satuan="{{ $s->Satuan }}"
-                                                            data-akun_belanja="{{ $s->akun_belanja }}"
-                                                            data-rekening_1="{{ $s->rekening_1 }}"
-                                                            data-ket="{{ $s->ket }}"
-                                                            data-user="{{ $s->user }}"
-                                                            data-alasan="{{ $s->alasan }}">
-                                                            <i class="fas fa-eye"></i> Lihat
-                                                        </a>
-                                                        <a href='{{ route('sbu_user.edit', $s->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon ml-2
-                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                                                            <i class="fas fa-edit"></i> Edit
-                                                        </a>
-                                                        @if($s->ket == 'Proses Usul')
-                                                            <form action="{{ route('sbu.hapus', $s->id) }}" method="POST" class="ml-2">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-sm btn-danger btn-icon" onclick="return confirm('Yakin ingin menghapus item ini?')">
-                                                                    <i class="fas fa-trash"></i> Hapus
-                                                                </button>
-                                                            </form>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </table>
                                 </div>
+
 
                                 <div class="float-right">
                                     {{ $sbu->withQueryString()->links() }}

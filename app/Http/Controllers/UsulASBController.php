@@ -105,25 +105,69 @@ class UsulASBController extends Controller
     public function admin_asb(Request $request)
     {
         $admin_asb = DB::table('usulan_asbs')
+            // Pencarian
             ->when($request->input('spek'), function ($query, $spek) {
-                return $query->where(function ($query) use ($spek) {
+                $query->where(function ($query) use ($spek) {
                     $query->where('spek', 'like', '%' . $spek . '%')
-                        ->orWhere('document', 'like', '%' . $spek . '%'); // Tambahkan pencarian di kolom "document"
+                        ->orWhere('document', 'like', '%' . $spek . '%');
                 });
             })
+
+            // Filter status
             ->when($request->input('filter'), function ($query, $filter) {
-                if ($filter == 'Usul Baru') {
-                    return $query->where('ket', 'Proses Usul');
-                } elseif ($filter == 'Disetujui') {
-                    return $query->where('ket', 'Disetujui');
-                } elseif ($filter == 'Ditolak') {
-                    return $query->where('ket', 'Ditolak');
+                if ($filter === 'Usul Baru') {
+                    $query->where('ket', 'Proses Usul');
+                } elseif ($filter === 'Disetujui') {
+                    $query->where('ket', 'Disetujui');
+                } elseif ($filter === 'Ditolak') {
+                    $query->where('ket', 'Ditolak');
                 }
             })
+
+            // Filter tahun
+            ->when($request->input('year'), function ($query, $year) {
+                $query->whereYear('created_at', $year);
+            })
+
+            // Filter disetujui oleh
+            ->when($request->input('disetujui'), function ($query, $disetujui) {
+                $query->where('disetujui', $disetujui);
+            })
+
+            // ✅ Filter SKPD (SAMA PERSIS DENGAN SHS)
+            ->when($request->filled('skpd'), function ($query) use ($request) {
+                $query->where('skpd', $request->skpd);
+            })
+
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanASB.admin_index', compact ('admin_asb'), );
+
+        // ===== Dropdown Filter =====
+
+        $years = DB::table('usulan_asbs')
+            ->selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->pluck('year');
+
+        $disetujuList = DB::table('usulan_asbs')
+            ->whereNotNull('disetujui')
+            ->distinct()
+            ->pluck('disetujui');
+
+        $skpdList = DB::table('usulan_asbs')
+            ->whereNotNull('skpd')
+            ->distinct()
+            ->orderBy('skpd')
+            ->pluck('skpd');
+
+        return view('pages.usulanASB.admin_index', compact(
+            'admin_asb',
+            'years',
+            'disetujuList',
+            'skpdList'
+        ));
     }
+
 
     public function admin_export_asb(Request $request)
     {

@@ -47,16 +47,47 @@
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
-                                    <form method="GET" action="{{ route('sbu.admin_sbu') }}">
-                                        <select class="form-control selectric" name="filter" onchange="this.form.submit()">
-                                            <option value="Semua" {{ request('filter') == 'Semua' ? 'selected' : '' }}>Semua</option>
-                                            <option value="Usul Baru" {{ request('filter') == 'Usul Baru' ? 'selected' : '' }}>Usul Baru</option>
-                                            <option value="Disetujui" {{ request('filter') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
-                                            <option value="Ditolak" {{ request('filter') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
-                                        </select>
+                                    <form method="GET" action="{{ route('sbu.admin_sbu') }}" class="row g-2 mb-3">
+                                        {{-- Filter Status --}}
+                                        <div class="col-md-3">
+                                            <select class="form-control selectric" name="filter" onchange="this.form.submit()">
+                                                <option value="">Status</option>
+                                                <option value="Usul Baru" {{ request('filter') == 'Usul Baru' ? 'selected' : '' }}>Usul Baru</option>
+                                                <option value="Disetujui" {{ request('filter') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                                                <option value="Ditolak" {{ request('filter') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                            </select>
+                                        </div>
+
+                                        {{-- Filter SKPD --}}
+                                        <div class="col-md-3">
+                                            <select class="form-control selectric" name="skpd" onchange="this.form.submit()">
+                                                <option value="">SKPD</option>
+                                                @foreach ($skpdList as $skpd)
+                                                    <option value="{{ $skpd }}" {{ request('skpd') == $skpd ? 'selected' : '' }}>
+                                                        {{ $skpd }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        {{-- Pencarian --}}
+                                        <div class="col-md-4">
+                                            <input type="text"
+                                                class="form-control"
+                                                name="spek"
+                                                placeholder="Pencarian Spek"
+                                                value="{{ request('spek') }}">
+                                        </div>
+
+                                        {{-- Tombol --}}
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary w-100">
+                                                <i class="fas fa-search"></i> Cari
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
-                                <div class="float-right">
+                                {{-- <div class="float-right">
                                     <form method="GET" action="{{route('sbu.admin_sbu')}}">
                                         <div class="input-group">
                                             <input type="text"
@@ -67,71 +98,96 @@
                                             </div>
                                         </div>
                                     </form>
-                                </div>
+                                </div> --}}
 
                                 <div class="clearfix mb-3"></div>
 
-                                <div class="table-responsive">
+                               <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th>Komponen</th>
+                                            <th>Uraian Usulan</th>
                                             <th>Harga</th>
-                                            <th>Dasar Surat</th>
                                             <th>SKPD</th>
                                             <th>Status</th>
+                                            <th>Ket.</th>
                                             <th>Action</th>
                                         </tr>
+
                                         @foreach ($admin_sbu as $s)
                                         <tr>
+                                            {{-- Uraian Usulan --}}
+                                            <td style="line-height: 1.6">
+                                                <strong>Dasar Surat:</strong><br>
+                                                {{ $s->Document }}<br><br>
 
-                                            <td>
-                                                {{ $s->Uraian }} <br>
-                                                <strong>Spesifikasi : {{ $s->Spek }}</strong> <br>
-                                                Satuan : {{ $s->Satuan }}
+                                                <strong>Komponen:</strong><br>
+                                                {{ $s->Uraian }}<br>
+
+                                                <strong>Spek:</strong><br>
+                                                {{ $s->Spek }}
                                             </td>
 
-                                            <td>{{ number_format((float) $s->Harga, 0, ',', '.') }}</td>
+                                            {{-- Harga + Satuan --}}
                                             <td>
-                                                {{$s->Document}}
+                                                <strong>Rp {{ number_format((float) $s->Harga, 0, ',', '.') }}</strong><br>
+                                                <span class="text-muted">Satuan: {{ $s->Satuan }}</span>
                                             </td>
+
+                                            {{-- SKPD --}}
                                             <td>
-                                                {{$s->skpd}}
+                                                {{ $s->skpd }}
                                             </td>
+
+                                            {{-- Status --}}
                                             <td>
-                                                    @php
-                                                        $status = $s->ket;
-                                                        $displayText = $status; // default
+                                                @php
+                                                    $status = $s->ket;
+                                                    $displayText = $status;
 
-                                                        if ($status == 'Proses Usul') {
-                                                            $displayText = 'Menunggu Verifikasi Admin';
-                                                        } elseif ($status == 'Verified') {
-                                                            $displayText = 'Menunggu Persetujuan Pimpinan';
-                                                        } elseif ($status == 'Ditolak') {
-                                                            $displayText = 'Usulan tidak memenuhi syarat';
-                                                        } elseif ($status == 'Disetujui') {
-                                                            $displayText = 'Usulan Disetujui';
-                                                        }
-                                                    @endphp
+                                                    if ($status == 'Proses Usul') {
+                                                        $displayText = 'Menunggu Verifikasi Admin';
+                                                    } elseif ($status == 'Verified') {
+                                                        $displayText = 'Menunggu Persetujuan Pimpinan';
+                                                    } elseif ($status == 'Ditolak') {
+                                                        $displayText = 'Usulan tidak memenuhi syarat';
+                                                    } elseif ($status == 'Disetujui') {
+                                                        $displayText = 'Usulan Disetujui';
+                                                    }
+                                                @endphp
 
-                                                    @if($status == 'Proses Usul')
-                                                        <span style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
-                                                    @elseif($status == 'Disetujui')
-                                                        <span style="color: #029925;"><strong>{{ $displayText }}</strong></span>
-                                                    @elseif($status == 'Ditolak')
-                                                        <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
-                                                    @elseif($status == 'Verified')
-                                                        <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
-                                                    @else
-                                                        <span><strong>{{ $displayText }}</strong></span>
-                                                    @endif
-                                                </td>
+                                                @if($status == 'Proses Usul')
+                                                    <span style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
+                                                @elseif($status == 'Disetujui')
+                                                    <span style="color: #029925;"><strong>{{ $displayText }}</strong></span>
+                                                @elseif($status == 'Ditolak')
+                                                    <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
+                                                @elseif($status == 'Verified')
+                                                    <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
+                                                @else
+                                                    <span><strong>{{ $displayText }}</strong></span>
+                                                @endif
+                                            </td>
+
+                                            {{-- Alasan --}}
+                                            <td>
+                                                @if($s->alasan)
+                                                    {{ $s->alasan }}
+                                                @else
+                                                    <em>-</em>
+                                                @endif
+                                            </td>
+
+                                            {{-- Action --}}
                                             <td>
                                                 <div class="dropdown text-center">
-                                                    <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuSBU{{ $s->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="btn btn-sm btn-secondary" type="button"
+                                                        id="dropdownMenuSBU{{ $s->id }}"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
 
-                                                    <div class="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="dropdownMenuSBU{{ $s->id }}">
+                                                    <div class="dropdown-menu dropdown-menu-end custom-dropdown"
+                                                        aria-labelledby="dropdownMenuSBU{{ $s->id }}">
 
                                                         {{-- View --}}
                                                         <a href="#"
@@ -153,14 +209,14 @@
                                                         {{-- Edit --}}
                                                         <a href="{{ route('sbu_admin.edit', $s->id) }}"
                                                             class="dropdown-item text-info
-                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
                                                             <i class="fas fa-edit"></i> Edit
                                                         </a>
 
                                                         {{-- Verifikasi --}}
                                                         <a href="#"
                                                             class="dropdown-item text-success
-                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalVerifikasi"
                                                             data-url="{{ route('sbu.verified', $s->id) }}">
@@ -170,18 +226,21 @@
                                                         {{-- Tolak --}}
                                                         <a href="#"
                                                             class="dropdown-item text-warning
-                                                                @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalTolak"
                                                             data-url="{{ route('sbu.tolak', $s->id) }}">
                                                             <i class="fas fa-hand-paper"></i> Tolak
                                                         </a>
 
-                                                        {{-- Hapus --}}
-                                                        <form action="{{ route('sbu.hapus', $s->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus data ini?')">
+                                                        {{-- Delete --}}
+                                                        <form action="{{ route('sbu.hapus', $s->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Yakin mau hapus data ini?')">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="dropdown-item text-danger
+                                                            <button type="submit"
+                                                                class="dropdown-item text-danger
                                                                 @if($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
                                                                 <i class="fas fa-times"></i> Delete
                                                             </button>
@@ -190,12 +249,11 @@
                                                     </div>
                                                 </div>
                                             </td>
-
                                         </tr>
                                         @endforeach
-
                                     </table>
                                 </div>
+
                                 <div class="float-right">
                                     {{ $admin_sbu->withQueryString()->links() }}
                                 </div>

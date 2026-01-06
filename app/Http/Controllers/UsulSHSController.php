@@ -68,9 +68,10 @@ class UsulSHSController extends Controller
                 return $query->where('disetujui', $disetujui);
             })
             // Filter berdasarkan SKPD
-            ->when($request->input('skpd'), function ($query, $skpd) {
-                return $query->where('skpd', $skpd);
+            ->when($request->filled('skpd'), function ($query) use ($request) {
+                $query->where('skpd', $request->skpd);
             })
+
             ->orderBy('id', 'desc')
             ->paginate(10);
 
@@ -86,8 +87,11 @@ class UsulSHSController extends Controller
             ->pluck('disetujui');
 
         $skpdList = DB::table('usulan_shs')
+            ->whereNotNull('skpd')
             ->distinct()
+            ->orderBy('skpd')
             ->pluck('skpd');
+
 
         return view('pages.usulanSHS.admin_index', compact('admin_shs', 'years', 'disetujuList', 'skpdList'));
     }
