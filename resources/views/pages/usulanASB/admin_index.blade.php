@@ -59,7 +59,7 @@
                                         </div>
 
                                         {{-- Filter SKPD --}}
-                                        <div class="col-md-3">
+                                        <div class="col-md-8">
                                             <select class="form-control selectric" name="skpd" onchange="this.form.submit()">
                                                 <option value="">SKPD</option>
                                                 @foreach ($skpdList as $skpd)
