@@ -180,12 +180,15 @@
   <!-- HERO -->
   <main class="hero">
     <div class="text" data-aos="fade-right">
-      <h1 class="neon-text">Deskripsi dan Dasar Hukum</h1>
-      <p>Website ini digunakan untuk mendukung Proses pengusulan Standar Harga Satuan (SHS) agar lebih mudah serta file surat usulan tidak mudah hilang, bisa diakses kapan saja selama koneksi internet Anda dalam keadaan baik-baik saja.
-        <Br><Br>Dalam Perencanaan Anggaran Pendapatan dan Belanja Daerah SHS merupakan Batasan Tertinggi yang besarannya tidak bisa dilampaui, kecuali apabila kondisi tertentu (Perubahan Aturan SHSR) atau Kenaikan Harga Pasar.
-        <br><br>Kepala Daerah juga dapat menambah item belanja lain yang tidak diatur dalam Perpres dengan menggunakan standar harga yang wajar, efisien, transparan, dan akuntabel untuk menghindari perbedaan harga yang ekstrem, Hal ini disebutkan pada Perpres No 72 Tahun 2025 tentang SHSR, Pasal 3 :
-        <br><br>(1) Kepala daerah menetapkan standar harga satuan biaya honorarium, perjalanan dinas dalam negeri, rapat atau pertemuan di dalam dan di luar kantor, pengadaan kendaraan dinas, dan pemeliharaan berpedoman pada standar harga satuan regional sebagaimana diatur dalam Pasal 1 dengan memperhatikan prinsip efisiensi, efektivitas, kepatutan, dan kewajaran.
-        <br><br>(2) Kepala daerah dapat menetapkan standar harga satuan SELAIN sebagaimana dimaksud pada ayat (1) dengan memperhatikan prinsip efisiensi, efektivitas, kepatutan, dan kewajaran sesuai dengan ketentuan peraturan perundang-undangan
+        <h1 class="neon-text">Deskripsi</h1>
+        <p>Website ini digunakan untuk mendukung Proses pengusulan Standar Harga Satuan (SHS) agar lebih mudah serta file surat usulan tidak mudah hilang, bisa diakses kapan saja selama koneksi internet Anda dalam keadaan baik-baik saja.
+            <Br><Br>Dalam Perencanaan Anggaran Pendapatan dan Belanja Daerah SHS merupakan Batasan Tertinggi yang besarannya tidak bisa dilampaui, kecuali apabila kondisi tertentu (Perubahan Aturan SHSR) atau Kenaikan Harga Pasar.
+        </p>
+
+        <h1 class="neon-text">Landasan Aturan</h1>
+        <p>Kepala Daerah dapat menambah item belanja lain yang tidak diatur dalam Perpres dengan menggunakan standar harga yang wajar, efisien, transparan, dan akuntabel untuk menghindari perbedaan harga yang ekstrem, Hal ini disebutkan pada Perpres No 72 Tahun 2025 tentang SHSR, Pasal 3 :
+            <br><br>(1) Kepala daerah menetapkan standar harga satuan biaya honorarium, perjalanan dinas dalam negeri, rapat atau pertemuan di dalam dan di luar kantor, pengadaan kendaraan dinas, dan pemeliharaan berpedoman pada standar harga satuan regional sebagaimana diatur dalam Pasal 1 dengan memperhatikan prinsip efisiensi, efektivitas, kepatutan, dan kewajaran.
+            <br><br>(2) Kepala daerah dapat menetapkan standar harga satuan SELAIN sebagaimana dimaksud pada ayat (1) dengan memperhatikan prinsip efisiensi, efektivitas, kepatutan, dan kewajaran sesuai dengan ketentuan peraturan perundang-undangan
         </p>
 
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
