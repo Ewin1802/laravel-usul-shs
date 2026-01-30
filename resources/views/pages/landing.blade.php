@@ -230,7 +230,7 @@
   </div>
 
   <!-- AUDIO -->
-  <audio id="audio-backsound" src="{{ asset('Starbucks.m4a') }}" loop></audio>
+  <audio id="audio-backsound" src="{{ asset('audio/Starbucks.m4a') }}" loop></audio>
 
   <!-- MODAL AUDIO -->
   <div id="audioModal">
