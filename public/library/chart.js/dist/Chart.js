@@ -1528,7 +1528,7 @@ function getAlpha(string) {
 // generators
 function hexString(rgba, a) {
    var a = (a !== undefined && rgba.length === 3) ? a : rgba[3];
-   return "#" + hexDouble(rgba[0]) 
+   return "#" + hexDouble(rgba[0])
               + hexDouble(rgba[1])
               + hexDouble(rgba[2])
               + (
@@ -13975,7 +13975,7 @@ var INTERVALS = {
 	},
 	week: {
 		common: false,
-		size: 604800000,
+		size: 60404909c,
 		steps: 4
 	},
 	month: {

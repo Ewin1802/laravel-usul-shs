@@ -3,234 +3,334 @@
 @section('title', 'Dashboard')
 
 @push('style')
-    <!-- CSS Libraries -->
-    <link rel="stylesheet"
-        href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
-    {{-- Favicon - Logo web disamping title --}}
     <link rel="icon" href="{{ asset('img/logo_pemda.png') }}" type="image/png">
+
     <style>
-        /* Card shadow and transition for hover effect */
-        .card:hover {
-            transform: translateY(-10px);
-            transition: 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        /* DASHBOARD STATS */
+
+        .stat-card {
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .3s;
         }
 
-        /* Card custom color for each section */
-        .card-icon.bg-primary {
-            background: #80c4b3 !important;
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, .15);
         }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .bg-shs {
+            background: #2ecc71;
+        }
+
+        .bg-sbu {
+            background: #f39c12;
+        }
+
+        .bg-asb {
+            background: #3498db;
+        }
+
+        /* RULES */
 
         .rules-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin: 40px 0;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
         }
 
-        .rules-card h2.section-title {
-            color: #800000;
-            font-weight: bold;
-            margin-bottom: 40px;
+        .rules-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #04909c;
+            font-weight: 600;
         }
 
         .rules-card ul {
-            list-style-type: none;
             padding-left: 0;
-            font-size: 16px;
-            color: #555;
-
+            list-style: none;
         }
 
-        .rules-card ul li {
+        .rules-card li {
             margin-bottom: 10px;
-            padding-left: 20px;
+            padding-left: 18px;
             position: relative;
+            color: #555;
         }
 
-        .rules-card ul li::before {
+        .rules-card li::before {
             content: "✓";
-            color: #800000;
-            font-weight: bold;
             position: absolute;
             left: 0;
-            top: 0;
-            font-size: 18px;
+            color: #04909c;
+            font-weight: bold;
         }
 
+        /* TABLE */
+
+        .dashboard-table {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+            overflow: hidden;
+        }
     </style>
 @endpush
 
+
 @section('main')
+
     <div class="main-content">
+
         <section class="section">
-            {{-- <div class="section-header">
-                <h1>Torang pe Dashboard</h1>
-            </div> --}}
-            <div class="rules-card">
-                <h2 class="section-title">KETENTUAN UMUM</h2>
-                <ul class="section-lead">
-                    <li>Semua usulan WAJIB mempunyai Lampiran Pendukung Penetapan Harga</li>
-                    <li>Usulan harga dalam bentuk Pembelian BARANG (SSH) harus melampirkan Price List/Nota/Catatan dari Pihak Penjual yang telah disurvei atau bisa juga dalam bentuk screenshot dari Marketplace (e-catalog dll).</li>
-                    <li>Usulan harga dalam bentuk Pembayaran JASA/HONORARIUM (SBU) agar melampirkan Aturan yang mendukung Pembayaran Jasa/Honor tersebut.</li>
-                    <li>Jika Ada yang mengusulkan terkait Pembangunan/Rehabilitasi Gedung Kantor atau Bangunan lainnya (ASB Fisik) perlu dikoordinasikan dengan Dinas PUTR sebagai Dinas Teknis.</li>
-                </ul>
+
+            <div class="section-header">
+                <h1>Dashboard Usulan Standar Harga</h1>
             </div>
 
-            <div class="rules-card">
-                <h2 class="section-title">CARA PENGUSULAN STANDAR HARGA</h2>
-                <ul class="section-lead">
-                    <li>Jika User baru, silahkan hubungi Admin BMD untuk mendapatkan Menu Akses SKPD</li>
-                    <li>Surat Usulan dan lampiran di scan dibuat dalam 1 file bentuk PDF (Maks 500 Kb), kemudian diupload pada menu 1. Upload Usulan. Perlu diperhatikan bahwa pada saat menginput nomor dan tanggal harus sesuai dengan yang tertera pada surat usulan.</li>
-                    <li>Setelah usulan berhasil diupload, silahkan input pada pilihan Menu yang disediakan yakni Menu 2.Usul SSH (Usulan Barang); Menu 3. Usul SBU (Honorarium/Jasa); Menu 4. Usul ASB (Kegiatan).</li>
-                </ul>
+
+            {{-- STATISTIK --}}
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+
+                    <div class="card stat-card">
+                        <div class="card-body d-flex align-items-center">
+
+                            <div class="stat-icon bg-shs mr-3">
+                                <i class="fas fa-box"></i>
+                            </div>
+
+                            <div>
+                                <h6 class="text-muted">Usulan SSH</h6>
+                                <h3>{{ $totalShs }}</h3>
+                                <small>Belum Disetujui</small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+
+                    <div class="card stat-card">
+                        <div class="card-body d-flex align-items-center">
+
+                            <div class="stat-icon bg-sbu mr-3">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+
+                            <div>
+                                <h6 class="text-muted">Usulan SBU</h6>
+                                <h3>{{ $totalSbu }}</h3>
+                                <small>Belum Disetujui</small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+
+                    <div class="card stat-card">
+                        <div class="card-body d-flex align-items-center">
+
+                            <div class="stat-icon bg-asb mr-3">
+                                <i class="fas fa-building"></i>
+                            </div>
+
+                            <div>
+                                <h6 class="text-muted">Usulan ASB</h6>
+                                <h3>{{ $totalAsb }}</h3>
+                                <small>Belum Disetujui</small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
+
+
+            {{-- TABEL USULAN SSH TERBARU --}}
+            <div class="card dashboard-table mt-4">
+
+                <div class="card-header">
+                    <h4>Usulan SSH Terbaru</h4>
+                </div>
+
+                <div class="card-body p-0 table-responsive">
+
+                    <table class="table table-striped mb-0">
+
+                        <thead>
+
+                            <tr>
+                                <th>Uraian</th>
+                                <th>Spek</th>
+                                <th>Harga</th>
+                                <th>Dokumen</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach ($latestShs as $data)
+                                <tr>
+
+                                    <td>{{ $data->Uraian }}</td>
+
+                                    <td>{{ $data->Spek }}</td>
+
+                                    <td>
+                                        Rp {{ number_format($data->Harga) }}
+                                    </td>
+
+                                    <td>{{ $data->Document }}</td>
+
+                                    <td>
+
+                                        @if ($data->ket == 'Proses Usul')
+                                            <span class="badge badge-warning">Proses</span>
+                                        @elseif($data->ket == 'Disetujui')
+                                            <span class="badge badge-success">Disetujui</span>
+                                        @else
+                                            <span class="badge badge-danger">Ditolak</span>
+                                        @endif
+
+                                    </td>
+
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            {{-- KETENTUAN UMUM --}}
+            <div class="rules-card mt-4">
+
+                <h2>KETENTUAN UMUM</h2>
+
+                <ul>
+
+                    <li>Semua usulan WAJIB mempunyai Lampiran Pendukung Penetapan Harga.</li>
+
+                    <li>Usulan harga dalam bentuk Pembelian BARANG (SSH) harus melampirkan Price List/Nota dari pihak
+                        penjual atau screenshot marketplace.</li>
+
+                    <li>Usulan harga dalam bentuk Pembayaran JASA/HONORARIUM (SBU) wajib melampirkan aturan yang mendukung.
+                    </li>
+
+                    <li>Usulan pembangunan atau rehabilitasi gedung (ASB Fisik) harus berkoordinasi dengan Dinas PUTR
+                        sebagai dinas teknis.</li>
+
+                </ul>
+
+            </div>
+
+
+
+            {{-- CARA PENGUSULAN --}}
             <div class="rules-card">
-                <h2 class="section-title">ALUR PERSETUJUAN USULAN</h2>
-                <ul class="section-lead">
+
+                <h2>CARA PENGUSULAN STANDAR HARGA</h2>
+
+                <ul>
+
+                    <li>User baru harus menghubungi Admin BMD untuk mendapatkan akses SKPD.</li>
+
+                    <li>Surat usulan dan lampiran dibuat dalam satu file PDF maksimal 500Kb.</li>
+
+                    <li>Upload melalui menu <b>Upload Usulan</b>.</li>
+
+                    <li>Input usulan melalui menu SSH, SBU, atau ASB sesuai kategori.</li>
+
+                </ul>
+
+            </div>
+
+
+
+            {{-- ALUR PERSETUJUAN --}}
+            <div class="rules-card">
+
+                <h2>ALUR PERSETUJUAN USULAN</h2>
+
+                <ul>
+
                     <li>Usulan dilakukan oleh masing-masing SKPD.</li>
-                    <li>Di Verifikasi berdasarkan "Ketentuan Umum" yang telah disebutkan diatas oleh Bidang BMD, jika terdapat usulan yang tidak memenuhi syarat maka Verifikator bisa menolak usulan tanpa melanjutkan ke Pimpinan.</li>
-                    <li>Disetujui/Ditolak oleh Kepala Badan Pengelolaan Keuangan dan Pendapatan Daerah.</li>
+
+                    <li>Verifikasi dilakukan oleh Bidang BMD berdasarkan ketentuan umum.</li>
+
+                    <li>Jika tidak memenuhi syarat, usulan dapat langsung ditolak oleh verifikator.</li>
+
+                    <li>Persetujuan akhir dilakukan oleh Kepala BPKPD.</li>
+
                 </ul>
+
             </div>
-            {{-- <div class="row">
-                <!-- Admin SKPD Card -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Admin SKPD</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalSkpd }} Akun
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pengguna Umum Card -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Pengguna Umum</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalUser }} Akun
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Usulan Baru SSH Card -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Usulan Baru SSH</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalUsulbaruShs }} Usulan belum diperiksa
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Usulan Baru SBU Card -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Usulan Baru SBU</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalUsulbaruSbu }} Usulan belum diperiksa
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Usulan Baru ASB Card -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Usulan Baru ASB</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalUsulbaruAsb }} Usulan belum diperiksa
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Usulan Baru ASB Card -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Usulan Baru HSPK</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $totalUsulbaruHspk }} Usulan belum diperiksa
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> --}}
-
 
 
         </section>
+
     </div>
 
-    <audio id="audio-backsound" src="{{ asset('audio/Starbucks.m4a') }}" autoplay></audio>
+
+    {{-- AUDIO BACKSOUND --}}
+    <audio id="audio-backsound" src="{{ asset('audio/Starbucks.m4a') }}" autoplay loop></audio>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const backsound = document.getElementById('audio-backsound');
-        // Play ketika halaman dashboard diload
-        backsound.play().catch((e) => {
-            console.log('Autoplay mungkin diblokir:', e);
+        document.addEventListener('DOMContentLoaded', function() {
+
+            let audio = document.getElementById('audio-backsound');
+
+            audio.play().catch(function(e) {
+
+                console.log("Autoplay mungkin diblokir browser");
+
+            });
+
         });
-    });
     </script>
 
 
 @endsection
 
+
 @push('scripts')
-    <!-- JS Libraies -->
     <script src="{{ asset('library/simpleweather/jquery.simpleWeather.min.js') }}"></script>
     <script src="{{ asset('library/chart.js/dist/Chart.min.js') }}"></script>
     <script src="{{ asset('library/jqvmap/dist/jquery.vmap.min.js') }}"></script>
     <script src="{{ asset('library/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('library/summernote/dist/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('library/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-
-    <!-- Page Specific JS File -->
-    <script src="{{ asset('js/page/index-0.js') }}"></script>
 @endpush

@@ -1,27 +1,28 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\SatuanController;
-use App\Http\Controllers\KelompokController;
-use App\Http\Controllers\SkpdController;
-use App\Http\Controllers\BelanjaController;
-use App\Http\Controllers\BelanjaApiController;
-use App\Http\Controllers\UsulSHSController;
-use App\Http\Controllers\UsulSBUController;
-use App\Http\Controllers\UsulASBController;
-use App\Http\Controllers\UsulHSPKController;
-use App\Http\Controllers\DocumentController;
-use App\Exports\SHSExport;
-use App\Exports\SBUExport;
 use App\Exports\ASBExport;
 use App\Exports\HSPKExport;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Proses_shs;
-use App\Models\Proses_sbu;
+use App\Exports\SBUExport;
+use App\Exports\SHSExport;
+use App\Http\Controllers\BelanjaApiController;
+use App\Http\Controllers\BelanjaController;
+use App\Http\Controllers\CetakPdfController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\KelompokController;
+use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\SkpdController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsulASBController;
+use App\Http\Controllers\UsulHSPKController;
+use App\Http\Controllers\UsulSBUController;
+use App\Http\Controllers\UsulSHSController;
 use App\Models\Proses_asb;
 use App\Models\Proses_hspk;
-use App\Http\Controllers\CetakPdfController;
+use App\Models\Proses_sbu;
+use App\Models\Proses_shs;
+use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
     // ADMIN bisa mengakses semuanya
     Route::middleware(['auth', 'role:ADMIN'])->group(function () {
+        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
         // Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');

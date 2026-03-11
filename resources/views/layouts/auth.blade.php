@@ -1,82 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
-        name="viewport">
-    <title>@yield('title') &mdash; Usul SHS Bolmut</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- Favicon - Logo web disamping title --}}
+    <title>@yield('title') — Usul SHS Bolmut</title>
+
     <link rel="icon" href="{{ asset('img/logo_pemda.png') }}" type="image/png">
 
-    <!-- General CSS Files -->
-    <link rel="stylesheet"
-        href="{{ asset('library/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('library/bootstrap/dist/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     @stack('style')
 
-    <!-- Template CSS -->
-    <link rel="stylesheet"
-        href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('css/components.css') }}">
-    <!-- Start GA -->
-    <script async
-        src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+    <style>
+        /* GLOBAL */
 
-        function gtag() {
-            dataLayer.push(arguments);
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            position: relative;
         }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-94034622-3');
-    </script>
-    <!-- END GA -->
+        /* overlay blur */
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('{{ asset('img/peta.webp') }}') center/cover no-repeat;
+            opacity: .15;
+            z-index: -1;
+        }
+
+        /* auth wrapper */
+
+        .auth-wrapper {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        /* glass card */
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
+            padding: 35px;
+        }
+
+        /* header */
+
+        .auth-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .auth-logo img {
+            height: 48px;
+        }
+
+        /* form */
+
+        .form-control {
+            height: 48px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            background: rgba(255, 255, 255, .08);
+            color: white;
+        }
+
+        .form-control:focus {
+            border-color: #00eaff;
+            box-shadow: 0 0 10px rgba(0, 234, 255, .4);
+            background: rgba(255, 255, 255, .12);
+            color: white;
+        }
+
+        label {
+            font-size: .85rem;
+            color: #ddd;
+        }
+
+        /* button */
+
+        .btn-login {
+            height: 48px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #00c9d8, #00a9b6);
+            border: none;
+            font-weight: 600;
+            letter-spacing: .5px;
+            transition: .25s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .3);
+        }
+
+        /* footer */
+
+        .auth-footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: .9rem;
+            color: #ddd;
+        }
+
+        .auth-footer a {
+            color: #00eaff;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .invalid-feedback {
+            color: #ffb3b3;
+        }
+    </style>
+
 </head>
 
-<body class="body-auth" >
-    <div id="app">
-        <section class="section">
-            <div class="container mt-5">
-                <div class="row">
-                    <div
-                        class="{{ Request::is('auth-register') ? 'col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2' : 'col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4' }}">
-                        <!-- Footer -->
-                        @include('components.auth-header')
+<body>
 
-                        <!-- Content -->
-                        @yield('main')
+    <div class="auth-wrapper">
 
-                        <!-- Footer -->
-                        @include('components.auth-footer')
-                    </div>
-                </div>
-            </div>
-        </section>
+        @yield('main')
+
     </div>
 
-    <!-- General JS Scripts -->
     <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('library/popper.js/dist/umd/popper.js') }}"></script>
-    <script src="{{ asset('library/tooltip.js/dist/umd/tooltip.js') }}"></script>
     <script src="{{ asset('library/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ asset('library/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('js/stisla.js') }}"></script>
 
     @stack('scripts')
 
-    <!-- Template JS File -->
-    <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
 </body>
 
 </html>

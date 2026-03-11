@@ -5,7 +5,7 @@
 
 ( function( factory ) {
 	"use strict";
-	
+
 	if ( typeof define === "function" && define.amd ) {
 
 		// AMD. Register as an anonymous module.
@@ -2029,7 +2029,7 @@ colors = jQuery.Color.names = {
 	gray: "#808080",
 	green: "#008000",
 	lime: "#00ff00",
-	maroon: "#800000",
+	maroon: "#04909c",
 	navy: "#000080",
 	olive: "#808000",
 	purple: "#800080",

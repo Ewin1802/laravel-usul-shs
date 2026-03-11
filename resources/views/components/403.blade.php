@@ -29,12 +29,12 @@
         h1 {
             font-size: 72px;
             margin-bottom: 20px;
-            color: #800000;
+            color: #04909c;
             font-weight: bold;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
         .message-container {
-            background-color: #800000;
+            background-color: #04909c;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;

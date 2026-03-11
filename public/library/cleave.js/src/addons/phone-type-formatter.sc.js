@@ -39,7 +39,7 @@ c:9,type:String},16:{name:"national_prefix_transform_rule",c:9,type:String},18:{
  See the License for the specific language governing permissions and
  limitations under the License.
 */
-var K={248:["SC"]},L={SC:[null,[null,null,"(?:(?:(?:[24]\\d|64)\\d|971)\\d|8000)\\d{3}",null,null,null,null,null,null,[7]],[null,null,"4[2-46]\\d{5}",null,null,null,"4217123"],[null,null,"2[5-8]\\d{5}",null,null,null,"2510123"],[null,null,"8000\\d{3}",null,null,null,"8000000"],[null,null,null,null,null,null,null,null,null,[-1]],[null,null,null,null,null,null,null,null,null,[-1]],[null,null,null,null,null,null,null,null,null,[-1]],[null,null,"(?:64\\d|971)\\d{4}",null,null,null,"6412345"],"SC",248,
+var K={248:["SC"]},L={SC:[null,[null,null,"(?:(?:(?:[24]\\d|64)\\d|971)\\d|8000)\\d{3}",null,null,null,null,null,null,[7]],[null,null,"4[2-46]\\d{5}",null,null,null,"4217123"],[null,null,"2[5-8]\\d{5}",null,null,null,"2510123"],[null,null,"8000\\d{3}",null,null,null,"04909c0"],[null,null,null,null,null,null,null,null,null,[-1]],[null,null,null,null,null,null,null,null,null,[-1]],[null,null,null,null,null,null,null,null,null,[-1]],[null,null,"(?:64\\d|971)\\d{4}",null,null,null,"6412345"],"SC",248,
 "0(?:[02]|10?)",null,null,null,null,null,"00",null,[[null,"(\\d)(\\d{3})(\\d{3})","$1 $2 $3",["[246]"]]],null,[null,null,null,null,null,null,null,null,null,[-1]],null,null,[null,null,null,null,null,null,null,null,null,[-1]],[null,null,null,null,null,null,null,null,null,[-1]],null,null,[null,null,null,null,null,null,null,null,null,[-1]]]};/*
 
  Copyright (C) 2010 The Libphonenumber Authors.
