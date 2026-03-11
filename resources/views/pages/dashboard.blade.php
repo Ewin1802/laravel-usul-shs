@@ -118,7 +118,7 @@
                             <div>
                                 <h6 class="text-muted">Usulan SSH</h6>
                                 <h3>{{ $totalShs }}</h3>
-                                <small>Belum Disetujui</small>
+                                <small>Disetujui</small>
                             </div>
 
                         </div>
@@ -139,7 +139,7 @@
                             <div>
                                 <h6 class="text-muted">Usulan SBU</h6>
                                 <h3>{{ $totalSbu }}</h3>
-                                <small>Belum Disetujui</small>
+                                <small>Disetujui</small>
                             </div>
 
                         </div>
@@ -160,7 +160,7 @@
                             <div>
                                 <h6 class="text-muted">Usulan ASB</h6>
                                 <h3>{{ $totalAsb }}</h3>
-                                <small>Belum Disetujui</small>
+                                <small>Disetujui</small>
                             </div>
 
                         </div>
@@ -173,57 +173,55 @@
 
 
             {{-- TABEL USULAN SSH TERBARU --}}
-            <div class="card dashboard-table mt-4">
+            <div class="card mt-4">
 
                 <div class="card-header">
-                    <h4>Usulan SSH Terbaru</h4>
+                    <h4>5 Usulan SSH Ditolak</h4>
                 </div>
 
-                <div class="card-body p-0 table-responsive">
+                <div class="card-body table-responsive">
 
-                    <table class="table table-striped mb-0">
+                    <table class="table table-striped">
 
                         <thead>
-
                             <tr>
+                                <th>SKPD</th>
                                 <th>Uraian</th>
                                 <th>Spek</th>
-                                <th>Harga</th>
-                                <th>Dokumen</th>
-                                <th>Status</th>
+                                <th>Alasan</th>
+                                <th>Tanggal</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
 
-                            @foreach ($latestShs as $data)
+                            @forelse($shsDitolak as $data)
                                 <tr>
+
+                                    <td>{{ $data->skpd }}</td>
 
                                     <td>{{ $data->Uraian }}</td>
 
                                     <td>{{ $data->Spek }}</td>
 
-                                    <td>
-                                        Rp {{ number_format($data->Harga) }}
+                                    <td class="text-danger">
+                                        {{ $data->alasan ?? '-' }}
                                     </td>
 
-                                    <td>{{ $data->Document }}</td>
-
                                     <td>
-
-                                        @if ($data->ket == 'Proses Usul')
-                                            <span class="badge badge-warning">Proses</span>
-                                        @elseif($data->ket == 'Disetujui')
-                                            <span class="badge badge-success">Disetujui</span>
-                                        @else
-                                            <span class="badge badge-danger">Ditolak</span>
-                                        @endif
-
+                                        {{ $data->created_at->format('d M Y') }}
                                     </td>
 
                                 </tr>
-                            @endforeach
+
+                            @empty
+
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">
+                                        Belum ada usulan SSH yang ditolak
+                                    </td>
+                                </tr>
+                            @endforelse
 
                         </tbody>
 
@@ -233,7 +231,121 @@
 
             </div>
 
+            <div class="card mt-4">
 
+                <div class="card-header">
+                    <h4>5 Usulan SBU Ditolak</h4>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>SKPD</th>
+                                <th>Uraian</th>
+                                <th>Keterangan</th>
+                                <th>Alasan</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @forelse($sbuDitolak as $data)
+                                <tr>
+
+                                    <td>{{ $data->skpd }}</td>
+
+                                    <td>{{ $data->Uraian }}</td>
+
+                                    <td>{{ $data->Spek ?? '-' }}</td>
+
+                                    <td class="text-danger">
+                                        {{ $data->alasan ?? '-' }}
+                                    </td>
+
+                                    <td>
+                                        {{ $data->created_at->format('d M Y') }}
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">
+                                        Belum ada usulan SBU yang ditolak
+                                    </td>
+                                </tr>
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="card mt-4">
+
+                <div class="card-header">
+                    <h4>5 Usulan ASB Ditolak</h4>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>SKPD</th>
+                                <th>Uraian</th>
+                                <th>Keterangan</th>
+                                <th>Alasan</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @forelse($asbDitolak as $data)
+                                <tr>
+
+                                    <td>{{ $data->skpd }}</td>
+
+                                    <td>{{ $data->Uraian }}</td>
+
+                                    <td>{{ $data->Spek ?? '-' }}</td>
+
+                                    <td class="text-danger">
+                                        {{ $data->alasan ?? '-' }}
+                                    </td>
+
+                                    <td>
+                                        {{ $data->created_at->format('d M Y') }}
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">
+                                        Belum ada usulan ASB yang ditolak
+                                    </td>
+                                </tr>
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
             {{-- KETENTUAN UMUM --}}
             <div class="rules-card mt-4">
