@@ -52,7 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', function () {
         return redirect()->route('dashboard');
         })->name('home');
-    Route::get('/dashboard', [UserController::class, 'showData'])->name('dashboard');
+    // Route::get('/dashboard', [UserController::class, 'showData'])->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::delete('shs/{id}/hapus', [UsulSHSController::class, 'destroy'])->name('shs.hapus');
     Route::delete('sbu/{id}/hapus', [UsulSBUController::class, 'destroy'])->name('sbu.hapus');
     Route::delete('asb/{id}/hapus', [UsulASBController::class, 'destroy'])->name('asb.hapus');
@@ -94,7 +95,7 @@ Route::middleware(['auth'])->group(function () {
 
     // ADMIN bisa mengakses semuanya
     Route::middleware(['auth', 'role:ADMIN'])->group(function () {
-        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+
 
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
         // Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
