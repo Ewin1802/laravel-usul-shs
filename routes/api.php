@@ -36,9 +36,7 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/logout', [AuthController::class, 'logout']);
-
     });
-
 });
 
 
@@ -90,8 +88,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/hspk/{id}/verifikasi', 'verifiedHspk');
         Route::put('/hspk/{id}/disetujui', 'approveHspk');
         Route::put('/hspk/{id}/ditolak', 'tolakHspk');
-
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | STATISTIK
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/statistik/usulan/{type}/{tahun}', [UsulanSkpdController::class, 'statistik']);
 
 
     /*
@@ -111,7 +116,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/belanja', 'belanja');
 
         Route::get('/dokumen', 'dokumen');
-
     });
 
 
@@ -130,7 +134,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/asb', 'createasb');
 
         Route::post('/hspk', 'createhspk');
-
     });
 
 
@@ -145,7 +148,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/upload', 'docstore');
 
         Route::get('/surat', 'list_surat');
-
     });
-
 });

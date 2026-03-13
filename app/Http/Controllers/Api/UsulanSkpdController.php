@@ -255,4 +255,46 @@ class UsulanSkpdController extends Controller
             'data' => $data
         ]);
     }
+
+    public function statistik(Request $request, $type, $tahun)
+    {
+        $models = $this->modelMap();
+
+        if (!isset($models[$type])) {
+            return response()->json([
+                'message' => 'Type tidak valid'
+            ], 400);
+        }
+
+        $model = $models[$type]['usulan'];
+
+        $user = Auth::user();
+
+        $query = $model::query();
+
+        // Filter user jika bukan kaban
+        if ($user->skpd !== 'KABAN' && $user->skpd !== 'AllSKPD') {
+            $query->where('user', $user->name);
+        }
+
+        $data = $query
+            ->selectRaw('MONTH(created_at) as bulan, COUNT(*) as total')
+            ->whereYear('created_at', $tahun)
+            ->groupByRaw('MONTH(created_at)')
+            ->pluck('total', 'bulan');
+
+        // Default 12 bulan
+        $result = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $result[] = $data[$i] ?? 0;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'type' => $type,
+            'tahun' => $tahun,
+            'data' => $result
+        ]);
+    }
 }
