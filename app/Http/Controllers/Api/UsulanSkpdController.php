@@ -17,6 +17,7 @@ use App\Models\Proses_asb;
 
 use App\Models\UsulanHspk;
 use App\Models\Proses_hspk;
+use Illuminate\Support\Facades\DB;
 
 class UsulanSkpdController extends Controller
 {
@@ -52,14 +53,17 @@ class UsulanSkpdController extends Controller
     {
         $user = Auth::user();
 
-        // buat instance model
         $instance = new $model;
-
         $table = $instance->getTable();
 
         $query = $model::query()
-            ->leftJoin('documents', 'documents.file_name', '=', $table . '.Document')
-            ->select($table . '.*', 'documents.file_path as document_url');
+            ->leftJoin('documents', function ($join) use ($table) {
+                $join->whereRaw("documents.file_name LIKE CONCAT('%', $table.Document, '%')");
+            })
+            ->select(
+                $table . '.*',
+                DB::raw("CONCAT('https://usaha.bolmut.id/storage/documents/', documents.file_path) as document_url")
+            );
 
         if ($request->id) {
             $query->where($table . '.id', $request->id);
