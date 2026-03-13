@@ -51,16 +51,15 @@ class UsulanSkpdController extends Controller
     private function getData($model, Request $request)
     {
         $user = Auth::user();
-        $table = $model::getTable();
+
+        // buat instance model
+        $instance = new $model;
+
+        $table = $instance->getTable();
 
         $query = $model::query()
-            ->leftJoin('documents', function ($join) use ($table) {
-                $join->whereRaw("documents.file_name LIKE CONCAT('%', $table.Document, '%')");
-            })
-            ->select(
-                $table . '.*',
-                'documents.file_path as document_url'
-            );
+            ->leftJoin('documents', 'documents.file_name', '=', $table . '.Document')
+            ->select($table . '.*', 'documents.file_path as document_url');
 
         if ($request->id) {
             $query->where($table . '.id', $request->id);
