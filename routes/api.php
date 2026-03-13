@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UsulanSkpdController;
@@ -13,61 +14,138 @@ use App\Http\Controllers\Api\DokumenController;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
+})->middleware('auth:sanctum');
+
+
+/*
+|--------------------------------------------------------------------------
+| AUTH
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('auth')->group(function () {
+
+    Route::post('/register', [AuthController::class, 'register']);
+
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+
+        Route::post('/logout', [AuthController::class, 'logout']);
+
+    });
+
 });
 
-//Resgister
-Route::post('/register', [AuthController::class, 'register']);
 
-//login
-Route::post('/login', [AuthController::class, 'login']);
+/*
+|--------------------------------------------------------------------------
+| PROTECTED ROUTES
+|--------------------------------------------------------------------------
+*/
 
-//logout
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
 
-//Users
-Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)->middleware('auth:sanctum');
-Route::put('/updateuser', [UserController::class, 'updateuser'])->middleware('auth:sanctum');
 
-Route::get('shs_usul', [UsulanSkpdController::class, 'data_shs'])->middleware('auth:sanctum');
-Route::get('sbu_usul', [UsulanSkpdController::class, 'data_sbu'])->middleware('auth:sanctum');
-Route::get('asb_usul', [UsulanSkpdController::class, 'data_asb'])->middleware('auth:sanctum');
-Route::get('hspk_usul', [UsulanSkpdController::class, 'data_hspk'])->middleware('auth:sanctum');
-Route::put('/usulanshs/{id}/verifikasi', [UsulanSkpdController::class, 'verifiedShs'])->middleware('auth:sanctum');
-Route::put('/usulanshs/{id}/disetujui', [UsulanSkpdController::class, 'approveShs'])->middleware('auth:sanctum');
-Route::put('/usulanshs/{id}/ditolak', [UsulanSkpdController::class, 'tolakShs'])->middleware('auth:sanctum');
-Route::put('/usulansbu/{id}/verifikasi', [UsulanSkpdController::class, 'verifiedSbu'])->middleware('auth:sanctum');
-Route::put('/usulansbu/{id}/disetujui', [UsulanSkpdController::class, 'approveSbu'])->middleware('auth:sanctum');
-Route::put('/usulansbu/{id}/ditolak', [UsulanSkpdController::class, 'tolakSbu'])->middleware('auth:sanctum');
-Route::put('/usulanasb/{id}/verifikasi', [UsulanSkpdController::class, 'verifiedAsb'])->middleware('auth:sanctum');
-Route::put('/usulanasb/{id}/disetujui', [UsulanSkpdController::class, 'approveAsb'])->middleware('auth:sanctum');
-Route::put('/usulanasb/{id}/ditolak', [UsulanSkpdController::class, 'tolakAsb'])->middleware('auth:sanctum');
-Route::put('/usulanhspk/{id}/verifikasi', [UsulanSkpdController::class, 'verifiedHspk'])->middleware('auth:sanctum');
-Route::put('/usulanhspk/{id}/disetujui', [UsulanSkpdController::class, 'approveHspk'])->middleware('auth:sanctum');
-Route::put('/usulanhspk/{id}/ditolak', [UsulanSkpdController::class, 'tolakHspk'])->middleware('auth:sanctum');
+    /*
+    |--------------------------------------------------------------------------
+    | USERS
+    |--------------------------------------------------------------------------
+    */
 
-Route::get('list-kelompok', [OpsiDasarController::class, 'kelompok'])->middleware('auth:sanctum');
-Route::get('list-satuan', [OpsiDasarController::class, 'satuan'])->middleware('auth:sanctum');
-Route::get('list-skpd', [OpsiDasarController::class, 'skpd'])->middleware('auth:sanctum');
+    Route::apiResource('users', UserController::class);
 
-//hanya mengambil belanja Api saja, jumlah rek disini terbatas, tidak seperti pengajuan lewat web
-Route::get('list-belanjaApi', [OpsiDasarController::class, 'belanja'])->middleware('auth:sanctum');
+    Route::put('/users/update', [UserController::class, 'updateuser']);
 
-Route::get('list-dokumen', [OpsiDasarController::class, 'dokumen'])->middleware('auth:sanctum');
 
-Route::post('create-shs', [CreateUsulanController::class, 'createshs'])->middleware('auth:sanctum');
-Route::post('create-sbu', [CreateUsulanController::class, 'createsbu'])->middleware('auth:sanctum');
-Route::post('create-asb', [CreateUsulanController::class, 'createasb'])->middleware('auth:sanctum');
-Route::post('create-hspk', [CreateUsulanController::class, 'createhspk'])->middleware('auth:sanctum');
+    /*
+    |--------------------------------------------------------------------------
+    | USULAN DATA
+    |--------------------------------------------------------------------------
+    */
 
-Route::post('create-dok', [DokumenController::class, 'docstore'])->middleware('auth:sanctum');
-Route::get('list-surat', [DokumenController::class, 'list_surat'])->middleware('auth:sanctum');
+    Route::prefix('usulan')->controller(UsulanSkpdController::class)->group(function () {
 
+        Route::get('/shs', 'data_shs');
+        Route::get('/sbu', 'data_sbu');
+        Route::get('/asb', 'data_asb');
+        Route::get('/hspk', 'data_hspk');
+
+        Route::put('/shs/{id}/verifikasi', 'verifiedShs');
+        Route::put('/shs/{id}/disetujui', 'approveShs');
+        Route::put('/shs/{id}/ditolak', 'tolakShs');
+
+        Route::put('/sbu/{id}/verifikasi', 'verifiedSbu');
+        Route::put('/sbu/{id}/disetujui', 'approveSbu');
+        Route::put('/sbu/{id}/ditolak', 'tolakSbu');
+
+        Route::put('/asb/{id}/verifikasi', 'verifiedAsb');
+        Route::put('/asb/{id}/disetujui', 'approveAsb');
+        Route::put('/asb/{id}/ditolak', 'tolakAsb');
+
+        Route::put('/hspk/{id}/verifikasi', 'verifiedHspk');
+        Route::put('/hspk/{id}/disetujui', 'approveHspk');
+        Route::put('/hspk/{id}/ditolak', 'tolakHspk');
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | OPSI DASAR (MASTER DATA)
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('opsi')->controller(OpsiDasarController::class)->group(function () {
+
+        Route::get('/kelompok', 'kelompok');
+
+        Route::get('/satuan', 'satuan');
+
+        Route::get('/skpd', 'skpd');
+
+        Route::get('/belanja', 'belanja');
+
+        Route::get('/dokumen', 'dokumen');
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE USULAN
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('create-usulan')->controller(CreateUsulanController::class)->group(function () {
+
+        Route::post('/shs', 'createshs');
+
+        Route::post('/sbu', 'createsbu');
+
+        Route::post('/asb', 'createasb');
+
+        Route::post('/hspk', 'createhspk');
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DOKUMEN
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('dokumen')->controller(DokumenController::class)->group(function () {
+
+        Route::post('/upload', 'docstore');
+
+        Route::get('/surat', 'list_surat');
+
+    });
+
+});
