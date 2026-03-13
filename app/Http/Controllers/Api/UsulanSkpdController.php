@@ -53,22 +53,28 @@ class UsulanSkpdController extends Controller
     {
         $user = Auth::user();
 
+        // buat instance model untuk ambil nama tabel
         $instance = new $model;
         $table = $instance->getTable();
 
         $query = $model::query()
             ->leftJoin('documents', function ($join) use ($table) {
-                $join->whereRaw("documents.file_name LIKE CONCAT('%', $table.Document, '%')");
+
+                $join->whereRaw(
+                    "documents.file_name LIKE CONCAT('%', $table.Document, '%')"
+                );
             })
             ->select(
                 $table . '.*',
                 DB::raw("CONCAT('https://usaha.bolmut.id/storage/documents/', documents.file_path) as document_url")
             );
 
+        // filter berdasarkan id jika ada
         if ($request->id) {
             $query->where($table . '.id', $request->id);
         }
 
+        // filter berdasarkan user jika bukan kaban
         if ($user->skpd !== 'KABAN' && $user->skpd !== 'AllSKPD') {
             $query->where($table . '.user', $user->name);
         }
