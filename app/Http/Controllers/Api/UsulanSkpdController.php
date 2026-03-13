@@ -52,19 +52,21 @@ class UsulanSkpdController extends Controller
     {
         $user = Auth::user();
 
-        $query = $model::query();
+        $query = $model::query()
+            ->leftJoin('dokumen', 'dokumen.nama', '=', $model::getTable() . '.Document')
+            ->select($model::getTable() . '.*', 'dokumen.url as document_url');
 
         if ($request->id) {
-            $query->where('id', $request->id);
+            $query->where($model::getTable() . '.id', $request->id);
         }
 
         if ($user->skpd !== 'KABAN' && $user->skpd !== 'AllSKPD') {
-            $query->where('user', $user->name);
+            $query->where($model::getTable() . '.user', $user->name);
         }
 
         return $query->get();
     }
-
+    
     /**
      * ======================
      * DATA
