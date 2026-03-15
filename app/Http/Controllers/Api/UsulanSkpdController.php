@@ -136,6 +136,10 @@ class UsulanSkpdController extends Controller
 
     public function verified(Request $request, $type, $id)
     {
+        $request->validate([
+            'alasan' => 'required|string'
+        ]);
+
         $models = $this->modelMap();
 
         if (!isset($models[$type])) {
@@ -150,14 +154,17 @@ class UsulanSkpdController extends Controller
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
         }
 
+        if ($data->ket !== 'Proses Usul') {
+            return response()->json([
+                'message' => 'Data sudah diproses sebelumnya'
+            ], 400);
+        }
+
         $user = $request->user();
 
         $data->admin = $user->name;
         $data->ket = 'Verified';
-
-        if ($request->alasan) {
-            $data->alasan = $request->alasan;
-        }
+        $data->alasan = $request->alasan;
 
         $data->save();
 
@@ -190,6 +197,12 @@ class UsulanSkpdController extends Controller
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
         }
 
+        if ($data->ket !== 'Verified') {
+            return response()->json([
+                'message' => 'Usulan belum diverifikasi'
+            ], 400);
+        }
+
         $exist = $prosesModel::where('Uraian', $data->Uraian)
             ->where('Spek', $data->Spek)
             ->where('Satuan', $data->Satuan)
@@ -202,36 +215,51 @@ class UsulanSkpdController extends Controller
             ], 400);
         }
 
-        $user = $request->user();
+        DB::beginTransaction();
 
-        $data->disetujui = $user->name;
-        $data->ket = 'Disetujui';
-        $data->save();
+        try {
 
-        $proses = new $prosesModel();
+            $user = $request->user();
 
-        $proses->Kode = $data->Kode;
-        $proses->Uraian = $data->Uraian;
-        $proses->Spek = $data->Spek;
-        $proses->Satuan = $data->Satuan;
-        $proses->Harga = $data->Harga;
-        $proses->akun_belanja = $data->akun_belanja;
-        $proses->rekening_1 = $data->rekening_1;
-        $proses->Document = $data->Document;
-        $proses->user = $data->user;
-        $proses->skpd = $data->skpd;
-        $proses->admin = $data->admin;
-        $proses->disetujui = $data->disetujui;
-        $proses->Kelompok = $data->Kelompok;
-        $proses->nilai_tkdn = $data->nilai_tkdn;
-        $proses->ket = $data->ket;
+            $data->disetujui = $user->name;
+            $data->ket = 'Disetujui';
+            $data->save();
 
-        $proses->save();
+            $proses = new $prosesModel();
 
-        return response()->json([
-            'message' => 'Data berhasil disetujui dan dipindahkan',
-            'data' => $proses
-        ]);
+            $proses->Kode = $data->Kode;
+            $proses->Uraian = $data->Uraian;
+            $proses->Spek = $data->Spek;
+            $proses->Satuan = $data->Satuan;
+            $proses->Harga = $data->Harga;
+            $proses->akun_belanja = $data->akun_belanja;
+            $proses->rekening_1 = $data->rekening_1;
+            $proses->Document = $data->Document;
+            $proses->user = $data->user;
+            $proses->skpd = $data->skpd;
+            $proses->admin = $data->admin;
+            $proses->disetujui = $data->disetujui;
+            $proses->Kelompok = $data->Kelompok;
+            $proses->nilai_tkdn = $data->nilai_tkdn;
+            $proses->ket = $data->ket;
+
+            $proses->save();
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Data berhasil disetujui dan dipindahkan',
+                'data' => $proses
+            ]);
+        } catch (\Exception $e) {
+
+            DB::rollback();
+
+            return response()->json([
+                'message' => 'Terjadi kesalahan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

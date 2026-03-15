@@ -48,7 +48,6 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
 
-
     /*
     |--------------------------------------------------------------------------
     | USERS
@@ -68,27 +67,27 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('usulan')->controller(UsulanSkpdController::class)->group(function () {
 
+        // ambil data usulan
         Route::get('/shs', 'data_shs');
         Route::get('/sbu', 'data_sbu');
         Route::get('/asb', 'data_asb');
         Route::get('/hspk', 'data_hspk');
 
-        Route::put('/shs/{id}/verifikasi', 'verifiedShs');
-        Route::put('/shs/{id}/disetujui', 'approveShs');
-        Route::put('/shs/{id}/ditolak', 'tolakShs');
+        /*
+        |--------------------------------------------------------------------------
+        | VERIFIKASI / APPROVE / REJECT
+        |--------------------------------------------------------------------------
+        | memakai parameter {type}
+        | type = shs | sbu | asb | hspk
+        */
 
-        Route::put('/sbu/{id}/verifikasi', 'verifiedSbu');
-        Route::put('/sbu/{id}/disetujui', 'approveSbu');
-        Route::put('/sbu/{id}/ditolak', 'tolakSbu');
+        Route::put('/{type}/{id}/verifikasi', 'verified');
 
-        Route::put('/asb/{id}/verifikasi', 'verifiedAsb');
-        Route::put('/asb/{id}/disetujui', 'approveAsb');
-        Route::put('/asb/{id}/ditolak', 'tolakAsb');
+        Route::put('/{type}/{id}/disetujui', 'approve');
 
-        Route::put('/hspk/{id}/verifikasi', 'verifiedHspk');
-        Route::put('/hspk/{id}/disetujui', 'approveHspk');
-        Route::put('/hspk/{id}/ditolak', 'tolakHspk');
+        Route::put('/{type}/{id}/ditolak', 'reject');
     });
+
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +95,10 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/statistik/usulan/{type}/{tahun}', [UsulanSkpdController::class, 'statistik']);
+    Route::get(
+        '/statistik/usulan/{type}/{tahun}',
+        [UsulanSkpdController::class, 'statistik']
+    );
 
 
     /*
