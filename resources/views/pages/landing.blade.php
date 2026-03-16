@@ -21,22 +21,18 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: url('{{ asset('img/peta.webp') }}') center/cover fixed no-repeat;
+            transition: background-position 0.2s ease-out;
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+                url('{{ asset('img/peta.webp') }}');
+
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+
             color: white;
             min-height: 100vh;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(6px);
-            z-index: -1;
         }
 
         .container {
@@ -48,14 +44,27 @@
         /* HEADER */
 
         header {
-            padding: 25px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            padding: 14px 25px;
+
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -91,14 +100,17 @@
         }
 
         .hero h1 {
-            font-size: 2.4rem;
+            font-size: 2.6rem;
             margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffffff, #00eaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            line-height: 1.7;
+            line-height: 1.8;
             color: #ddd;
-            margin-bottom: 25px;
+            max-width: 520px;
         }
 
         .hero img {
@@ -127,12 +139,23 @@
         }
 
         .btn-primary {
-            background: #00c9d8;
-            color: white;
+            background: #00eaff;
+            color: #00373b;
+            box-shadow:
+                0 0 10px #00eaff,
+                0 0 20px #00eaff,
+                0 0 40px #00eaff;
+
+            transition: .3s;
         }
 
         .btn-primary:hover {
-            background: #00a9b6;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 0 20px #00eaff,
+                0 0 40px #00eaff,
+                0 0 60px #00eaff;
         }
 
         .btn-outline {
@@ -246,6 +269,16 @@
             }
 
         }
+
+        .logo img {
+            height: 55px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+            transition: 0.3s;
+        }
+
+        .logo img:hover {
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
+        }
     </style>
 </head>
 
@@ -255,7 +288,9 @@
         <div class="container navbar">
 
             <div class="logo">
-                USAHA
+                <a href="#">
+                    <img src="{{ asset('img/logo_usaha.png') }}" alt="Logo Usaha">
+                </a>
             </div>
 
             <nav>
@@ -399,6 +434,17 @@
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
         }
+    </script>
+    <script>
+        document.addEventListener("mousemove", function(e) {
+
+            let x = (e.clientX / window.innerWidth) * 10;
+            let y = (e.clientY / window.innerHeight) * 10;
+
+            document.body.style.backgroundPosition =
+                `${50 - x}% ${50 - y}%`;
+
+        });
     </script>
 
 </body>
