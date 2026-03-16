@@ -10,7 +10,10 @@
         </div>
 
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="#">USAHA</a>
+            {{-- <a href="#">USAHA</a> --}}
+            <a href="#">
+                <img src="{{ asset('img/logo_small.png') }}" alt="Logo Usaha" style="height: 60px;">
+            </a>
         </div>
 
 
