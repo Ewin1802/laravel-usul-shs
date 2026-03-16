@@ -51,17 +51,17 @@
         }
 
         .navbar {
+            position:relative;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             padding: 14px 25px;
+            flex-wrap: wrap;
 
             background: rgba(255, 255, 255, 0.05);
             border-radius: 14px;
 
             backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-
             border: 1px solid rgba(255, 255, 255, 0.15);
 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -253,45 +253,48 @@
             color: #bbb;
             font-size: .85rem;
         }
+        .menu-toggle {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
 
         /* RESPONSIVE */
 
-        @media(max-width:900px) {
+        @media(max-width:768px) {
 
             .menu-toggle {
                 display: block;
             }
 
             nav {
-                position: absolute;
-                top: 70px;
-                left: 0;
+                display: none;
                 width: 100%;
-
                 flex-direction: column;
+                gap: 12px;
+
                 background: rgba(0, 0, 0, 0.9);
                 backdrop-filter: blur(10px);
 
-                text-align: center;
-                padding: 20px;
-
-                display: none;
-            }
-
-            nav a {
-                padding: 12px;
-                font-size: 16px;
+                margin-top: 15px;
+                padding: 15px;
+                border-radius: 10px;
             }
 
             nav.active {
                 display: flex;
             }
 
+            nav a {
+                padding: 10px;
+                font-size: 16px;
+            }
+
             .hero {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-
         }
 
         .logo img {
@@ -304,11 +307,7 @@
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
         }
 
-        .menu-toggle {
-            display: none;
-            font-size: 28px;
-            cursor: pointer;
-        }
+
     </style>
 </head>
 
@@ -323,16 +322,16 @@
                 </a>
             </div>
 
-            <div class="menu-toggle" onclick="toggleMenu()">
-                ☰
-            </div>
-
             <nav id="nav-menu">
                 <a href="https://sipd-ri.kemendagri.go.id/auth/login">SIPD-RI</a>
                 <a href="https://bolaangmongondowutara.e-bmd.co.id/">E-BMD</a>
                 <a href="#">RK-BMD</a>
                 <a href="#">LELANG-BMD</a>
             </nav>
+
+            <div class="menu-toggle" onclick="toggleMenu()">
+                ☰
+            </div>
 
         </div>
     </header>
