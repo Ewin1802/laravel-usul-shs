@@ -258,14 +258,38 @@
 
         @media(max-width:900px) {
 
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
+            .menu-toggle {
+                display: block;
             }
 
             nav {
-                justify-content: center;
-                margin-top: 10px;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.9);
+                backdrop-filter: blur(10px);
+
+                text-align: center;
+                padding: 20px;
+
+                display: none;
+            }
+
+            nav a {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
 
         }
@@ -278,6 +302,12 @@
 
         .logo img:hover {
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -293,7 +323,11 @@
                 </a>
             </div>
 
-            <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                ☰
+            </div>
+
+            <nav id="nav-menu">
                 <a href="https://sipd-ri.kemendagri.go.id/auth/login">SIPD-RI</a>
                 <a href="https://bolaangmongondowutara.e-bmd.co.id/">E-BMD</a>
                 <a href="#">RK-BMD</a>
@@ -445,6 +479,11 @@
                 `${50 - x}% ${50 - y}%`;
 
         });
+    </script>
+    <script>
+        function toggleMenu() {
+            document.getElementById("nav-menu").classList.toggle("active");
+        }
     </script>
 
 </body>
