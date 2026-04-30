@@ -51,9 +51,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('home', function () {
         return redirect()->route('dashboard');
-        })->name('home');
+    })->name('home');
     // Route::get('/dashboard', [UserController::class, 'showData'])->name('dashboard');
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::delete('shs/{id}/hapus', [UsulSHSController::class, 'destroy'])->name('shs.hapus');
     Route::delete('sbu/{id}/hapus', [UsulSBUController::class, 'destroy'])->name('sbu.hapus');
     Route::delete('asb/{id}/hapus', [UsulASBController::class, 'destroy'])->name('asb.hapus');
@@ -90,12 +90,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('hspk/store', [UsulHSPKController::class, 'store'])->name('hspk.store');
         Route::get('hspk/{id}/useredit', [UsulHSPKController::class, 'edituser'])->name('hspk_user.edit');
         Route::put('/hspk/{id}', [UsulHSPKController::class, 'updateuser'])->name('hspk_user.ubah');
-
     });
 
     // ADMIN bisa mengakses semuanya
     Route::middleware(['auth', 'role:ADMIN'])->group(function () {
 
+        Route::post('/update-alasan', [UsulSHSController::class, 'updateAlasan'])
+            ->name('shs.update.alasan');
+        Route::post('/sbu/update-alasan', [UsulSBUController::class, 'updateAlasan'])
+            ->name('sbu.update.alasan');
+        Route::post('/asb/update-alasan', [UsulASBController::class, 'updateAlasan'])
+            ->name('asb.update.alasan');
 
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
         // Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
@@ -172,7 +177,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('export-shs', function () {
             $excel = Excel::raw(new SHSExport, \Maatwebsite\Excel\Excel::XLSX);
             Proses_shs::truncate();
-            return response()->streamDownload(function() use ($excel) {
+            return response()->streamDownload(function () use ($excel) {
                 echo $excel;
             }, 'shs.xlsx', [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -181,44 +186,36 @@ Route::middleware(['auth'])->group(function () {
         })->name('shs.export');
 
         Route::get('export-sbu', function () {
-                $excel = Excel::raw(new SBUExport, \Maatwebsite\Excel\Excel::XLSX);
-                Proses_sbu::truncate();
-                return response()->streamDownload(function() use ($excel) {
-                    echo $excel;
-                }, 'sbu.xlsx', [
-                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'Cache-Control' => 'no-store, no-cache',
-                ]);
-            })->name('sbu.export');
-        });
+            $excel = Excel::raw(new SBUExport, \Maatwebsite\Excel\Excel::XLSX);
+            Proses_sbu::truncate();
+            return response()->streamDownload(function () use ($excel) {
+                echo $excel;
+            }, 'sbu.xlsx', [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Cache-Control' => 'no-store, no-cache',
+            ]);
+        })->name('sbu.export');
+    });
 
-        Route::get('export-asb', function () {
-                $excel = Excel::raw(new ASBExport, \Maatwebsite\Excel\Excel::XLSX);
-                Proses_asb::truncate();
-                return response()->streamDownload(function() use ($excel) {
-                    echo $excel;
-                }, 'asb.xlsx', [
-                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'Cache-Control' => 'no-store, no-cache',
-                ]);
-            })->name('asb.export');
+    Route::get('export-asb', function () {
+        $excel = Excel::raw(new ASBExport, \Maatwebsite\Excel\Excel::XLSX);
+        Proses_asb::truncate();
+        return response()->streamDownload(function () use ($excel) {
+            echo $excel;
+        }, 'asb.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'no-store, no-cache',
+        ]);
+    })->name('asb.export');
 
-        Route::get('export-hspk', function () {
-                $excel = Excel::raw(new HSPKExport, \Maatwebsite\Excel\Excel::XLSX);
-                Proses_hspk::truncate();
-                return response()->streamDownload(function() use ($excel) {
-                    echo $excel;
-                }, 'hspk.xlsx', [
-                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'Cache-Control' => 'no-store, no-cache',
-                ]);
-            })->name('hspk.export');
-        });
-
-
-
-
-
-
-
-
+    Route::get('export-hspk', function () {
+        $excel = Excel::raw(new HSPKExport, \Maatwebsite\Excel\Excel::XLSX);
+        Proses_hspk::truncate();
+        return response()->streamDownload(function () use ($excel) {
+            echo $excel;
+        }, 'hspk.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'no-store, no-cache',
+        ]);
+    })->name('hspk.export');
+});

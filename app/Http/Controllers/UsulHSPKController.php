@@ -54,8 +54,8 @@ class UsulHSPKController extends Controller
 
         // Ambil dokumen yang hanya sesuai dengan SKPD pengguna yang login dan urutkan secara descending
         $documents = Document::where('skpd', $userSkpd)
-        ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
-        ->get();
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
+            ->get();
 
         // Ambil data lainnya jika diperlukan
         $kelompoks = Kelompok::all();
@@ -131,18 +131,18 @@ class UsulHSPKController extends Controller
             })
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanHSPK.admin_index', compact ('admin_hspk'), );
+        return view('pages.usulanHSPK.admin_index', compact('admin_hspk'),);
     }
 
     public function admin_export_hspk(Request $request)
     {
         $export_hspk = DB::table('proses_hspks')
-            ->when($request->input('spek'), function ($query, $spek ) {
-                return $query->where('spek', 'like', '%'.$spek.'%' );
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where('spek', 'like', '%' . $spek . '%');
             })
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanHSPK.admin_export_hspk', compact ('export_hspk'), );
+        return view('pages.usulanHSPK.admin_export_hspk', compact('export_hspk'),);
     }
 
     public function proses($id)
@@ -306,4 +306,5 @@ class UsulHSPKController extends Controller
 
         return redirect()->route('hspk.index')->with('success', 'HSPK successfully updated');
     }
+   
 }

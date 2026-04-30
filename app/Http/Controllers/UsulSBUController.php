@@ -38,7 +38,6 @@ class UsulSBUController extends Controller
         return view('pages.usulanSBU.index', compact('sbu'));
     }
 
-
     public function create()
     {
         // Ambil SKPD dari pengguna yang sedang login
@@ -46,8 +45,8 @@ class UsulSBUController extends Controller
 
         // Ambil dokumen yang hanya sesuai dengan SKPD pengguna yang login dan urutkan secara descending
         $documents = Document::where('skpd', $userSkpd)
-        ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
-        ->get();
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
+            ->get();
 
         // Ambil data lainnya jika diperlukan
         $kelompoks = Kelompok::all();
@@ -158,16 +157,15 @@ class UsulSBUController extends Controller
         return view('pages.usulanSBU.admin_index', compact('admin_sbu', 'years', 'disetujuList', 'skpdList'));
     }
 
-
     public function admin_export_sbu(Request $request)
     {
         $export_sbu = DB::table('proses_sbus')
-            ->when($request->input('spek'), function ($query, $spek ) {
-                return $query->where('spek', 'like', '%'.$spek.'%' );
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where('spek', 'like', '%' . $spek . '%');
             })
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanSBU.admin_export_sbu', compact ('export_sbu'), );
+        return view('pages.usulanSBU.admin_export_sbu', compact('export_sbu'),);
     }
 
     public function proses($id)
@@ -343,5 +341,28 @@ class UsulSBUController extends Controller
         $usulan->save();
 
         return redirect()->route('sbu.index')->with('success', 'SBU successfully updated');
+    }
+
+    public function updateAlasan(Request $request)
+    {
+        Log::info('UPDATE ALASAN SBU', [
+            'user' => auth()->user()->name ?? null,
+            'role' => auth()->user()->roles ?? null,
+            'id' => $request->id,
+            'alasan' => $request->alasan
+        ]);
+
+        $usulan = UsulanSbu::findOrFail($request->id);
+
+        // proteksi admin (sesuaikan dengan kolom roles)
+        if (strtolower(auth()->user()->roles) !== 'admin') {
+            abort(403, 'Tidak diizinkan');
+        }
+
+        $usulan->alasan = $request->alasan;
+        $usulan->admin = auth()->user()->name;
+        $usulan->save();
+
+        return redirect()->back()->with('success', 'Alasan SBU berhasil diperbarui.');
     }
 }
