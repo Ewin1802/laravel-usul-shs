@@ -16,35 +16,35 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $users = DB::table('users')
-    //         ->when($request->input('name'), function ($query, $name) {
-    //             return $query->where(function ($query) use ($name) {
-    //                 $query->where('name', 'like', '%' . $name . '%')
-    //                     ->orWhere('skpd', 'like', '%' . $name . '%'); // Tambahkan pencarian di kolom "skpd" juga
-    //             });
-    //         })
-    //         ->where('skpd', '!=', 'AllSKPD')  // Mengecualikan user yang memiliki skpd "AllSKPD"
-    //         ->orderBy('id', 'desc')
-    //         ->paginate(10);
-
-    //     return view('pages.users.index', compact('users'));
-    // }
     public function index(Request $request)
     {
         $users = DB::table('users')
             ->when($request->input('name'), function ($query, $name) {
                 return $query->where(function ($query) use ($name) {
                     $query->where('name', 'like', '%' . $name . '%')
-                        ->orWhere('skpd', 'like', '%' . $name . '%');
+                        ->orWhere('skpd', 'like', '%' . $name . '%'); // Tambahkan pencarian di kolom "skpd" juga
                 });
             })
+            ->where('skpd', '!=', 'AllSKPD')  // Mengecualikan user yang memiliki skpd "AllSKPD"
             ->orderBy('id', 'desc')
             ->paginate(10);
 
         return view('pages.users.index', compact('users'));
     }
+    // public function index(Request $request)
+    // {
+    //     $users = DB::table('users')
+    //         ->when($request->input('name'), function ($query, $name) {
+    //             return $query->where(function ($query) use ($name) {
+    //                 $query->where('name', 'like', '%' . $name . '%')
+    //                     ->orWhere('skpd', 'like', '%' . $name . '%');
+    //             });
+    //         })
+    //         ->orderBy('id', 'desc')
+    //         ->paginate(10);
+
+    //     return view('pages.users.index', compact('users'));
+    // }
 
 
     public function create()
