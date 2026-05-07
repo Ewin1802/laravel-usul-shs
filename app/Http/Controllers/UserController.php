@@ -16,16 +16,30 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     $users = DB::table('users')
+    //         ->when($request->input('name'), function ($query, $name) {
+    //             return $query->where(function ($query) use ($name) {
+    //                 $query->where('name', 'like', '%' . $name . '%')
+    //                     ->orWhere('skpd', 'like', '%' . $name . '%'); // Tambahkan pencarian di kolom "skpd" juga
+    //             });
+    //         })
+    //         ->where('skpd', '!=', 'AllSKPD')  // Mengecualikan user yang memiliki skpd "AllSKPD"
+    //         ->orderBy('id', 'desc')
+    //         ->paginate(10);
+
+    //     return view('pages.users.index', compact('users'));
+    // }
     public function index(Request $request)
     {
         $users = DB::table('users')
             ->when($request->input('name'), function ($query, $name) {
                 return $query->where(function ($query) use ($name) {
                     $query->where('name', 'like', '%' . $name . '%')
-                        ->orWhere('skpd', 'like', '%' . $name . '%'); // Tambahkan pencarian di kolom "skpd" juga
+                        ->orWhere('skpd', 'like', '%' . $name . '%');
                 });
             })
-            ->where('skpd', '!=', 'AllSKPD')  // Mengecualikan user yang memiliki skpd "AllSKPD"
             ->orderBy('id', 'desc')
             ->paginate(10);
 
@@ -100,6 +114,6 @@ class UserController extends Controller
         $totalUsulbaruAsb = UsulanAsb::where('ket', 'Proses Usul')->count();
         $totalUsulbaruHspk = UsulanHspk::where('ket', 'Proses Usul')->count();
 
-        return view('pages.dashboard', compact('totalSkpd', 'totalUser', 'totalUsulbaruShs', 'totalUsulbaruSbu', 'totalUsulbaruAsb','totalUsulbaruHspk'));
+        return view('pages.dashboard', compact('totalSkpd', 'totalUser', 'totalUsulbaruShs', 'totalUsulbaruSbu', 'totalUsulbaruAsb', 'totalUsulbaruHspk'));
     }
 }
