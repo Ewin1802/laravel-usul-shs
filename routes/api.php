@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api1\AuthController;
+use App\Http\Controllers\Api\CreateUsulanController;
+use App\Http\Controllers\Api\DokumenController;
+use App\Http\Controllers\Api\OpsiDasarController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\UsulanSkpdController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\UsulanSkpdController;
-use App\Http\Controllers\Api\CreateUsulanController;
-use App\Http\Controllers\Api\OpsiDasarController;
-use App\Http\Controllers\Api\DokumenController;
 
 /*
 |--------------------------------------------------------------------------
