@@ -176,7 +176,7 @@
             <div class="card mt-4">
 
                 <div class="card-header">
-                    <h4>5 Usulan SSH Ditolak</h4>
+                    <h4>Usulan SSH Ditolak</h4>
                 </div>
 
                 <div class="card-body table-responsive">
@@ -234,7 +234,7 @@
             <div class="card mt-4">
 
                 <div class="card-header">
-                    <h4>5 Usulan SBU Ditolak</h4>
+                    <h4>Usulan SBU Ditolak</h4>
                 </div>
 
                 <div class="card-body table-responsive">
@@ -292,7 +292,7 @@
             <div class="card mt-4">
 
                 <div class="card-header">
-                    <h4>5 Usulan ASB Ditolak</h4>
+                    <h4>Usulan ASB Ditolak</h4>
                 </div>
 
                 <div class="card-body table-responsive">

@@ -464,120 +464,226 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
+    <!-- JS Libraries -->
     <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
-
-    <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/features-posts.js') }}"></script>
-    <!-- Bootstrap 5 JS + Popper -->
-    <!-- Bootstrap 5 CSS -->
 
-    <!-- Bootstrap 5 JS + Popper -->
+    <!-- Bootstrap 5 -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-
-    {{-- verifikasi --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var modalVerifikasi = document.getElementById('modalVerifikasi');
 
-            modalVerifikasi.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget;
-                var url = button.getAttribute('data-url');
-                var form = document.getElementById('formVerifikasi');
+            // =========================
+            // VERIFIKASI MODAL
+            // =========================
+            const modalVerifikasi =
+                document.getElementById('modalVerifikasi');
 
-                // Atur action form dengan URL dinamis
-                form.action = url;
-            });
+            if (modalVerifikasi) {
+                modalVerifikasi.addEventListener(
+                    'show.bs.modal',
+                    function(event) {
+
+                        const button = event.relatedTarget;
+                        const url =
+                            button.getAttribute('data-url');
+
+                        document.getElementById(
+                            'formVerifikasi'
+                        ).action = url;
+                    }
+                );
+            }
+
+            // =========================
+            // TOLAK MODAL
+            // =========================
+            const modalTolak =
+                document.getElementById('modalTolak');
+
+            if (modalTolak) {
+                modalTolak.addEventListener(
+                    'show.bs.modal',
+                    function(event) {
+
+                        const button = event.relatedTarget;
+                        const url =
+                            button.getAttribute('data-url');
+
+                        document.getElementById(
+                            'formTolak'
+                        ).action = url;
+                    }
+                );
+            }
+
+            // =========================
+            // VIEW MODAL
+            // =========================
+            const modalView =
+                document.getElementById('modalView');
+
+            if (modalView) {
+                modalView.addEventListener(
+                    'show.bs.modal',
+                    function(event) {
+
+                        const button = event.relatedTarget;
+
+                        const doc =
+                            button.getAttribute('data-doc');
+
+                        const uraian =
+                            button.getAttribute('data-uraian');
+
+                        const speck =
+                            button.getAttribute('data-speck');
+
+                        const satuan =
+                            button.getAttribute('data-satuan');
+
+                        const akunBelanja =
+                            button.getAttribute(
+                                'data-akun_belanja'
+                            );
+
+                        const rekening1 =
+                            button.getAttribute(
+                                'data-rekening_1'
+                            );
+
+                        const ket =
+                            button.getAttribute('data-ket');
+
+                        const user =
+                            button.getAttribute('data-user');
+
+                        const alasan =
+                            button.getAttribute('data-alasan');
+
+                        modalView.querySelector('#doc')
+                            .textContent = doc;
+
+                        modalView.querySelector('#uraian')
+                            .textContent = uraian;
+
+                        modalView.querySelector('#speck')
+                            .textContent = speck;
+
+                        modalView.querySelector('#satuan')
+                            .textContent = satuan;
+
+                        modalView.querySelector('#akun_belanja')
+                            .textContent = akunBelanja;
+
+                        modalView.querySelector('#rekening_1')
+                            .textContent = rekening1;
+
+                        modalView.querySelector('#ket')
+                            .textContent = ket;
+
+                        modalView.querySelector('#user')
+                            .textContent = user;
+
+                        modalView.querySelector('#alasan')
+                            .textContent = alasan;
+
+                        const ketElement =
+                            modalView.querySelector('#ket');
+
+                        if (ket === 'Ditolak') {
+                            ketElement.style.color = 'red';
+                        } else {
+                            ketElement.style.color = '';
+                        }
+                    }
+                );
+            }
+
+            // =========================
+            // EDIT ALASAN MODAL
+            // =========================
+            const modalAlasan =
+                document.getElementById('modalAlasan');
+
+            if (modalAlasan) {
+                modalAlasan.addEventListener(
+                    'show.bs.modal',
+                    function(event) {
+
+                        const button = event.relatedTarget;
+
+                        const id =
+                            button.getAttribute('data-id');
+
+                        const alasan =
+                            button.getAttribute('data-alasan');
+
+                        document.getElementById(
+                            'alasan_id'
+                        ).value = id;
+
+                        document.getElementById(
+                            'alasan_text'
+                        ).value = alasan;
+
+                        console.log(
+                            'EDIT ALASAN ID:',
+                            id
+                        );
+                    }
+                );
+            }
+
+            // =========================
+            // AUTO DROPUP
+            // =========================
+            document
+                .querySelectorAll('.dropdown')
+                .forEach(function(el) {
+
+                    el.addEventListener(
+                        'shown.bs.dropdown',
+                        function(e) {
+
+                            const dropdownMenu =
+                                e.target.querySelector(
+                                    '.dropdown-menu'
+                                );
+
+                            if (!dropdownMenu) return;
+
+                            const rect =
+                                dropdownMenu
+                                .getBoundingClientRect();
+
+                            if (
+                                rect.bottom >
+                                window.innerHeight
+                            ) {
+                                e.target.classList.add(
+                                    'dropup'
+                                );
+                            } else {
+                                e.target.classList.remove(
+                                    'dropup'
+                                );
+                            }
+                        }
+                    );
+                });
+
         });
-    </script>
 
-    {{-- tolak --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modalTolak = document.getElementById('modalTolak');
-            modalTolak.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget;
-                var url = button.getAttribute('data-url');
-                var form = document.getElementById('formTolak');
-                form.action = url;
-            });
-        });
-    </script>
-
-    {{-- view --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modalView = document.getElementById('modalView');
-
-            modalView.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget;
-
-                // Ambil data dari tombol yang diklik
-                var doc = button.getAttribute('data-doc');
-                var uraian = button.getAttribute('data-uraian');
-                var speck = button.getAttribute('data-speck');
-                var satuan = button.getAttribute('data-satuan');
-                var akun_belanja = button.getAttribute('data-akun_belanja');
-                var rekening_1 = button.getAttribute('data-rekening_1');
-                var ket = button.getAttribute('data-ket');
-                var user = button.getAttribute('data-user');
-                var alasan = button.getAttribute('data-alasan');
-
-                // Isi data ke dalam modal dengan menggunakan textContent
-                modalView.querySelector('#doc').textContent = doc;
-                modalView.querySelector('#uraian').textContent = uraian;
-                modalView.querySelector('#speck').textContent = speck;
-                modalView.querySelector('#satuan').textContent = satuan;
-                modalView.querySelector('#akun_belanja').textContent = akun_belanja;
-                modalView.querySelector('#rekening_1').textContent = rekening_1;
-                modalView.querySelector('#ket').textContent = ket;
-                modalView.querySelector('#user').textContent = user;
-                modalView.querySelector('#alasan').textContent = alasan;
-
-                // Jika nilai ket adalah "Ditolak", ubah warna teks menjadi merah
-                var ketElement = modalView.querySelector('#ket');
-                if (ket === 'Ditolak') {
-                    ketElement.style.color = 'red';
-                } else {
-                    // Kembalikan ke warna default jika tidak "Ditolak"
-                    ketElement.style.color = '';
-                }
-            });
-        });
-    </script>
-
-    {{-- pilih tahun --}}
-    <script>
+        // =========================
+        // SUBMIT TAHUN
+        // =========================
         function submitForm() {
-            document.getElementById("yearForm").submit();
+            document.getElementById(
+                'yearForm'
+            ).submit();
         }
-    </script>
-
-    <script>
-        document.querySelectorAll('.dropdown').forEach(function(el) {
-            el.addEventListener('shown.bs.dropdown', function(e) {
-                const dropdownMenu = e.target.querySelector('.dropdown-menu');
-                const rect = dropdownMenu.getBoundingClientRect();
-
-                if (rect.bottom > window.innerHeight) {
-                    e.target.classList.add('dropup');
-                } else {
-                    e.target.classList.remove('dropup');
-                }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var modal = document.getElementById('modalAlasan');
-
-            modal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget;
-
-                document.getElementById('alasan_id').value = button.getAttribute('data-id');
-                document.getElementById('alasan_text').value = button.getAttribute('data-alasan');
-            });
-        });
     </script>
 @endpush

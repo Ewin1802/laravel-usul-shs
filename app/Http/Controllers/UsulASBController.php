@@ -45,8 +45,8 @@ class UsulASBController extends Controller
 
         // Ambil dokumen yang hanya sesuai dengan SKPD pengguna yang login dan urutkan secara descending
         $documents = Document::where('skpd', $userSkpd)
-        ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
-        ->get();
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
+            ->get();
 
         // Ambil data lainnya jika diperlukan
         $kelompoks = Kelompok::all();
@@ -172,12 +172,12 @@ class UsulASBController extends Controller
     public function admin_export_asb(Request $request)
     {
         $export_asb = DB::table('proses_asbs')
-            ->when($request->input('spek'), function ($query, $spek ) {
-                return $query->where('spek', 'like', '%'.$spek.'%' );
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where('spek', 'like', '%' . $spek . '%');
             })
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanASB.admin_export_asb', compact ('export_asb'), );
+        return view('pages.usulanASB.admin_export_asb', compact('export_asb'),);
     }
 
     public function proses($id)
@@ -354,5 +354,28 @@ class UsulASBController extends Controller
         $usulan->save();
 
         return redirect()->route('asb.index')->with('success', 'ASB successfully updated');
+    }
+
+    public function updateAlasan(Request $request)
+    {
+        Log::info('UPDATE ALASAN ASB', [
+            'user' => auth()->user()->name ?? null,
+            'role' => auth()->user()->roles ?? null,
+            'id' => $request->id,
+            'alasan' => $request->alasan
+        ]);
+
+        $usulan = UsulanAsb::findOrFail($request->id);
+
+        // validasi role admin
+        if (strtolower(auth()->user()->roles) !== 'admin') {
+            abort(403, 'Tidak diizinkan');
+        }
+
+        $usulan->alasan = $request->alasan;
+        $usulan->admin = auth()->user()->name;
+        $usulan->save();
+
+        return redirect()->back()->with('success', 'Alasan ASB berhasil diperbarui.');
     }
 }
