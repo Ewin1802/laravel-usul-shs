@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -36,7 +37,72 @@ class UserController extends Controller
             'data' => $users,
         ]);
     }
+    public function show($id)
+    {
+        $user = User::find($id);
 
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $user
+        ]);
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User tidak ditemukan'
+            ], 404);
+        }
+
+        $request->validate([
+            'name'  => 'required',
+            'roles' => 'required',
+            'skpd'  => 'required'
+        ]);
+
+        $user->update([
+            'name'  => $request->name,
+            'roles' => $request->roles,
+            'skpd'  => $request->skpd,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data user berhasil diperbarui',
+            'data' => $user
+        ]);
+    }
+
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User tidak ditemukan'
+            ], 404);
+        }
+
+        $user->password = Hash::make('11111111');
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Password berhasil direset menjadi 11111111'
+        ]);
+    }
 
     public function updateuser(Request $request)
     {

@@ -28,13 +28,9 @@ Route::get('/user', function (Request $request) {
 */
 
 Route::prefix('auth')->group(function () {
-
     Route::post('/register', [AuthController::class, 'register']);
-
     Route::post('/login', [AuthController::class, 'login']);
-
     Route::middleware('auth:sanctum')->group(function () {
-
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 });
@@ -55,9 +51,11 @@ Route::middleware('auth:sanctum')->group(function () {
     */
 
     Route::apiResource('users', UserController::class);
-
     Route::put('/users/update', [UserController::class, 'updateuser']);
-
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::put('/users/{id}', [UserController::class, 'adminUpdate']);
+    Route::put('/users/{id}/reset-password', [UserController::class, 'resetPassword']);
 
     /*
     |--------------------------------------------------------------------------
@@ -82,9 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
         */
 
         Route::put('/{type}/{id}/verifikasi', 'verified');
-
         Route::put('/{type}/{id}/disetujui', 'approve');
-
         Route::put('/{type}/{id}/ditolak', 'reject');
     });
 
@@ -110,13 +106,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('opsi')->controller(OpsiDasarController::class)->group(function () {
 
         Route::get('/kelompok', 'kelompok');
-
         Route::get('/satuan', 'satuan');
-
         Route::get('/skpd', 'skpd');
-
         Route::get('/belanja', 'belanja');
-
         Route::get('/dokumen', 'dokumen');
     });
 
@@ -130,11 +122,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('create-usulan')->controller(CreateUsulanController::class)->group(function () {
 
         Route::post('/shs', 'createshs');
-
         Route::post('/sbu', 'createsbu');
-
         Route::post('/asb', 'createasb');
-
         Route::post('/hspk', 'createhspk');
     });
 
@@ -146,9 +135,7 @@ Route::middleware('auth:sanctum')->group(function () {
     */
 
     Route::prefix('dokumen')->controller(DokumenController::class)->group(function () {
-
         Route::post('/upload', 'docstore');
-
         Route::get('/surat', 'list_surat');
     });
 });

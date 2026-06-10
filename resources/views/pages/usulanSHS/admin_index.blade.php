@@ -4,8 +4,7 @@
 
 @push('style')
     <!-- CSS Libraries -->
-    <link rel="stylesheet"
-        href="{{ asset('library/selectric/public/selectric.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -52,20 +51,28 @@
 
                                         {{-- Filter Status --}}
                                         <div class="col-md-3">
-                                            <select class="form-control selectric" name="filter" onchange="this.form.submit()">
+                                            <select class="form-control selectric" name="filter"
+                                                onchange="this.form.submit()">
                                                 <option value="">Status</option>
-                                                <option value="Usul Baru" {{ request('filter') == 'Usul Baru' ? 'selected' : '' }}>Usul Baru</option>
-                                                <option value="Disetujui" {{ request('filter') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
-                                                <option value="Ditolak" {{ request('filter') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                                <option value="Usul Baru"
+                                                    {{ request('filter') == 'Usul Baru' ? 'selected' : '' }}>Usul Baru
+                                                </option>
+                                                <option value="Disetujui"
+                                                    {{ request('filter') == 'Disetujui' ? 'selected' : '' }}>Disetujui
+                                                </option>
+                                                <option value="Ditolak"
+                                                    {{ request('filter') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                                             </select>
                                         </div>
 
                                         {{-- Filter SKPD --}}
                                         <div class="col-md-8">
-                                            <select class="form-control selectric" name="skpd" onchange="this.form.submit()">
+                                            <select class="form-control selectric" name="skpd"
+                                                onchange="this.form.submit()">
                                                 <option value="">SKPD</option>
                                                 @foreach ($skpdList as $skpd)
-                                                    <option value="{{ $skpd }}" {{ request('skpd') == $skpd ? 'selected' : '' }}>
+                                                    <option value="{{ $skpd }}"
+                                                        {{ request('skpd') == $skpd ? 'selected' : '' }}>
                                                         {{ $skpd }}
                                                     </option>
                                                 @endforeach
@@ -74,11 +81,8 @@
 
                                         {{-- Pencarian --}}
                                         <div class="col-md-4">
-                                            <input type="text"
-                                                class="form-control"
-                                                name="spek"
-                                                placeholder="Pencarian Spek"
-                                                value="{{ request('spek') }}">
+                                            <input type="text" class="form-control" name="spek"
+                                                placeholder="Pencarian Spek" value="{{ request('spek') }}">
                                         </div>
 
                                         {{-- Tombol --}}
@@ -120,142 +124,150 @@
                                         </tr>
 
                                         @foreach ($admin_shs as $s)
-                                        <tr>
-                                            {{-- Uraian Usulan --}}
-                                            <td style="line-height: 1.6">
-                                                <strong>Dasar Surat:</strong><br>
-                                                {{ $s->Document }}<br><br>
+                                            <tr>
+                                                {{-- Uraian Usulan --}}
+                                                <td style="line-height: 1.6">
+                                                    <strong>Dasar Surat:</strong><br>
+                                                    {{ $s->Document }}<br><br>
 
-                                                <strong>Komponen:</strong><br>
-                                                {{ $s->Uraian }}<br>
+                                                    <strong>Komponen:</strong><br>
+                                                    {{ $s->Uraian }}<br>
 
-                                                <strong>Spek:</strong><br>
-                                                {{ $s->Spek }}
-                                            </td>
+                                                    <strong>Spek:</strong><br>
+                                                    {{ $s->Spek }}
+                                                </td>
 
-                                            {{-- Harga + Satuan (1 kolom) --}}
-                                            <td>
-                                                <strong>Rp {{ number_format((float) $s->Harga, 0, ',', '.') }}</strong><br>
-                                                <span class="text-muted">Satuan: {{ $s->Satuan }}</span>
-                                            </td>
+                                                {{-- Harga + Satuan (1 kolom) --}}
+                                                <td>
+                                                    <strong>Rp
+                                                        {{ number_format((float) $s->Harga, 0, ',', '.') }}</strong><br>
+                                                    <span class="text-muted">Satuan: {{ $s->Satuan }}</span>
+                                                </td>
 
-                                            {{-- SKPD --}}
-                                            <td>
-                                                {{ $s->skpd }}
-                                            </td>
+                                                {{-- SKPD --}}
+                                                <td>
+                                                    {{ $s->skpd }}
+                                                </td>
 
-                                            {{-- Status --}}
-                                            <td>
-                                                @php
-                                                    $status = $s->ket;
-                                                    $displayText = $status;
+                                                {{-- Status --}}
+                                                <td>
+                                                    @php
+                                                        $status = $s->ket;
+                                                        $displayText = $status;
 
-                                                    if ($status == 'Proses Usul') {
-                                                        $displayText = 'Menunggu Verifikasi Admin';
-                                                    } elseif ($status == 'Verified') {
-                                                        $displayText = 'Menunggu Persetujuan Pimpinan';
-                                                    } elseif ($status == 'Ditolak') {
-                                                        $displayText = 'Usulan tidak memenuhi syarat';
-                                                    } elseif ($status == 'Disetujui') {
-                                                        $displayText = 'Usulan Disetujui';
-                                                    }
-                                                @endphp
+                                                        if ($status == 'Proses Usul') {
+                                                            $displayText = 'Menunggu Verifikasi Admin';
+                                                        } elseif ($status == 'Verified') {
+                                                            $displayText = 'Menunggu Persetujuan Pimpinan';
+                                                        } elseif ($status == 'Ditolak') {
+                                                            $displayText = 'Usulan tidak memenuhi syarat';
+                                                        } elseif ($status == 'Disetujui') {
+                                                            $displayText = 'Usulan Disetujui';
+                                                        }
+                                                    @endphp
 
-                                                @if($status == 'Proses Usul')
-                                                    <span style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
-                                                @elseif($status == 'Disetujui')
-                                                    <span style="color: #029925;"><strong>{{ $displayText }}</strong></span>
-                                                @elseif($status == 'Ditolak')
-                                                    <span style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
-                                                @elseif($status == 'Verified')
-                                                    <span style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
-                                                @else
-                                                    <span><strong>{{ $displayText }}</strong></span>
-                                                @endif
-                                            </td>
+                                                    @if ($status == 'Proses Usul')
+                                                        <span
+                                                            style="color: #07c9c9;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Disetujui')
+                                                        <span
+                                                            style="color: #029925;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Ditolak')
+                                                        <span
+                                                            style="color: #ff0000;"><strong>{{ $displayText }}</strong></span>
+                                                    @elseif($status == 'Verified')
+                                                        <span
+                                                            style="color: #e0a800;"><strong>{{ $displayText }}</strong></span>
+                                                    @else
+                                                        <span><strong>{{ $displayText }}</strong></span>
+                                                    @endif
+                                                </td>
 
-                                            {{-- Alasan --}}
-                                            <td>
-                                                @if($s->alasan)
-                                                    {{ $s->alasan }}
-                                                @else
-                                                    <em>-</em>
-                                                @endif
-                                            </td>
+                                                {{-- Alasan --}}
+                                                <td>
+                                                    @if ($s->alasan)
+                                                        {{ $s->alasan }}
+                                                    @else
+                                                        <em>-</em>
+                                                    @endif
+                                                </td>
 
-                                            {{-- Action --}}
-                                            <td>
-                                                <div class="dropdown text-center">
-                                                    <button class="btn btn-sm btn-secondary" type="button"
-                                                        id="dropdownMenu{{ $s->id }}"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
+                                                {{-- Action --}}
+                                                <td>
+                                                    <div class="dropdown text-center">
+                                                        <button class="btn btn-sm btn-secondary" type="button"
+                                                            id="dropdownMenu{{ $s->id }}" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
 
-                                                    <div class="dropdown-menu dropdown-menu-end custom-dropdown"
-                                                        aria-labelledby="dropdownMenu{{ $s->id }}">
+                                                        <div class="dropdown-menu dropdown-menu-end custom-dropdown"
+                                                            aria-labelledby="dropdownMenu{{ $s->id }}">
 
-                                                        {{-- View --}}
-                                                        <a href="#"
-                                                            class="dropdown-item text-primary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalView"
-                                                            data-doc="{{ $s->Document }}"
-                                                            data-uraian="{{ $s->Uraian }}"
-                                                            data-speck="{{ $s->Spek }}"
-                                                            data-satuan="{{ $s->Satuan }}"
-                                                            data-akun_belanja="{{ $s->akun_belanja }}"
-                                                            data-rekening_1="{{ $s->rekening_1 }}"
-                                                            data-ket="{{ $s->ket }}"
-                                                            data-user="{{ $s->user }}"
-                                                            data-alasan="{{ $s->alasan }}">
-                                                            <i class="fas fa-eye"></i> View
-                                                        </a>
+                                                            {{-- View --}}
+                                                            <a href="#" class="dropdown-item text-primary"
+                                                                data-bs-toggle="modal" data-bs-target="#modalView"
+                                                                data-doc="{{ $s->Document }}"
+                                                                data-uraian="{{ $s->Uraian }}"
+                                                                data-speck="{{ $s->Spek }}"
+                                                                data-satuan="{{ $s->Satuan }}"
+                                                                data-akun_belanja="{{ $s->akun_belanja }}"
+                                                                data-rekening_1="{{ $s->rekening_1 }}"
+                                                                data-ket="{{ $s->ket }}"
+                                                                data-user="{{ $s->user }}"
+                                                                data-alasan="{{ $s->alasan }}">
+                                                                <i class="fas fa-eye"></i> View
+                                                            </a>
 
-                                                        {{-- Edit --}}
-                                                        <a href="{{ route('shs_admin.edit', $s->id) }}"
-                                                            class="dropdown-item text-info
-                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                                                            <i class="fas fa-edit"></i> Edit
-                                                        </a>
+                                                            {{-- Edit --}}
+                                                            <a href="{{ route('shs_admin.edit', $s->id) }}"
+                                                                class="dropdown-item text-info
+                                                            @if ($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                                <i class="fas fa-edit"></i> Edit
+                                                            </a>
 
-                                                        {{-- Verifikasi --}}
-                                                        <a href="#"
-                                                            class="dropdown-item text-success
-                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalVerifikasi"
-                                                            data-url="{{ route('shs.verified', $s->id) }}">
-                                                            <i class="fas fa-check-circle"></i> Verifikasi
-                                                        </a>
+                                                            {{-- Verifikasi --}}
+                                                            <a href="#"
+                                                                class="dropdown-item text-success
+                                                            @if ($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                                data-bs-toggle="modal" data-bs-target="#modalVerifikasi"
+                                                                data-url="{{ route('shs.verified', $s->id) }}">
+                                                                <i class="fas fa-check-circle"></i> Verifikasi
+                                                            </a>
 
-                                                        {{-- Tolak --}}
-                                                        <a href="#"
-                                                            class="dropdown-item text-warning
-                                                            @if($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalTolak"
-                                                            data-url="{{ route('shs.tolak', $s->id) }}">
-                                                            <i class="fas fa-hand-paper"></i> Tolak
-                                                        </a>
 
-                                                        {{-- Delete --}}
-                                                        <form action="{{ route('shs.hapus', $s->id) }}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Yakin mau hapus data ini?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="dropdown-item text-danger
-                                                                @if($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
-                                                                <i class="fas fa-times"></i> Delete
-                                                            </button>
-                                                        </form>
+                                                            {{-- Tolak --}}
+                                                            <a href="#"
+                                                                class="dropdown-item text-warning
+                                                            @if ($s->ket == 'Ditolak' || $s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif"
+                                                                data-bs-toggle="modal" data-bs-target="#modalTolak"
+                                                                data-url="{{ route('shs.tolak', $s->id) }}">
+                                                                <i class="fas fa-hand-paper"></i> Tolak
+                                                            </a>
+                                                            <a href="#" class="dropdown-item text-warning"
+                                                                data-bs-toggle="modal" data-bs-target="#modalAlasan"
+                                                                data-id="{{ $s->id }}"
+                                                                data-alasan="{{ $s->alasan }}">
+                                                                <i class="fas fa-comment-dots"></i> Edit Alasan
+                                                            </a>
 
+                                                            {{-- Delete --}}
+                                                            <form action="{{ route('shs.hapus', $s->id) }}"
+                                                                method="POST"
+                                                                onsubmit="return confirm('Yakin mau hapus data ini?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="dropdown-item text-danger
+                                                                @if ($s->ket == 'Disetujui' || $s->ket == 'Verified') disabled @endif">
+                                                                    <i class="fas fa-times"></i> Delete
+                                                                </button>
+                                                            </form>
+
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </table>
                                 </div>
@@ -272,7 +284,8 @@
     </div>
 
     <!-- Modal Verifikasi -->
-    <div class="modal fade" id="modalVerifikasi" tabindex="-1" aria-labelledby="modalVerifikasiLabel" aria-hidden="true">
+    <div class="modal fade" id="modalVerifikasi" tabindex="-1" aria-labelledby="modalVerifikasiLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="formVerifikasi" method="POST" action="">
@@ -375,7 +388,8 @@
     </div>
 
     <!-- Modal untuk memilih tahun -->
-    <div class="modal fade" id="yearModal" tabindex="-1" role="dialog" aria-labelledby="yearModalLabel" aria-hidden="true">
+    <div class="modal fade" id="yearModal" tabindex="-1" role="dialog" aria-labelledby="yearModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -405,7 +419,7 @@
                             <label for="disetujui">Disetujui oleh:</label>
                             <select class="form-control" id="disetujui" name="disetujui">
                                 <option value="" selected>Semua</option>
-                                @foreach($disetujuList as $user)
+                                @foreach ($disetujuList as $user)
                                     <option value="{{ $user }}">{{ $user }}</option>
                                 @endforeach
                             </select>
@@ -422,7 +436,29 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalAlasan" tabindex="-1">
+        <div class="modal-dialog">
+            <form method="POST" action="{{ route('shs.update.alasan') }}">
+                @csrf
+                <input type="hidden" name="id" id="alasan_id">
 
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Edit Alasan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <textarea name="alasan" id="alasan_text" class="form-control"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
 @endsection
@@ -443,10 +479,10 @@
 
     {{-- verifikasi --}}
     <script>
-            document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var modalVerifikasi = document.getElementById('modalVerifikasi');
 
-            modalVerifikasi.addEventListener('show.bs.modal', function (event) {
+            modalVerifikasi.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget;
                 var url = button.getAttribute('data-url');
                 var form = document.getElementById('formVerifikasi');
@@ -459,9 +495,9 @@
 
     {{-- tolak --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var modalTolak = document.getElementById('modalTolak');
-            modalTolak.addEventListener('show.bs.modal', function (event) {
+            modalTolak.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget;
                 var url = button.getAttribute('data-url');
                 var form = document.getElementById('formTolak');
@@ -472,10 +508,10 @@
 
     {{-- view --}}
     <script>
-            document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var modalView = document.getElementById('modalView');
 
-            modalView.addEventListener('show.bs.modal', function (event) {
+            modalView.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget;
 
                 // Ambil data dari tombol yang diklik
@@ -520,8 +556,8 @@
     </script>
 
     <script>
-        document.querySelectorAll('.dropdown').forEach(function (el) {
-            el.addEventListener('shown.bs.dropdown', function (e) {
+        document.querySelectorAll('.dropdown').forEach(function(el) {
+            el.addEventListener('shown.bs.dropdown', function(e) {
                 const dropdownMenu = e.target.querySelector('.dropdown-menu');
                 const rect = dropdownMenu.getBoundingClientRect();
 
@@ -532,7 +568,16 @@
                 }
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('modalAlasan');
+
+            modal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget;
+
+                document.getElementById('alasan_id').value = button.getAttribute('data-id');
+                document.getElementById('alasan_text').value = button.getAttribute('data-alasan');
+            });
+        });
     </script>
-
-
 @endpush

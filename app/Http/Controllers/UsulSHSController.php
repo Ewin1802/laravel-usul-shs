@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\UsulanShs;
 use App\Http\Requests\UpdateUsulanRequest;
-use App\Models\Kelompok;
-use App\Models\Satuan;
 use App\Models\Belanja;
 use App\Models\Document;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use App\Models\Kelompok;
 use App\Models\Proses_shs;
+use App\Models\Satuan;
+use App\Models\UsulanShs;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UsulSHSController extends Controller
 {
@@ -37,7 +36,6 @@ class UsulSHSController extends Controller
 
         return view('pages.usulanSHS.index', compact('shs'));
     }
-
 
     public function admin_shs(Request $request)
     {
@@ -96,16 +94,15 @@ class UsulSHSController extends Controller
         return view('pages.usulanSHS.admin_index', compact('admin_shs', 'years', 'disetujuList', 'skpdList'));
     }
 
-
     public function admin_export_shs(Request $request)
     {
         $export_shs = DB::table('proses_shs')
-            ->when($request->input('spek'), function ($query, $spek ) {
-                return $query->where('spek', 'like', '%'.$spek.'%' );
+            ->when($request->input('spek'), function ($query, $spek) {
+                return $query->where('spek', 'like', '%' . $spek . '%');
             })
             ->orderBy('id', 'desc')
             ->paginate(10);
-        return view('pages.usulanSHS.admin_export_shs', compact ('export_shs'), );
+        return view('pages.usulanSHS.admin_export_shs', compact('export_shs'),);
     }
 
     public function verified(Request $request, $id)
@@ -170,15 +167,15 @@ class UsulSHSController extends Controller
 
         // Ambil dokumen yang hanya sesuai dengan SKPD pengguna yang login dan urutkan secara descending
         $documents = Document::where('skpd', $userSkpd)
-        ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
-        ->get();
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom 'created_at' secara descending
+            ->get();
 
         // Ambil data lainnya jika diperlukan
         $kelompoks = Kelompok::all();
         $satuans = Satuan::all();
         $belanjas = Belanja::all();
 
-         return view('pages.usulanSHS.create', compact('documents', 'kelompoks', 'satuans', 'belanjas'));
+        return view('pages.usulanSHS.create', compact('documents', 'kelompoks', 'satuans', 'belanjas'));
     }
 
     public function store(Request $request)
@@ -348,15 +345,18 @@ class UsulSHSController extends Controller
         return redirect()->route('shs.index')->with('success', 'SSH successfully updated');
     }
 
-    // public function showData()
-    // {
-    //     $totalUsulbaruShs = UsulanShs::where('ket', 'Proses Usul')->count();
-    //     $totalUsulbaruSbu = UsulanSbu::where('ket', 'Proses Usul')->count();
-    //     $totalUsulbaruAsb = UsulanAsb::where('ket', 'Proses Usul')->count();
-    //     $totalUsulbaruHspk = UsulanHspk::where('ket', 'Proses Usul')->count();
+    public function updateAlasan(Request $request)
+    {
+        $usulan = UsulanShs::findOrFail($request->id);
 
-    //     return view('pages.dashboard', compact('totalUsulbaruShs', 'totalUsulbaruSbu', 'totalUsulbaruAsb', 'totalUsulbaruHspk'));
-    // }
+        if (strtolower(auth()->user()->roles) !== 'admin') {
+            abort(403, 'Tidak diizinkan');
+        }
 
+        $usulan->alasan = $request->alasan;
+        $usulan->admin = auth()->user()->name;
+        $usulan->save();
 
+        return redirect()->back()->with('success', 'Alasan berhasil diperbarui.');
+    }
 }
