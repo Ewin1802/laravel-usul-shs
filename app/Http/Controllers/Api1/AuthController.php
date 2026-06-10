@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 
-class AuthController extends Controller
+class AuthController1 extends Controller
 {
     public function register(Request $request)
     {
