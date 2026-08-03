@@ -460,7 +460,7 @@
     <script src="{{ asset('js/page/features-posts.js') }}"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             // =========================
             // VERIFIKASI MODAL
@@ -522,7 +522,7 @@
                 });
             }
 
-            
+
 
             // =========================
             // EDIT ALASAN SBU

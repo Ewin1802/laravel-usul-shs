@@ -97,6 +97,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/update-alasan', [UsulSHSController::class, 'updateAlasan'])
             ->name('shs.update.alasan');
+        Route::post('/sbu/update-alasan', [UsulSBUController::class, 'updateAlasan'])
+            ->name('sbu.update.alasan');
+            
         Route::get('admin/docs_admin', [DocumentController::class, 'admin_index'])->name('docs_admin');
         // Route::delete('/documents/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
         Route::get('admin/contohsurat_create', [DocumentController::class, 'createContohSurat'])->name('docs_admin.create');
